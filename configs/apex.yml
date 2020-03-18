@@ -1,0 +1,4 @@
+APEX:
+  IF_ON: True
+  OPT_LEVEL: 'O1'
+  LOSS_SCALE: ("1.0",)
