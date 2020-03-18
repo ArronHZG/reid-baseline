@@ -1,5 +1,5 @@
-APEX:
-  OPT_LEVEL: 'O2'
+MODEL:
+  NAME: resnet50_ibn_a
 EVAL:
   EPOCH_PERIOD: 30
 TENSORBOARDX:

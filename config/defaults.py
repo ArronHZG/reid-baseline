@@ -83,4 +83,4 @@ _C.APEX = CN()
 _C.APEX.IF_ON = True
 _C.APEX.OPT_LEVEL = 'O1'  # O1 or O2
 _C.APEX.IF_SYNC_BN = False
-_C.APEX.LOSS_SCALE = ("128.0",)
+_C.APEX.LOSS_SCALE = ("1.0",)

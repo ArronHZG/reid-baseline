@@ -7,10 +7,30 @@ import logging
 
 import torch
 from torch import nn
+from torch.hub import load_state_dict_from_url
 
 from .backbones.resnet import ResNet, BasicBlock, Bottleneck
 from .backbones.senet import SENet, SEResNetBottleneck, SEBottleneck, SEResNeXtBottleneck
-from .backbones.resnet_ibn_a import resnet50_ibn_a
+from .backbones.resnet_ibn_a import resnet50_ibn_a, resnet101_ibn_a
+
+model_urls = {
+    'resnet18': 'https://download.pytorch.org/models/resnet18-5c106cde.pth',
+    'resnet34': 'https://download.pytorch.org/models/resnet34-333f7ec4.pth',
+    'resnet50': 'https://download.pytorch.org/models/resnet50-19c8e357.pth',
+    'resnet101': 'https://download.pytorch.org/models/resnet101-5d3b4d8f.pth',
+    'resnet152': 'https://download.pytorch.org/models/resnet152-b121ed2d.pth',
+    'resnext50_32x4d': 'https://download.pytorch.org/models/resnext50_32x4d-7cdf4587.pth',
+    'resnext101_32x8d': 'https://download.pytorch.org/models/resnext101_32x8d-8ba56ff5.pth',
+    'wide_resnet50_2': 'https://download.pytorch.org/models/wide_resnet50_2-95faca4d.pth',
+    'wide_resnet101_2': 'https://download.pytorch.org/models/wide_resnet101_2-32ee1156.pth',
+    'senet154': 'http://data.lip6.fr/cadene/pretrainedmodels/senet154-c7b49a05.pth',
+    'se_resnet50': 'http://data.lip6.fr/cadene/pretrainedmodels/se_resnet50-ce0d4300.pth',
+    'se_resnet101': 'http://data.lip6.fr/cadene/pretrainedmodels/se_resnet101-7e38fcc6.pth',
+    'se_resnet152': 'http://data.lip6.fr/cadene/pretrainedmodels/se_resnet152-d17c99b7.pth',
+    'se_resnext50_32x4d': 'http://data.lip6.fr/cadene/pretrainedmodels/se_resnext50_32x4d-a260b3a4.pth',
+    'se_resnext101_32x4d': 'http://data.lip6.fr/cadene/pretrainedmodels/se_resnext101_32x4d-3b2fe3d8.pth',
+    'resnet50_ibn_a': 'https://download.pytorch.org/models/resnet50-19c8e357.pth',
+    'resnet101_ibn_a': 'https://download.pytorch.org/models/resnet101-5d3b4d8f.pth'}
 
 
 def weights_init_kaiming(m):
@@ -63,7 +83,6 @@ class Baseline(nn.Module):
             self.base = ResNet(last_stride=last_stride,
                                block=Bottleneck,
                                layers=[3, 8, 36, 3])
-
         elif model_name == 'se_resnet50':
             self.base = SENet(block=SEResNetBottleneck,
                               layers=[3, 4, 6, 3],
@@ -97,7 +116,7 @@ class Baseline(nn.Module):
                               downsample_kernel_size=1,
                               downsample_padding=0,
                               last_stride=last_stride)
-        elif model_name == 'se_resnext50':
+        elif model_name == 'se_resnext50_32x4d':
             self.base = SENet(block=SEResNeXtBottleneck,
                               layers=[3, 4, 6, 3],
                               groups=32,
@@ -108,7 +127,7 @@ class Baseline(nn.Module):
                               downsample_kernel_size=1,
                               downsample_padding=0,
                               last_stride=last_stride)
-        elif model_name == 'se_resnext101':
+        elif model_name == 'se_resnext101_32x4d':
             self.base = SENet(block=SEResNeXtBottleneck,
                               layers=[3, 4, 23, 3],
                               groups=32,
@@ -128,11 +147,15 @@ class Baseline(nn.Module):
                               last_stride=last_stride)
         elif model_name == 'resnet50_ibn_a':
             self.base = resnet50_ibn_a(last_stride)
+        elif model_name == 'resnet101_ibn_a':
+            self.base = resnet101_ibn_a(last_stride)
 
         if pretrain_choice == 'imagenet':
-            self.base.load_param(model_path)
+            state_dict = load_state_dict_from_url(model_urls[model_name])
+            self.base.load_state_dict(state_dict, strict=False)
+            # self.base.load_param(model_path)
             logger = logging.getLogger("reid_baseline")
-            logger.info('Loading pretrained ImageNet model')
+            logger.info(f'Loading {model_name} pretrained ImageNet model')
 
         self.gap = nn.AdaptiveAvgPool2d(1)
         # self.gap = nn.AdaptiveMaxPool2d(1)

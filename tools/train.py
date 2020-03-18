@@ -3,24 +3,22 @@ import logging
 import os
 import random
 import sys
-import numpy as np
-
-import torch
-from torch.backends import cudnn
-
-from utils.saver import Saver
 
 sys.path.append('.')
 sys.path.append('..')
 
+import numpy as np
+import torch
+from torch.backends import cudnn
+
 from config import cfg
 from data import make_data_loader
 from engine.trainer import do_train
-from modeling import build_model
 from loss import Loss
+from modeling import build_model
 from solver import make_optimizer, WarmupMultiStepLR
-
 from utils.logger import setup_logger
+from utils.saver import Saver
 
 
 def train(cfg, saver):
@@ -92,36 +90,27 @@ def train(cfg, saver):
 
 
 def main():
-    # parser = argparse.ArgumentParser(description="ReID Baseline Training")
-    #
-    # parser.add_argument("--config_file", default="", help="path to config file", type=str)
-    # parser.add_argument("opts", help="Modify config options using the command-line",
-    #                     default=None, nargs=argparse.REMAINDER)
-    #
-    # args = parser.parse_args()
-    #
-    #
-    # #
-    # if args.config_file != "":
-    #     cfg.merge_from_file(args.config_file)
-    # cfg.merge_from_list(args.opts)
-    # cfg.freeze()
-    # cfg.merge_from_file("/home/arron/PycharmProjects/reid-baseline/configs/softmax_triplet_with_center.yml")
-    cfg.merge_from_file("/home/arron/PycharmProjects/reid-baseline/configs/apex.yml")
+    parser = argparse.ArgumentParser(description="ReID Baseline Training")
+    parser.add_argument("--config_file", default="", help="path to config file", type=str)
+    parser.add_argument("opts", help="Modify config options using the command-line",
+                        default=None, nargs=argparse.REMAINDER)
+    args = parser.parse_args()
+
+    if args.config_file != "":
+        cfg.merge_from_file(args.config_file)
+    cfg.merge_from_list(args.opts)
     cfg.freeze()
 
     saver = Saver(cfg)
     logger = setup_logger("reid_baseline", saver.save_path, 0)
     logger.setLevel(logging.INFO)
 
-    # logger.info("Using {} GPUS".format(num_gpus))
-    # logger.info(args)
-    #
-    # if args.config_file != "":
-    #     logger.info("Loaded configuration file {}".format(args.config_file))
+    if args.config_file != "":
+        logger.info("Loaded configuration file {}".format(args.config_file))
     #     with open(args.config_file, 'r') as cf:
     #         config_str = "\n" + cf.read()
     #         logger.info(config_str)
+
     logger.info("Running with config:\n{}".format(cfg))
     logger.info("=" * 20)
     if cfg.MODEL.DEVICE == "cuda":
