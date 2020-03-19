@@ -89,7 +89,7 @@ def train(cfg, saver):
         optimizer_center=optimizer_center)
 
 
-def main():
+def main(merge_list=None):
     parser = argparse.ArgumentParser(description="ReID Baseline Training")
     parser.add_argument("--config_file", default="", help="path to config file", type=str)
     parser.add_argument("opts", help="Modify config options using the command-line",
@@ -99,7 +99,7 @@ def main():
     if args.config_file != "":
         cfg.merge_from_file(args.config_file)
     cfg.merge_from_list(args.opts)
-    cfg.freeze()
+    cfg.merge_from_list(merge_list)
 
     saver = Saver(cfg)
     logger = setup_logger("reid_baseline", saver.save_path, 0)
@@ -129,11 +129,12 @@ def main():
         random.seed(1024)  # random and transforms
         torch.set_printoptions(precision=10)
 
-    train(cfg, saver)
+    return cfg, saver
 
 
 if __name__ == '__main__':
-    main()
+    cfg, saver = main()
+    train(cfg, saver)
 
 # args.distributed = False
 #     if 'WORLD_SIZE' in os.environ:

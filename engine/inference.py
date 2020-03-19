@@ -58,17 +58,19 @@ def inference(
     logger.info("Enter inferencing")
 
     if cfg.TEST.IF_RE_RANKING:
-        print("Create evaluator for reranking")
+        logger.info("Create evaluator for reranking")
         metrics = {'r1_mAP': R1_mAP_reranking(num_query, max_rank=50, if_feat_norm=cfg.TEST.IF_FEAT_NORM)}
     else:
-        print("Create evaluator")
+        logger.info("Create evaluator")
         metrics = {'r1_mAP': R1_mAP(num_query, max_rank=50, if_feat_norm=cfg.TEST.IF_FEAT_NORM)}
 
     evaluator = create_supervised_evaluator(model, metrics=metrics, device=device)
 
     evaluator.run(val_loader)
     cmc, mAP = evaluator.state.metrics['r1_mAP']
+    logger.info('-' * 60)
     logger.info('Validation Results')
     logger.info("mAP: {:.1%}".format(mAP))
     for r in [1, 5, 10]:
         logger.info("CMC curve, Rank-{:<3}:{:.1%}".format(r, cmc[r - 1]))
+    logger.info('-' * 60)

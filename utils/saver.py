@@ -1,5 +1,6 @@
 import glob
 import os
+
 import numpy as np
 import torch
 from ignite.handlers import ModelCheckpoint
@@ -12,15 +13,24 @@ class Saver:
         if cfg.SAVER.OUTPUT_DIR is not "":
             self.save_path = cfg.SAVER.OUTPUT_DIR
         else:
-            self.save_path = os.path.join("..",
+            dirname_list = os.path.dirname(__file__).split("/")[:-1]
+            up_dir = "/".join(dirname_list)
+            self.save_path = os.path.join(up_dir,
                                           "run",
                                           cfg.DATASETS.NAMES,
                                           cfg.MODEL.NAME)
+            print(self.save_path)
 
-        self.runs = glob.glob(os.path.join(self.save_path, 'experiment-*'))
-        run_ids = sorted([int(experiment.split('-')[-1]) for experiment in self.runs]) if self.runs else [0]
-        run_id = run_ids[-1] + 1
-        self.save_path = os.path.join(self.save_path, 'experiment-{}'.format(str(run_id)))
+        if not cfg.TEST.IF_ON:
+            self.runs = glob.glob(os.path.join(self.save_path, 'experiment-*'))
+            run_ids = sorted([int(experiment.split('-')[-1]) for experiment in self.runs]) if self.runs else [0]
+            run_id = run_ids[-1] + 1
+            self.save_path = os.path.join(self.save_path, 'experiment-{}'.format(str(run_id)))
+        else:
+            run_id = cfg.TEST.RUN_ID
+            print(f"Loading run_id: {run_id}")
+            self.save_path = os.path.join(self.save_path, 'experiment-{}'.format(str(run_id)))
+            assert os.path.exists(self.save_path)
 
         self.train_checkpointer = ModelCheckpoint(self.save_path,
                                                   "train",
@@ -43,8 +53,9 @@ class Saver:
             raise RuntimeError("checkpoint doesn't exist.")
 
         self.train_checkpointer.load_objects(self.to_save, checkpoint)
-        self.to_save['trainer'].state.max_epochs = self.cfg.TRAIN.MAX_EPOCHS
-        self.best_result = np.load(os.path.join(self.save_path, "best.npy"))
+        self.best_result = np.load(glob.glob(os.path.join(self.save_path, "*.npy"))[0])
+        if 'trainer' in self.to_save.keys():
+            self.to_save['trainer'].state.max_epochs = self.cfg.TRAIN.MAX_EPOCHS
 
     # loading the saved model
     # TODO 增加run_id

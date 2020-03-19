@@ -54,6 +54,12 @@ mAP: 85.9%
 CMC curve, Rank-1  :94.2%
 CMC curve, Rank-5  :98.2%
 CMC curve, Rank-10 :99.0%
+
+Validation Results - Epoch: 120
+mAP: 86.2%
+CMC curve, Rank-1  :94.1%
+CMC curve, Rank-5  :98.2%
+CMC curve, Rank-10 :98.8%
 ```
 ### baseline (resnet101 experiment-1)
 ```
