@@ -1,19 +1,11 @@
-# encoding: utf-8
-"""
-@author:  sherlock
-@contact: sherlockliao01@gmail.com
-"""
-
 import logging
 
 import torch
-import torch.nn as nn
 from ignite.engine import Engine, Events
 from ignite.handlers import Timer
 from ignite.metrics import RunningAverage
 
 from utils.reid_metric import R1_mAP
-from utils.saver import Saver
 from utils.tensorboardX_log import TensorBoardXLog
 
 
@@ -25,7 +17,7 @@ def create_supervised_trainer(model, optimizer, loss_fn, cfg,
         img, target = batch
         img = img.to(device) if torch.cuda.device_count() >= 1 else img
         target = target.to(device) if torch.cuda.device_count() >= 1 else target
-        score, feat = model(img)
+        feat, score = model(img)
         loss = loss_fn(score, feat, target)
         loss.backward()
         if cfg.APEX.IF_ON:
@@ -54,7 +46,7 @@ def create_supervised_trainer_with_center(model, optimizer, loss_fn, cfg,
         img, target = batch
         img = img.to(device) if torch.cuda.device_count() >= 1 else img
         target = target.to(device) if torch.cuda.device_count() >= 1 else target
-        score, feat = model(img)
+        feat, score = model(img)
         loss = loss_fn(score, feat, target)
 
         if cfg.APEX.IF_ON:

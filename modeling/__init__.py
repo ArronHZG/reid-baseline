@@ -4,7 +4,7 @@
 @contact: sherlockliao01@gmail.com
 """
 
-from .baseline import Baseline
+from .strong_baseline import Baseline
 
 
 def build_model(cfg, num_classes):

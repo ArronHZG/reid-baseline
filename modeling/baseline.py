@@ -185,11 +185,9 @@ class Baseline(nn.Module):
             cls_score = self.classifier(feat)
             return cls_score, x  # global feature for triplet loss
         else:
-            if self.neck_feat == 'after':
-                # print("Test with feature after BN")
+            if self.if_bnneck and self.neck_feat == 'after':  # Test with feature after BN
                 return feat
             else:
-                # print("Test with feature before BN")
                 return x
 
     def load_param(self, trained_path):

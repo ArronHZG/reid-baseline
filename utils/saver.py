@@ -17,10 +17,10 @@ class Saver:
                                           cfg.DATASETS.NAMES,
                                           cfg.MODEL.NAME)
 
-        self.runs = glob.glob(os.path.join(self.save_path, 'experiment_*'))
-        run_ids = sorted([int(experiment.split('_')[-1]) for experiment in self.runs]) if self.runs else [0]
+        self.runs = glob.glob(os.path.join(self.save_path, 'experiment-*'))
+        run_ids = sorted([int(experiment.split('-')[-1]) for experiment in self.runs]) if self.runs else [0]
         run_id = run_ids[-1] + 1
-        self.save_path = os.path.join(self.save_path, 'experiment_{}'.format(str(run_id)))
+        self.save_path = os.path.join(self.save_path, 'experiment-{}'.format(str(run_id)))
 
         self.train_checkpointer = ModelCheckpoint(self.save_path,
                                                   "train",
