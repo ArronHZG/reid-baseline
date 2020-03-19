@@ -59,7 +59,7 @@ def weights_init_classifier(m):
 class Baseline(nn.Module):
     in_planes = 2048
 
-    def __init__(self, num_classes, last_stride, model_path, if_bnneck, neck_feat, model_name, pretrain_choice):
+    def __init__(self, num_classes, last_stride, if_bnneck, neck_feat, model_name, pretrain_choice):
         super(Baseline, self).__init__()
         if model_name == 'resnet18':
             self.in_planes = 512
@@ -173,24 +173,24 @@ class Baseline(nn.Module):
             self.classifier = nn.Linear(self.in_planes, self.num_classes)
 
     def forward(self, x):
+        x = self.base(x)
+        x = self.gap(x)  # (b, 2048, 1, 1)
+        x = x.view(x.shape[0], -1)  # flatten to (bs, 2048)
 
-        global_feat = self.gap(self.base(x))  # (b, 2048, 1, 1)
-        global_feat = global_feat.view(global_feat.shape[0], -1)  # flatten to (bs, 2048)
-
-        feat = global_feat
+        feat = x
         if self.if_bnneck:
-            feat = self.bottleneck(global_feat)  # normalize for angular softmax
+            feat = self.bottleneck(x)  # normalize for angular softmax
 
         if self.training:
             cls_score = self.classifier(feat)
-            return cls_score, global_feat  # global feature for triplet loss
+            return cls_score, x  # global feature for triplet loss
         else:
             if self.neck_feat == 'after':
                 # print("Test with feature after BN")
                 return feat
             else:
                 # print("Test with feature before BN")
-                return global_feat
+                return x
 
     def load_param(self, trained_path):
         param_dict = torch.load(trained_path)

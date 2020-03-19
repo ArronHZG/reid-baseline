@@ -26,7 +26,6 @@ _C.MODEL.DEVICE_ID = '0'
 _C.MODEL.IF_DETERMINISTIC = False
 _C.MODEL.NAME = 'resnet50'
 _C.MODEL.LAST_STRIDE = 1
-_C.MODEL.PRETRAIN_PATH = '/home/arron/.torch/models/resnet50-19c8e357.pth'
 _C.MODEL.PRETRAIN_CHOICE = 'imagenet'  # Options: 'imagenet','random' or 'self'
 _C.MODEL.IF_BNNECK = True
 

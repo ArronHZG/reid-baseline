@@ -1,4 +1,4 @@
-python ../tools/train.py --config_file='../configs/bigger_batch.yml'
+
 python ../tools/train.py --config_file='../configs/apex.yml'
 python ../tools/train.py --config_file='../configs/resnet50_ibn_a.yml'
 python ../tools/train.py --config_file='../configs/resnet101.yml'
