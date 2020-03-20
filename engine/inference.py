@@ -25,16 +25,12 @@ def create_supervised_evaluator(model, metrics,
     Returns:
         Engine: an evaluator engine with supervised inference function
     """
-    if device:
-        if torch.cuda.device_count() > 1:
-            model = nn.DataParallel(model)
-        model.to(device)
 
     def _inference(engine, batch):
         model.eval()
         with torch.no_grad():
             data, pids, camids = batch
-            data = data.to(device) if torch.cuda.device_count() >= 1 else data
+            data = data.to(device)
             feat = model(data)
             return feat, pids, camids
 

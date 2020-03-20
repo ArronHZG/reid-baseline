@@ -15,13 +15,9 @@ class Loss:
     def __init__(self, cfg, num_classes):  # modified by arron
 
         self.cfg = cfg
-
         self.num_classes = num_classes
-
         self.loss_type = cfg.LOSS.LOSS_TYPE
-
         using_gpu = cfg.MODEL.DEVICE == 'cuda'
-
         if self.cfg.LOSS.IF_LABEL_SMOOTH:
             self.xent = CrossEntropyLabelSmooth(num_classes=self.num_classes,
                                                 use_gpu=using_gpu)
@@ -35,14 +31,11 @@ class Loss:
         self.using_center = cfg.LOSS.IF_WITH_CENTER
 
         if self.using_center:
-
             self.center_loss_weight = cfg.LOSS.CENTER_LOSS_WEIGHT
-
             if cfg.MODEL.NAME == 'resnet18' or cfg.MODEL.NAME == 'resnet34':
                 self.feat_dim = 512
             else:
                 self.feat_dim = 2048
-
             self.center = CenterLoss(num_classes=self.num_classes,
                                      feat_dim=self.feat_dim,
                                      use_gpu=using_gpu)

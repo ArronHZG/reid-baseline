@@ -12,14 +12,14 @@ from .samplers import RandomIdentitySampler, RandomIdentitySampler_alignedreid  
 from .transforms import build_transforms
 
 
-def make_data_loader(cfg):
+def make_data_loader(cfg, cluster=False):
     train_transforms = build_transforms(cfg, is_train=True)
     val_transforms = build_transforms(cfg, is_train=False)
-    if len(cfg.DATASETS.NAMES) == 1:
+    # TODO: add multi dataset to train
+    if not cluster:
         dataset = init_dataset(cfg.DATASETS.NAMES, root=cfg.DATASETS.ROOT_DIR)
     else:
-        # TODO: add multi dataset to train
-        dataset = init_dataset(cfg.DATASETS.NAMES, root=cfg.DATASETS.ROOT_DIR)
+        dataset = init_dataset(cfg.CLUSTER.DATASETS_NAMES, root=cfg.DATASETS.ROOT_DIR)
 
     num_classes = dataset.num_train_pids
     train_set = ImageDataset(dataset.train, train_transforms)
@@ -32,9 +32,13 @@ def make_data_loader(cfg):
     if cfg.LOSS.LOSS_TYPE is not 'softmax' and cfg.DATALOADER.SAMPLER is 'None':
         raise ValueError(f"Loss {cfg.LOSS.LOSS_TYPE} should not using {cfg.DATALOADER.SAMPLER} dataloader sampler")
 
+    batch_size = cfg.TRAIN.BATCH_SIZE
+    if cfg.CLUSTER.IF_ON:
+        batch_size = cfg.TEST.BATCH_SIZE
+
     train_loader = DataLoader(
         train_set,
-        batch_size=cfg.TRAIN.BATCH_SIZE,
+        batch_size=batch_size,
         sampler=sampler,
         shuffle=shuffle,
         num_workers=cfg.DATALOADER.NUM_WORKERS,

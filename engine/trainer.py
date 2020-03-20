@@ -15,8 +15,8 @@ def create_supervised_trainer(model, optimizer, loss_fn, cfg,
         model.train()
         optimizer.zero_grad()
         img, target = batch
-        img = img.to(device) if torch.cuda.device_count() >= 1 else img
-        target = target.to(device) if torch.cuda.device_count() >= 1 else target
+        img = img.to(device)
+        target = target.to(device)
         feat, score = model(img)
         loss = loss_fn(score, feat, target)
         loss.backward()
@@ -94,12 +94,11 @@ def do_train(
         scheduler,
         loss_fn,
         num_query,
-        start_epoch,
         saver,
         center_criterion=None,
         optimizer_center=None
 ):
-    logger = logging.getLogger("reid_baseline")
+    logger = logging.getLogger("reid_baseline.train")
 
     tb_log = TensorBoardXLog(cfg, saver.save_path)
 
@@ -156,9 +155,10 @@ def do_train(
     RunningAverage(output_transform=lambda x: x[0]).attach(trainer, 'avg_loss')
     RunningAverage(output_transform=lambda x: x[1]).attach(trainer, 'avg_acc')
 
+    # TODO start epoch
     @trainer.on(Events.STARTED)
     def start_training(engine):
-        engine.state.epoch = start_epoch
+        engine.state.epoch = 0
 
     @trainer.on(Events.EPOCH_STARTED)
     def adjust_learning_rate(engine):

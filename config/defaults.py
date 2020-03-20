@@ -3,7 +3,7 @@ from yacs.config import CfgNode as CN
 _C = CN()
 
 _C.DATASETS = CN()
-_C.DATASETS.NAMES = 'market1501'
+_C.DATASETS.NAMES = 'market1501'  # market1501, dukemtmc
 _C.DATASETS.ROOT_DIR = '/home/arron/dataset'
 
 _C.DATALOADER = CN()
@@ -61,14 +61,6 @@ _C.TRAIN.MAX_EPOCHS = 120
 _C.EVAL = CN()
 _C.EVAL.EPOCH_PERIOD = 30
 
-_C.TEST = CN()
-_C.TEST.IF_ON = False
-_C.TEST.BATCH_SIZE = 128
-_C.TEST.IF_RE_RANKING = False
-_C.TEST.RUN_ID = 2
-_C.TEST.NECK_FEAT = 'after'
-_C.TEST.IF_FEAT_NORM = True
-
 _C.SAVER = CN()
 _C.SAVER.OUTPUT_DIR = ""
 _C.SAVER.CHECKPOINT_PERIOD = 1
@@ -84,3 +76,16 @@ _C.APEX.IF_ON = True
 _C.APEX.OPT_LEVEL = 'O2'  # O1 or O2
 _C.APEX.IF_SYNC_BN = False
 _C.APEX.LOSS_SCALE = ("1.0",)
+
+_C.TEST = CN()
+_C.TEST.IF_ON = False
+_C.TEST.BATCH_SIZE = 128  # from evaluate and extract feature
+_C.TEST.IF_RE_RANKING = True
+_C.TEST.RUN_ID = 5
+_C.TEST.NECK_FEAT = 'after'
+_C.TEST.IF_FEAT_NORM = True
+
+_C.CLUSTER = CN()
+_C.CLUSTER.IF_ON = False
+_C.CLUSTER.DATASETS_NAMES = 'dukemtmc'
+_C.CLUSTER.IF_FLIP = False
