@@ -5,6 +5,7 @@ Created on Fri, 25 May 2018 20:29:09
 
 @author: luohao
 """
+import logging
 
 """
 CVPR2017 paper:Zhong Z, Zheng L, Cao D, et al. Re-ranking Person Re-identification with k-reciprocal Encoding[J]. 2017.
@@ -25,6 +26,8 @@ Minibatch: avaliable when 'MemorySave' is 'True'
 import numpy as np
 import torch
 
+logger = logging.getLogger("reid_baseline.re_ranking")
+
 
 def re_ranking(probFea, galFea, k1, k2, lambda_value, local_distmat=None, only_local=False):
     # if feature vector is numpy, you should use 'torch.tensor' transform it to tensor
@@ -34,7 +37,7 @@ def re_ranking(probFea, galFea, k1, k2, lambda_value, local_distmat=None, only_l
         original_dist = local_distmat
     else:
         feat = torch.cat([probFea, galFea])
-        print('using GPU to compute original distance')
+        logger.info('using GPU to compute original distance')
         distmat = torch.pow(feat, 2).sum(dim=1, keepdim=True).expand(all_num, all_num) + \
                   torch.pow(feat, 2).sum(dim=1, keepdim=True).expand(all_num, all_num).t()
         distmat.addmm_(1, -2, feat, feat.t())
@@ -47,7 +50,7 @@ def re_ranking(probFea, galFea, k1, k2, lambda_value, local_distmat=None, only_l
     V = np.zeros_like(original_dist).astype(np.float16)
     initial_rank = np.argsort(original_dist).astype(np.int32)
 
-    print('starting re_ranking')
+    logger.info('starting re_ranking')
     for i in range(all_num):
         # k-reciprocal neighbors
         forward_k_neigh_index = initial_rank[i, :k1 + 1]

@@ -101,7 +101,7 @@ def do_train(
 ):
     logger = logging.getLogger("reid_baseline.train")
 
-    tb_log = TensorBoardXLog(cfg, saver.save_path)
+    tb_log = TensorBoardXLog(cfg, saver.save_dir)
 
     device = cfg.MODEL.DEVICE
 
@@ -138,9 +138,6 @@ def do_train(
     trainer.add_event_handler(Events.EPOCH_COMPLETED(every=cfg.SAVER.CHECKPOINT_PERIOD),
                               saver.train_checkpointer,
                               saver.to_save)
-
-    # train_evaluator = create_supervised_evaluator(model, metrics={
-    #     'r1_mAP': R1_mAP(num_query, max_rank=50, if_feat_norm=cfg.TEST.IF_FEAT_NORM)}, device=device)
 
     validation_evaluator = create_supervised_evaluator(model, metrics={
         'r1_mAP': R1_mAP(num_query, max_rank=50, if_feat_norm=cfg.TEST.IF_FEAT_NORM)}, device=device)

@@ -1,0 +1,6 @@
+EVAL:
+  EPOCH_PERIOD: 30
+TENSORBOARDX:
+    IF_ON: False
+UDA:
+  TIMES: 5

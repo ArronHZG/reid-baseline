@@ -10,13 +10,9 @@ from tools.expand import TrainComponent, main
 
 
 def train(cfg, saver):
-    logger = logging.getLogger("reid_baseline.train")
-
     train_loader, val_loader, num_query, num_classes = make_data_loader(cfg)
 
-    train_component = TrainComponent(cfg,
-                                     logger,
-                                     num_classes)
+    train_component = TrainComponent(cfg, num_classes)
 
     do_train(
         cfg,

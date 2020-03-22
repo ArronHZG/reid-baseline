@@ -22,7 +22,7 @@ def setup_logger(name, save_dir, distributed_rank):
     logger.addHandler(ch)
 
     if save_dir:
-        fh = logging.FileHandler(os.path.join(save_dir, "log.txr"))
+        fh = logging.FileHandler(os.path.join(save_dir, "log.txt"))
         fh.setLevel(logging.DEBUG)
         fh.setFormatter(formatter)
         logger.addHandler(fh)

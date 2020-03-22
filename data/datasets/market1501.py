@@ -40,7 +40,7 @@ class Market1501(BaseImageDataset):
         gallery = self._process_dir(self.gallery_dir, relabel=False)
 
         if verbose:
-            logger = logging.getLogger("reid_baseline")
+            logger = logging.getLogger("reid_baseline.dataset")
             logger.info("Market1501 loaded")
             self.print_dataset_statistics(train, query, gallery)
 

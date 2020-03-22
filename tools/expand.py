@@ -18,9 +18,11 @@ from solver import make_optimizer, WarmupMultiStepLR
 from utils.logger import setup_logger
 from utils.saver import Saver
 
+logger = logging.getLogger("reid_baseline.train")
+
 
 class TrainComponent:
-    def __init__(self, cfg, logger, num_classes):
+    def __init__(self, cfg, num_classes):
         self.device = cfg.MODEL.DEVICE
         self.model = build_model(cfg, num_classes)
         loss_class = Loss(cfg, num_classes)

@@ -27,7 +27,6 @@ _C.MODEL.IF_DETERMINISTIC = False
 _C.MODEL.NAME = 'resnet50'
 _C.MODEL.LAST_STRIDE = 1
 _C.MODEL.PRETRAIN_CHOICE = 'imagenet'  # Options: 'imagenet','random' or 'self'
-_C.MODEL.IF_BNNECK = True
 
 _C.LOSS = CN()
 _C.LOSS.IF_WITH_CENTER = True
@@ -81,13 +80,11 @@ _C.TEST = CN()
 _C.TEST.IF_ON = False
 _C.TEST.BATCH_SIZE = 128  # from evaluate and extract feature
 _C.TEST.IF_RE_RANKING = True
-_C.TEST.RUN_ID = 5
-_C.TEST.NECK_FEAT = 'after'
+_C.TEST.RUN_ID = 1
 _C.TEST.IF_FEAT_NORM = True
 
 _C.UDA = CN()
 _C.UDA.IF_ON = False
 _C.UDA.DATASETS_NAMES = 'dukemtmc'
-_C.UDA.IF_FLIP = False
-_C.UDA.TIMES = 5
-_C.UDA.ITER = 30
+_C.UDA.IF_FLIP = True
+_C.UDA.TIMES = 1

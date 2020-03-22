@@ -8,6 +8,5 @@ from .strong_baseline import Baseline
 
 
 def build_model(cfg, num_classes):
-    model = Baseline(num_classes, cfg.MODEL.LAST_STRIDE, cfg.MODEL.IF_BNNECK,
-                     cfg.TEST.NECK_FEAT, cfg.MODEL.NAME, cfg.MODEL.PRETRAIN_CHOICE)
+    model = Baseline(num_classes, cfg.MODEL.LAST_STRIDE, cfg.MODEL.NAME, cfg.MODEL.PRETRAIN_CHOICE)
     return model

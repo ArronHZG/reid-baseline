@@ -19,39 +19,29 @@ model_map = {'resnet18': resnet18,
 
 class Baseline(nn.Module):
 
-    def __init__(self, num_classes, last_stride, if_bnneck, neck_feat, model_name, pretrain_choice):
+    def __init__(self, num_classes, last_stride, model_name, pretrain_choice):
         super(Baseline, self).__init__()
         self.base = model_map[model_name](last_stride=last_stride,
                                           pretrained=True if pretrain_choice == 'imagenet' else False)
 
         self.GAP = nn.AdaptiveAvgPool2d(1)
         self.num_classes = num_classes
-        self.if_bnneck = if_bnneck
-        self.neck_feat = neck_feat
         self.in_planes = 512 * self.base.block.expansion
 
-        if self.if_bnneck:
-            self.bottleneck = nn.BatchNorm1d(self.in_planes)
-            self.bottleneck.bias.requires_grad_(False)
-            self.bottleneck.apply(weights_init_kaiming)
-            self.classifier = nn.Linear(self.in_planes, self.num_classes, bias=False)
-        else:
-            self.classifier = nn.Linear(self.in_planes, self.num_classes)
+        self.bottleneck = nn.BatchNorm1d(self.in_planes)
+        self.bottleneck.bias.requires_grad_(False)
+        self.bottleneck.apply(weights_init_kaiming)
+        self.classifier = nn.Linear(self.in_planes, self.num_classes, bias=False)
+
         self.classifier.apply(weights_init_classifier)
 
     def forward(self, x):
         x = self.base(x)
         feat_t = self.GAP(x).view(x.size(0), -1)
-
-        feat_c = feat_t
-        if self.if_bnneck:
-            feat_c = self.bottleneck(feat_t)  # normalize for angular softmax
+        feat_c = self.bottleneck(feat_t)  # normalize for angular softmax
 
         if self.training:
             cls_score = self.classifier(feat_c)
             return feat_t, cls_score  # global feature for triplet loss
-        else:
-            if self.if_bnneck and self.neck_feat == 'after':  # Test with feature after BN
-                return feat_c
-            else:
-                return feat_t
+        else:  # Test with feature after BN
+            return feat_c

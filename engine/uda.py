@@ -1,16 +1,32 @@
+"""
+@author:  arron
+@contact: hou.arron@gmail.com
+
+
+    model
+    data
+for:
+    eval
+    extract
+    calculate dist
+    cluster label
+    generate data
+    fine tuning
+"""
 import logging
 
 import torch
-from ignite.engine import Engine, Events
+from torch import nn
 from ignite.contrib.handlers import ProgressBar
+from ignite.engine import Engine, Events
 from sklearn.cluster import DBSCAN
 
 from data import make_data_loader
+from engine.inference import inference
+from engine.trainer import do_train
 from modeling import build_model
-from modeling.strong_baseline import model_map, Baseline
 from tools.expand import TrainComponent
 from utils.re_ranking import re_ranking
-import numpy as np
 
 logger = logging.getLogger("reid_baseline.cluster")
 
@@ -117,64 +133,75 @@ def generate_self_label(dist_matrix):
     print(type(dist))
 
     labels = cluster.fit_predict(dist)
-    num_ids = len(set(labels)) - 1
-    return num_ids, labels
+    return labels
 
 
-def generate_dataloader(tgt_dataset, labels_list, train_transformer):
-    return []
+def load_weight(old_model: nn.Module, new_model: nn.Module):
+    old_weight = old_model.state_dict()
+    old_weight.pop("classifier.weight")
+    new_model.load_state_dict(old_weight, strict=False)
 
 
-def cluster_train():
-    pass
-    # do_train(cfg,
-    #     model,
-    #     train_loader,
-    #     val_loader,
-    #     optimizer,
-    #     scheduler,
-    #     loss_fn,
-    #     num_query,
-    #     saver,
-    #     center_criterion=None,
-    #     optimizer_center=None)
+class SSG:
+    def __init__(self, cfg, saver):
+        self.cfg = cfg
+        self.saver = saver
+        self.device = self.cfg.MODEL.DEVICE
+        self.num_classes = 0
 
+        # define model and load model weight, this model only is used to extract feature.
+        logger.info(f"load model from {self.saver.load_dir}")
+        self.model = build_model(self.cfg, self.num_classes)
+        if self.cfg.MODEL.DEVICE is 'cuda':
+            self.model.cuda()
+        self.saver.to_save = {'model': self.model}
+        self.saver.load_checkpoint(is_best=True)
 
-def ssg(cfg, saver):
-    device = cfg.MODEL.DEVICE
+        # data
+        self.target_train_loader, self.val_loader, self.num_query, _ = make_data_loader(cfg, cluster=True)
 
-    # data
-    _, _, _, source_num_classes = make_data_loader(cfg)
+    def cluster(self):
+        # eval
+        inference(self.cfg, self.model, self.val_loader, self.num_query)
 
-    target_train_loader, _, _, _ = make_data_loader(cfg, cluster=True)
+        # extract feature from target dataset
+        logger.info("Start extract feature")
+        target_features, _ = extract_features(self.model, self.device, self.target_train_loader, self.cfg.UDA.IF_FLIP)
 
-    # define model and load model weight, this model only is used by extract feature.
-    logger.info(f"load model from {saver.save_dir}")
-    extract_model = build_model(cfg, source_num_classes)
-    to_load = {'model': extract_model}
-    saver.to_save = to_load
-    saver.load_checkpoint(is_best=True)
-    extract_model.to(device)
+        logger.info("compute dist")
+        dict_matrix = compute_dist(target_features, if_re_ranking=True)
+        del target_features
 
-    # extract feature from target dataset
-    logger.info("Start extract feature")
-    target_features, _ = extract_features(extract_model, device, target_train_loader, cfg.UDA.IF_FLIP)
+        # generate label
+        logger.info("generate self label")
+        class_num, labels = generate_self_label(dict_matrix)
+        logger.info(f"class_num {class_num}")
 
-    logger.info("compute dist")
-    dict_matrix = compute_dist(target_features, if_re_ranking=True)
-    del target_features
+        # generate_dataloader
+        logger.info("generate data loader")
+        gen_train_loader, _, _, gen_num_classes = make_data_loader(self.cfg, labels=labels)
 
-    logger.info("generate self label")
-    class_num, labels = generate_self_label(dict_matrix)
-    print(f"class_num {class_num}")
-    #
-    logger.info("generate data loader")
-    # train_loader_list = generate_dataloader(target_train_loader, labels)
-    # del labels_list
-    #
-    # cluster_train()
+        # train
+        self.cluster_train(gen_train_loader, gen_num_classes)
+
+    def cluster_train(self, train_loader, num_classes):
+        tr_comp = TrainComponent(self.cfg, num_classes)
+        load_weight(self.model, tr_comp.model)
+        do_train(self.cfg,
+                 tr_comp.model,
+                 train_loader,
+                 self.val_loader,
+                 tr_comp.optimizer,
+                 tr_comp.scheduler,
+                 tr_comp.loss_function,
+                 self.num_query,
+                 self.saver,
+                 center_criterion=tr_comp.loss_center,
+                 optimizer_center=tr_comp.optimizer_center)
+        self.model = tr_comp.model
 
 
 def do_uda(cfg, saver):
+    ssg = SSG(cfg, saver)
     for i in range(cfg.UDA.TIMES):
-        ssg(cfg, saver)
+        ssg.cluster()

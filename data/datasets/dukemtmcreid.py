@@ -5,6 +5,7 @@
 """
 
 import glob
+import logging
 import re
 import urllib
 import zipfile
@@ -46,7 +47,8 @@ class DukeMTMCreID(BaseImageDataset):
         gallery = self._process_dir(self.gallery_dir, relabel=False)
 
         if verbose:
-            print("=> DukeMTMC-reID loaded")
+            logger = logging.getLogger("reid_baseline.dataset")
+            logger.info("DukeMTMC-reID loaded")
             self.print_dataset_statistics(train, query, gallery)
 
         self.train = train
@@ -59,7 +61,6 @@ class DukeMTMCreID(BaseImageDataset):
 
     def _download_data(self):
         if osp.exists(self.dataset_dir):
-            print("This dataset has been downloaded.")
             return
 
         print("Creating directory {}".format(self.dataset_dir))
