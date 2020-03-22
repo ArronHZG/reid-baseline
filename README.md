@@ -8,15 +8,17 @@
 
 [OasisYang/SSG](https://github.com/OasisYang/SSG)
 
+[visualizing-dbscan-clustering](https://www.naftaliharris.com/blog/visualizing-dbscan-clustering/)
+
 ## ecosystem
 
 [ignite](https://github.com/pytorch/ignite)
 
 [tensorboardX](https://github.com/lanpa/tensorboardX)
 
-[dali](https://github.com/NVIDIA/DALI)
+UNDO [dali](https://github.com/NVIDIA/DALI)
 
-[jpeg4py](https://github.com/ajkxyz/jpeg4py)
+UNDO [jpeg4py](https://github.com/ajkxyz/jpeg4py)
 
 [apex](https://github.com/NVIDIA/apex)
 
@@ -76,6 +78,20 @@ mAP: 94.2%
 CMC curve, Rank-1  :95.7%
 CMC curve, Rank-5  :98.0%
 CMC curve, Rank-10 :98.6%
+
+test-after
+Validation Results
+mAP: 85.6%
+CMC curve, Rank-1  :94.1%
+CMC curve, Rank-5  :97.7%
+CMC curve, Rank-10 :98.6%
+
+test-after-rerank
+Validation Results
+mAP: 93.4%
+CMC curve, Rank-1  :95.0%
+CMC curve, Rank-5  :97.4%
+CMC curve, Rank-10 :98.0%
 
 ```
 ### baseline (resnet101 experiment-1)

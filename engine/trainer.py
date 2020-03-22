@@ -9,7 +9,7 @@ from utils.reid_metric import R1_mAP
 from utils.tensorboardX_log import TensorBoardXLog
 
 
-def create_supervised_trainer(model, optimizer, loss_fn, cfg,
+def create_supervised_trainer(model, optimizer, loss_fn, apex=False,
                               device=None):
     def _update(engine, batch):
         model.train()
@@ -20,7 +20,7 @@ def create_supervised_trainer(model, optimizer, loss_fn, cfg,
         feat, score = model(img)
         loss = loss_fn(score, feat, target)
         loss.backward()
-        if cfg.APEX.IF_ON:
+        if apex:
             from apex import amp
             with amp.scale_loss(loss, optimizer) as scaled_loss:
                 scaled_loss.backward()
@@ -34,7 +34,8 @@ def create_supervised_trainer(model, optimizer, loss_fn, cfg,
     return Engine(_update)
 
 
-def create_supervised_trainer_with_center(model, optimizer, loss_fn, cfg,
+def create_supervised_trainer_with_center(model, optimizer, loss_fn,
+                                          apex=False,
                                           center_criterion=None,
                                           optimizer_center=None,
                                           center_loss_weight=None,
@@ -44,12 +45,12 @@ def create_supervised_trainer_with_center(model, optimizer, loss_fn, cfg,
         optimizer.zero_grad()
         optimizer_center.zero_grad()
         img, target = batch
-        img = img.to(device) if torch.cuda.device_count() >= 1 else img
-        target = target.to(device) if torch.cuda.device_count() >= 1 else target
+        img = img.to(device)
+        target = target.to(device)
         feat, score = model(img)
         loss = loss_fn(score, feat, target)
 
-        if cfg.APEX.IF_ON:
+        if apex:
             from apex import amp
             with amp.scale_loss(loss, optimizer) as scaled_loss:
                 scaled_loss.backward()
@@ -109,7 +110,7 @@ def do_train(
         trainer = create_supervised_trainer_with_center(model,
                                                         optimizer,
                                                         loss_fn,
-                                                        cfg,
+                                                        apex=cfg.APEX.IF_ON,
                                                         center_criterion=center_criterion,
                                                         optimizer_center=optimizer_center,
                                                         center_loss_weight=cfg.LOSS.CENTER_LOSS_WEIGHT,
@@ -125,7 +126,7 @@ def do_train(
         trainer = create_supervised_trainer(model,
                                             optimizer,
                                             loss_fn,
-                                            cfg,
+                                            apex=cfg.APEX.IF_ON,
                                             device=device)
         saver.to_save = {'trainer': trainer,
                          'model': model,

@@ -85,7 +85,9 @@ _C.TEST.RUN_ID = 5
 _C.TEST.NECK_FEAT = 'after'
 _C.TEST.IF_FEAT_NORM = True
 
-_C.CLUSTER = CN()
-_C.CLUSTER.IF_ON = False
-_C.CLUSTER.DATASETS_NAMES = 'dukemtmc'
-_C.CLUSTER.IF_FLIP = False
+_C.UDA = CN()
+_C.UDA.IF_ON = False
+_C.UDA.DATASETS_NAMES = 'dukemtmc'
+_C.UDA.IF_FLIP = False
+_C.UDA.TIMES = 5
+_C.UDA.ITER = 30

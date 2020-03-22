@@ -75,7 +75,7 @@ def main(merge_list=None):
         cfg.merge_from_list(merge_list)
 
     saver = Saver(cfg)
-    logger = setup_logger("reid_baseline", saver.save_path, 0)
+    logger = setup_logger("reid_baseline", saver.save_dir, 0)
     logger.setLevel(logging.INFO)
 
     if args.config_file != "":

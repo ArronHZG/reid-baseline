@@ -19,7 +19,7 @@ def make_data_loader(cfg, cluster=False):
     if not cluster:
         dataset = init_dataset(cfg.DATASETS.NAMES, root=cfg.DATASETS.ROOT_DIR)
     else:
-        dataset = init_dataset(cfg.CLUSTER.DATASETS_NAMES, root=cfg.DATASETS.ROOT_DIR)
+        dataset = init_dataset(cfg.UDA.DATASETS_NAMES, root=cfg.DATASETS.ROOT_DIR)
 
     num_classes = dataset.num_train_pids
     train_set = ImageDataset(dataset.train, train_transforms)
@@ -33,7 +33,7 @@ def make_data_loader(cfg, cluster=False):
         raise ValueError(f"Loss {cfg.LOSS.LOSS_TYPE} should not using {cfg.DATALOADER.SAMPLER} dataloader sampler")
 
     batch_size = cfg.TRAIN.BATCH_SIZE
-    if cfg.CLUSTER.IF_ON:
+    if cfg.UDA.IF_ON:
         batch_size = cfg.TEST.BATCH_SIZE
 
     train_loader = DataLoader(

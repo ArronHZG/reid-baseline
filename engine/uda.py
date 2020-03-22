@@ -1,0 +1,180 @@
+import logging
+
+import torch
+from ignite.engine import Engine, Events
+from ignite.contrib.handlers import ProgressBar
+from sklearn.cluster import DBSCAN
+
+from data import make_data_loader
+from modeling import build_model
+from modeling.strong_baseline import model_map, Baseline
+from tools.expand import TrainComponent
+from utils.re_ranking import re_ranking
+import numpy as np
+
+logger = logging.getLogger("reid_baseline.cluster")
+
+
+def create_extractor(model, device=None, flip=False):
+    def horizontal_flip(tensor):
+        """
+        :param tensor: N x C x H x W
+        :return:
+        """
+        inv_idx = torch.arange(tensor.size(3) - 1, -1, -1).long()
+        img_flip = tensor.index_select(3, inv_idx)
+        return img_flip
+
+    def _inference(engine, batch):
+        model.eval()
+        with torch.no_grad():
+            img, target = batch
+            img = img.to(device)
+            target = target.to(device)
+            feat = model(img)
+            if flip:
+                flip_img = horizontal_flip(img)
+                flip_feat = model(flip_img)
+                feat += flip_feat
+
+            return feat, target
+
+    engine = Engine(_inference)
+    return engine
+
+
+def extract_features(model, device, data_loader, flip):
+    features = []
+    labels = []
+
+    extractor = create_extractor(model, device, flip)
+
+    pbar = ProgressBar(persist=True)
+    pbar.attach(extractor)
+
+    @extractor.on(Events.ITERATION_COMPLETED)
+    def get_output(engine):
+        feat, label = extractor.state.output
+        feat = torch.nn.functional.normalize(feat, dim=1, p=2)
+        features.append(feat)
+        labels.append(label)
+
+    logger.info("Start extract features")
+    extractor.run(data_loader)
+
+    cat_features = torch.cat(features)
+    cat_labels = torch.cat(labels)
+
+    return cat_features, cat_labels
+
+
+def compute_dist(feat, if_re_ranking):
+    if if_re_ranking:
+        dist_matrix = re_ranking(feat, feat, k1=20, k2=6, lambda_value=0.3)
+        dist_matrix = torch.from_numpy(dist_matrix)
+    else:
+        m = feat.size(0)
+        dist_matrix = torch.pow(feat, 2).sum(dim=1, keepdim=True).expand(m, m) \
+                      + torch.pow(feat, 2).sum(dim=1, keepdim=True).expand(m, m).t()
+
+        # dist_matrix = dist_matrix -2 feat@feat.T
+        dist_matrix.addmm_(beta=1, alpha=-2, mat1=feat, mat2=feat.t())
+    dist_matrix.clamp_(min=0, max=1e+12)
+    return dist_matrix
+
+
+cluster = None
+
+
+def create_cluster(dist: torch.Tensor):
+    """
+    If want to use DBSCAN, we need to affirm the best epsilon in DBSCAN.
+    :param dist:
+    :return:
+    """
+    rho = 1.6e-3
+    dist = dist.triu(1)  # the upper triangular part of a matrix
+    dist = dist.view(dist.size(0) ** 2, -1).squeeze()
+    dist = dist[dist.nonzero()].squeeze()  # get all distance  dim = 1
+    sorted_dist, _ = dist.sort()
+    top_num = torch.tensor(rho * sorted_dist.size()[0]).round().to(torch.int)
+    if top_num <= 20:
+        top_num = 20
+    print(top_num)
+    eps = sorted_dist[:top_num].mean().cpu().numpy()
+    # logger.info(f'eps in cluster: {eps:.3f}')
+    print(eps)
+    return DBSCAN(eps=eps, min_samples=4, metric='precomputed', n_jobs=8)
+
+
+def generate_self_label(dist_matrix):
+    global cluster
+    if cluster is None:
+        print("create_cluster")
+        cluster = create_cluster(dist_matrix)
+
+    dist = dist_matrix.cpu().numpy()
+    print(type(dist))
+
+    labels = cluster.fit_predict(dist)
+    num_ids = len(set(labels)) - 1
+    return num_ids, labels
+
+
+def generate_dataloader(tgt_dataset, labels_list, train_transformer):
+    return []
+
+
+def cluster_train():
+    pass
+    # do_train(cfg,
+    #     model,
+    #     train_loader,
+    #     val_loader,
+    #     optimizer,
+    #     scheduler,
+    #     loss_fn,
+    #     num_query,
+    #     saver,
+    #     center_criterion=None,
+    #     optimizer_center=None)
+
+
+def ssg(cfg, saver):
+    device = cfg.MODEL.DEVICE
+
+    # data
+    _, _, _, source_num_classes = make_data_loader(cfg)
+
+    target_train_loader, _, _, _ = make_data_loader(cfg, cluster=True)
+
+    # define model and load model weight, this model only is used by extract feature.
+    logger.info(f"load model from {saver.save_dir}")
+    extract_model = build_model(cfg, source_num_classes)
+    to_load = {'model': extract_model}
+    saver.to_save = to_load
+    saver.load_checkpoint(is_best=True)
+    extract_model.to(device)
+
+    # extract feature from target dataset
+    logger.info("Start extract feature")
+    target_features, _ = extract_features(extract_model, device, target_train_loader, cfg.UDA.IF_FLIP)
+
+    logger.info("compute dist")
+    dict_matrix = compute_dist(target_features, if_re_ranking=True)
+    del target_features
+
+    logger.info("generate self label")
+    class_num, labels = generate_self_label(dict_matrix)
+    print(f"class_num {class_num}")
+    #
+    logger.info("generate data loader")
+    # train_loader_list = generate_dataloader(target_train_loader, labels)
+    # del labels_list
+    #
+    # cluster_train()
+
+
+def do_uda(cfg, saver):
+    for i in range(cfg.UDA.TIMES):
+        ssg(cfg, saver)

@@ -33,11 +33,11 @@ def re_ranking(probFea, galFea, k1, k2, lambda_value, local_distmat=None, only_l
     if only_local:
         original_dist = local_distmat
     else:
-        feat = torch.cat([probFea,galFea])
+        feat = torch.cat([probFea, galFea])
         print('using GPU to compute original distance')
-        distmat = torch.pow(feat,2).sum(dim=1, keepdim=True).expand(all_num,all_num) + \
-                      torch.pow(feat, 2).sum(dim=1, keepdim=True).expand(all_num, all_num).t()
-        distmat.addmm_(1,-2,feat,feat.t())
+        distmat = torch.pow(feat, 2).sum(dim=1, keepdim=True).expand(all_num, all_num) + \
+                  torch.pow(feat, 2).sum(dim=1, keepdim=True).expand(all_num, all_num).t()
+        distmat.addmm_(1, -2, feat, feat.t())
         original_dist = distmat.cpu().numpy()
         del feat
         if not local_distmat is None:
@@ -98,4 +98,3 @@ def re_ranking(probFea, galFea, k1, k2, lambda_value, local_distmat=None, only_l
     del jaccard_dist
     final_dist = final_dist[:query_num, query_num:]
     return final_dist
-

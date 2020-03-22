@@ -41,7 +41,7 @@ class Market1501(BaseImageDataset):
 
         if verbose:
             logger = logging.getLogger("reid_baseline")
-            logger.info("==> Market1501 loaded")
+            logger.info("Market1501 loaded")
             self.print_dataset_statistics(train, query, gallery)
 
         self.train = train
