@@ -7,6 +7,7 @@ import logging
 
 import numpy as np
 
+logger = logging.getLogger("reid_baseline.dataset")
 
 class BaseDataset(object):
     """
@@ -51,7 +52,6 @@ class BaseImageDataset(BaseDataset):
 
     def print_dataset_statistics(self, train, query, gallery):
 
-        logger = logging.getLogger("reid_baseline")
         num_train_pids, num_train_imgs, num_train_cams = self.get_imagedata_info(train)
         num_query_pids, num_query_imgs, num_query_cams = self.get_imagedata_info(query)
         num_gallery_pids, num_gallery_imgs, num_gallery_cams = self.get_imagedata_info(gallery)

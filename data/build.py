@@ -16,32 +16,37 @@ def make_data_loader(cfg, cluster=False, labels=None):
     # ######
     # train
     # ######
+    if labels is None:
+        labels = []
+    labels_flag = len(labels) > 0
     train_transforms = build_transforms(cfg, is_train=True)
     # TODO: add multi dataset to train
     dataset = None
 
     # for simple train
-    if not cluster and not labels:
+    if not cluster and not labels_flag:
         dataset = init_dataset(cfg.DATASETS.NAMES, root=cfg.DATASETS.ROOT_DIR)
 
     # get uda data set for extracting features
-    if cluster and not labels:
+    if cluster and not labels_flag:
         dataset = init_dataset(cfg.UDA.DATASETS_NAMES, root=cfg.DATASETS.ROOT_DIR)
 
     # using generate labels for uda train
-    if not cluster and labels:
+    if not cluster and labels_flag:
         dataset = init_dataset(cfg.UDA.DATASETS_NAMES, root=cfg.DATASETS.ROOT_DIR, verbose=False)
         generate_train = []
         for i in range(len(labels)):
+            if labels[i] == -1:
+                continue
             img_path, _, _ = dataset.train[i]
-            generate_train.append((img_path, labels, -1))
+            generate_train.append((img_path, labels[i], -1))
         dataset.train = generate_train
         dataset.print_dataset_statistics(dataset.train, dataset.query, dataset.gallery)
 
-    if cluster and labels:
+    if cluster and labels_flag:
         raise ValueError(f" not support")
 
-    num_classes = dataset.num_train_pids if not labels else len(set(labels)) - 1
+    num_classes = dataset.num_train_pids if not labels_flag else len(set(labels)) - 1
     train_set = ImageDataset(dataset.train, train_transforms)
     shuffle = True
     sampler = None

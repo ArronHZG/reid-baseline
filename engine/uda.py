@@ -37,7 +37,7 @@ def create_extractor(model, device=None, flip=False):
         :param tensor: N x C x H x W
         :return:
         """
-        inv_idx = torch.arange(tensor.size(3) - 1, -1, -1).long()
+        inv_idx = torch.arange(tensor.size(3) - 1, -1, -1).long().to(device)
         img_flip = tensor.index_select(3, inv_idx)
         return img_flip
 
@@ -75,7 +75,6 @@ def extract_features(model, device, data_loader, flip):
         features.append(feat)
         labels.append(label)
 
-    logger.info("Start extract features")
     extractor.run(data_loader)
 
     cat_features = torch.cat(features)
@@ -116,21 +115,20 @@ def create_cluster(dist: torch.Tensor):
     top_num = torch.tensor(rho * sorted_dist.size()[0]).round().to(torch.int)
     if top_num <= 20:
         top_num = 20
-    print(top_num)
+    logger.info(f"top_num: {top_num}")
     eps = sorted_dist[:top_num].mean().cpu().numpy()
     # logger.info(f'eps in cluster: {eps:.3f}')
-    print(eps)
+    logger.info(f"eps: {eps:.4f}")
     return DBSCAN(eps=eps, min_samples=4, metric='precomputed', n_jobs=8)
 
 
 def generate_self_label(dist_matrix):
     global cluster
     if cluster is None:
-        print("create_cluster")
+        logger.info("Create cluster function")
         cluster = create_cluster(dist_matrix)
 
     dist = dist_matrix.cpu().numpy()
-    print(type(dist))
 
     labels = cluster.fit_predict(dist)
     return labels
@@ -147,11 +145,10 @@ class SSG:
         self.cfg = cfg
         self.saver = saver
         self.device = self.cfg.MODEL.DEVICE
-        self.num_classes = 0
 
         # define model and load model weight, this model only is used to extract feature.
         logger.info(f"load model from {self.saver.load_dir}")
-        self.model = build_model(self.cfg, self.num_classes)
+        self.model = build_model(self.cfg, 0)
         if self.cfg.MODEL.DEVICE is 'cuda':
             self.model.cuda()
         self.saver.to_save = {'model': self.model}
@@ -165,21 +162,22 @@ class SSG:
         inference(self.cfg, self.model, self.val_loader, self.num_query)
 
         # extract feature from target dataset
-        logger.info("Start extract feature")
+        logger.info("Extract feature")
         target_features, _ = extract_features(self.model, self.device, self.target_train_loader, self.cfg.UDA.IF_FLIP)
 
-        logger.info("compute dist")
+        logger.info("Compute dist")
         dict_matrix = compute_dist(target_features, if_re_ranking=True)
+        # dict_matrix = compute_dist(target_features, if_re_ranking=False)
         del target_features
 
         # generate label
-        logger.info("generate self label")
-        class_num, labels = generate_self_label(dict_matrix)
-        logger.info(f"class_num {class_num}")
+        logger.info("Cluster self label")
+        labels = generate_self_label(dict_matrix)
 
         # generate_dataloader
-        logger.info("generate data loader")
+        logger.info("Generate data loader")
         gen_train_loader, _, _, gen_num_classes = make_data_loader(self.cfg, labels=labels)
+        logger.info(f"class num {gen_num_classes}")
 
         # train
         self.cluster_train(gen_train_loader, gen_num_classes)

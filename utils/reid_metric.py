@@ -37,7 +37,7 @@ class R1_mAP(Metric):
     def compute(self):
         feats = torch.cat(self.feats, dim=0)
         if self.if_feat_norm:
-            self.logger.info("The test feature is normalized")
+            logger.info("The test feature is normalized")
             feats = torch.nn.functional.normalize(feats, dim=1, p=2)
         # query
         qf = feats[:self.num_query]
@@ -79,7 +79,7 @@ class R1_mAP_reranking(Metric):
     def compute(self):
         feats = torch.cat(self.feats, dim=0)
         if self.if_feat_norm:
-            self.logger.info("The test feature is normalized")
+            logger.info("The test feature is normalized")
             feats = torch.nn.functional.normalize(feats, dim=1, p=2)
 
         # query
