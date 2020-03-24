@@ -4,12 +4,15 @@ sys.path.append('.')
 sys.path.append('..')
 
 from tools.expand import main, TrainComponent
-from data import make_data_loader
+from data import make_data_loader, make_multi_data_loader
 from engine.trainer import do_train
 
 
 def train(cfg, saver):
-    train_loader, val_loader, num_query, num_classes = make_data_loader(cfg)
+    if len(cfg.DATASETS.EXPAND) > 0:
+        train_loader, val_loader, num_query, num_classes = make_multi_data_loader(cfg)
+    else:
+        train_loader, val_loader, num_query, num_classes = make_data_loader(cfg)
 
     train_component = TrainComponent(cfg, num_classes)
 

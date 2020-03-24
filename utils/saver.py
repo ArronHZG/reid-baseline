@@ -76,10 +76,14 @@ class Saver:
         return load_dir
 
     def get_save_dir(self):
+        name = self.cfg.DATASETS.NAMES
+        if len(self.cfg.DATASETS.EXPAND) > 0:
+            for n in self.cfg.DATASETS.EXPAND:
+                name += f"--{n}"
         first_dir = os.path.join(self.up_dir,
                                  "run",
                                  "direct",
-                                 self.cfg.DATASETS.NAMES,
+                                 name,
                                  self.cfg.MODEL.NAME)
         runs = glob.glob(os.path.join(first_dir, 'experiment-*'))
         run_ids = sorted([int(experiment.split('-')[-1]) for experiment in runs]) if runs else [0]

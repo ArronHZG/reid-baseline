@@ -106,8 +106,15 @@ def do_train(cfg,
                               saver.train_checkpointer,
                               saver.to_save)
 
-    validation_evaluator = create_supervised_evaluator(tr_comp.model, metrics={
-        'r1_mAP': R1_mAP(num_query, max_rank=50, if_feat_norm=cfg.TEST.IF_FEAT_NORM)}, device=device)
+    # multi-dataset
+    validation_evaluator_list = []
+    if not isinstance(num_query, list):
+        num_query = [num_query]
+
+    for _, n_q in num_query:
+        evaluator = create_supervised_evaluator(tr_comp.model, metrics={
+            'r1_mAP': R1_mAP(n_q, max_rank=50, if_feat_norm=cfg.TEST.IF_FEAT_NORM)}, device=device)
+        validation_evaluator_list.append(evaluator)
 
     timer = Timer(average=True)
     timer.attach(trainer,
@@ -169,27 +176,37 @@ def do_train(cfg,
         # for r in [1, 5, 10]:
         #     logger.info("CMC curve, Rank-{:<3}:{:.1%}".format(r, cmc[r - 1]))
 
-        validation_evaluator.run(val_loader)
-        cmc, mAP = validation_evaluator.state.metrics['r1_mAP']
-        logger.info("Validation Results - Epoch: {}".format(engine.state.epoch))
-        logger.info("mAP: {:.1%}".format(mAP))
-        for r in [1, 5, 10]:
-            logger.info("CMC curve, Rank-{:<3}:{:.1%}".format(r, cmc[r - 1]))
-        value = (mAP + cmc[0]) / 2
+        sum_result = 0
+        for index, validation_evaluator in enumerate(validation_evaluator_list):
+            validation_evaluator.run(val_loader[index])
+            if device == 'cuda':
+                torch.cuda.empty_cache()
 
-        if saver.best_result < value:
-            logger.info(f'Save best: {value:.4f}')
-            saver.save_best_value(value)
+            cmc, mAP = validation_evaluator.state.metrics['r1_mAP']
+            logger.info(f"{num_query[index]} Validation Results - Epoch: {engine.state.epoch}")
+            logger.info("mAP: {:.1%}".format(mAP))
+            for r in [1, 5, 10]:
+                logger.info("CMC curve, Rank-{:<3}:{:.1%}".format(r, cmc[r - 1]))
+            sum_result += (mAP + cmc[0]) / 2
+
+        sum_result /= index + 1
+
+        if saver.best_result < sum_result:
+            logger.info(f'Save best: {sum_result:.4f}')
+            saver.save_best_value(sum_result)
             saver.best_checkpointer(engine, saver.to_save)
-            saver.best_result = value
+            saver.best_result = sum_result
         else:
-            logger.info(f"Not best: {saver.best_result:.4f} > {value:.4f}")
+            logger.info(f"Not best: {saver.best_result:.4f} > {sum_result:.4f}")
         logger.info('-' * 80)
 
-        if device == 'cuda':
-            torch.cuda.empty_cache()
+    tb_log.attach_handler(trainer, tr_comp.model, tr_comp.optimizer)
 
-    tb_log.attach_handler(trainer, validation_evaluator, tr_comp.model, tr_comp.optimizer)
+    # self.tb_logger.attach(
+    #     validation_evaluator,
+    #     log_handler=ReIDOutputHandler(tag="valid", metric_names=["r1_mAP"], another_engine=trainer),
+    #     event_name=Events.EPOCH_COMPLETED,
+    # )
 
     trainer.run(train_loader, max_epochs=cfg.TRAIN.MAX_EPOCHS)
 

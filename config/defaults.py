@@ -3,8 +3,9 @@ from yacs.config import CfgNode as CN
 _C = CN()
 
 _C.DATASETS = CN()
-_C.DATASETS.NAMES = 'market1501'  # market1501, dukemtmc
+_C.DATASETS.NAMES = 'market1501'  # market1501, dukemtmc, msmt17
 _C.DATASETS.ROOT_DIR = '/home/arron/dataset'
+_C.DATASETS.EXPAND = ()
 
 _C.DATALOADER = CN()
 _C.DATALOADER.NUM_WORKERS = 8

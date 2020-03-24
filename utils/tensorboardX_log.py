@@ -65,7 +65,7 @@ class TensorBoardXLog:
     def close(self):
         self.tb_logger.close()
 
-    def attach_handler(self, trainer, validation_evaluator, model, optimizer):
+    def attach_handler(self, trainer, model, optimizer):
         if not self.cfg.TENSORBOARDX.IF_ON:
             return
 
@@ -82,12 +82,6 @@ class TensorBoardXLog:
         #     log_handler=ReIDOutputHandler(tag="train", metric_names=["loss", "r1_mAP"], another_engine=trainer),
         #     event_name=Events.EPOCH_COMPLETED,
         # )
-
-        self.tb_logger.attach(
-            validation_evaluator,
-            log_handler=ReIDOutputHandler(tag="valid", metric_names=["r1_mAP"], another_engine=trainer),
-            event_name=Events.EPOCH_COMPLETED,
-        )
 
         self.tb_logger.attach(trainer,
                               log_handler=OptimizerParamsHandler(optimizer),
