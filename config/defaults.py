@@ -35,6 +35,8 @@ _C.LOSS.LOSS_TYPE = 'softmax_triplet'  # Options: 'softmax' 'triplet' 'softmax_t
 _C.LOSS.CENTER_LOSS_WEIGHT = 0.0005
 _C.LOSS.MARGIN = 0.3
 
+_C.LOSS.DEC = True
+
 _C.OPTIMIZER = CN()
 _C.OPTIMIZER.BASE_LR = 0.00035
 _C.OPTIMIZER.BIAS_LR_FACTOR = 1.0
@@ -87,4 +89,5 @@ _C.UDA = CN()
 _C.UDA.IF_ON = False
 _C.UDA.DATASETS_NAMES = 'dukemtmc'
 _C.UDA.IF_FLIP = True
+_C.UDA.IF_RE_RANKING = True
 _C.UDA.TIMES = 1

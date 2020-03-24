@@ -5,7 +5,7 @@ sys.path.append('.')
 from data import make_data_loader
 from engine.inference import inference
 from modeling import build_model
-from tools.expand import main
+from script.tools.expand import main
 
 
 def test(cfg, saver):

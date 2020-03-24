@@ -1,4 +1,3 @@
-import logging
 import sys
 
 sys.path.append('.')
@@ -6,7 +5,7 @@ sys.path.append('..')
 
 from data import make_data_loader
 from engine.trainer import do_train
-from tools.expand import TrainComponent, main
+from script.tools.expand import TrainComponent, main
 
 
 def train(cfg, saver):

@@ -4,11 +4,20 @@
 
 [michuanhaohao/reid-strong-baseline](https://github.com/michuanhaohao/reid-strong-baseline)
 
-### Self-similarity Grouping: A Simple Unsupervised Cross Domain Adaptation Approach for Person Re-identificatio(SSG)
+### Self-similarity Grouping: A Simple Unsupervised Cross Domain Adaptation Approach for Person Re-identification(SSG)
 
 [OasisYang/SSG](https://github.com/OasisYang/SSG)
-
 [visualizing-dbscan-clustering](https://www.naftaliharris.com/blog/visualizing-dbscan-clustering/)
+
+### Unsupervised Deep Embedding for Clustering Analysis
+
+[arxiv](https://arxiv.org/abs/1511.06335)
+[DeepClustering](https://github.com/Deepayan137/DeepClustering)
+
+
+### Center Loss
+
+[centerloss](https://github.com/jxgu1016/MNIST_center_loss_pytorch/blob/master/MNIST_with_centerloss.py)
 
 ## ecosystem
 
@@ -150,4 +159,23 @@ mAP: 87.6%
 CMC curve, Rank-1  :94.9%
 CMC curve, Rank-5  :98.5%
 CMC curve, Rank-10 :99.0%
+```
+##
+
+### baseline
+```
+mAP: 76.4%
+CMC curve, Rank-1  :86.7%
+CMC curve, Rank-5  :94.1%
+CMC curve, Rank-10 :96.1%
+```
+
+
+### markdt-->duke
+``` epoch-5
+Validation Results
+mAP: 44.8%
+CMC curve, Rank-1  :51.8%
+CMC curve, Rank-5  :59.8%
+CMC curve, Rank-10 :65.7%
 ```

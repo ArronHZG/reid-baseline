@@ -25,7 +25,7 @@ class TrainComponent:
     def __init__(self, cfg, num_classes):
         self.device = cfg.MODEL.DEVICE
         self.model = build_model(cfg, num_classes)
-        loss_class = Loss(cfg, num_classes)
+        loss_class = Loss(cfg, num_classes, 2048, self.device)
         self.loss_center = loss_class.center
         self.loss_function = loss_class.make_loss()
         self.optimizer, self.optimizer_center = make_optimizer(cfg, self.model, self.loss_center)

@@ -17,7 +17,6 @@ import logging
 
 import torch
 from torch import nn
-from ignite.contrib.handlers import ProgressBar
 from ignite.engine import Engine, Events
 from sklearn.cluster import DBSCAN
 
@@ -25,7 +24,7 @@ from data import make_data_loader
 from engine.inference import inference
 from engine.trainer import do_train
 from modeling import build_model
-from tools.expand import TrainComponent
+from script.tools.expand import TrainComponent
 from utils.re_ranking import re_ranking
 
 logger = logging.getLogger("reid_baseline.cluster")
@@ -64,9 +63,9 @@ def extract_features(model, device, data_loader, flip):
     labels = []
 
     extractor = create_extractor(model, device, flip)
-
-    pbar = ProgressBar(persist=True)
-    pbar.attach(extractor)
+    #
+    # pbar = ProgressBar(persist=True)
+    # pbar.attach(extractor)
 
     @extractor.on(Events.ITERATION_COMPLETED)
     def get_output(engine):
@@ -153,6 +152,7 @@ class SSG:
             self.model.cuda()
         self.saver.to_save = {'model': self.model}
         self.saver.load_checkpoint(is_best=True)
+        saver.best_result = 0
 
         # data
         self.target_train_loader, self.val_loader, self.num_query, _ = make_data_loader(cfg, cluster=True)
@@ -160,13 +160,17 @@ class SSG:
     def cluster(self):
         # eval
         inference(self.cfg, self.model, self.val_loader, self.num_query)
+        if self.device == 'cuda':
+            torch.cuda.empty_cache()
 
         # extract feature from target dataset
         logger.info("Extract feature")
         target_features, _ = extract_features(self.model, self.device, self.target_train_loader, self.cfg.UDA.IF_FLIP)
+        if self.device == 'cuda':
+            torch.cuda.empty_cache()
 
         logger.info("Compute dist")
-        dict_matrix = compute_dist(target_features, if_re_ranking=True)
+        dict_matrix = compute_dist(target_features, if_re_ranking=self.cfg.UDA.IF_RE_RANKING)
         # dict_matrix = compute_dist(target_features, if_re_ranking=False)
         del target_features
 
@@ -185,6 +189,9 @@ class SSG:
     def cluster_train(self, train_loader, num_classes):
         tr_comp = TrainComponent(self.cfg, num_classes)
         load_weight(self.model, tr_comp.model)
+        del self.model
+        if self.device == 'cuda':
+            torch.cuda.empty_cache()
         do_train(self.cfg,
                  tr_comp.model,
                  train_loader,
@@ -202,4 +209,5 @@ class SSG:
 def do_uda(cfg, saver):
     ssg = SSG(cfg, saver)
     for i in range(cfg.UDA.TIMES):
+        logger.info(f"############# times {i} ###############")
         ssg.cluster()

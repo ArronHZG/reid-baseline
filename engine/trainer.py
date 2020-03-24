@@ -198,10 +198,16 @@ def do_train(
         value = (mAP + cmc[0]) / 2
 
         if saver.best_result < value:
-            logger.info('Save best')
+            logger.info(f'Save best {value}')
             saver.save_best_value(value)
             saver.best_checkpointer(engine, saver.to_save)
+            saver.best_result = value
+        else:
+            logger.info(f"Not best: {saver.best_result:.4f} > {value:.4f}")
         logger.info('-' * 80)
+
+        if device == 'cuda':
+            torch.cuda.empty_cache()
 
     tb_log.attach_handler(trainer, validation_evaluator, model, optimizer)
 

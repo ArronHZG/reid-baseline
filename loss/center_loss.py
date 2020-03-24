@@ -15,16 +15,11 @@ class CenterLoss(nn.Module):
         feat_dim (int): feature dimension.
     """
 
-    def __init__(self, num_classes=751, feat_dim=2048, use_gpu=True):
+    def __init__(self, num_classes=751, feat_dim=2048):
         super(CenterLoss, self).__init__()
         self.num_classes = num_classes
         self.feat_dim = feat_dim
-        self.use_gpu = use_gpu
-
-        if self.use_gpu:
-            self.centers = nn.Parameter(torch.randn(self.num_classes, self.feat_dim).cuda(), requires_grad=True)
-        else:
-            self.centers = nn.Parameter(torch.randn(self.num_classes, self.feat_dim), requires_grad=True)
+        self.centers = nn.Parameter(torch.randn(self.num_classes, self.feat_dim), requires_grad=True)
 
     def forward(self, x, labels):
         """
@@ -51,12 +46,12 @@ class CenterLoss(nn.Module):
 
 if __name__ == '__main__':
     use_gpu = False
-    center_loss = CenterLoss(use_gpu=use_gpu)
+    center_loss = CenterLoss()
     features = torch.rand(16, 2048)
     targets = torch.Tensor([0, 1, 2, 3, 2, 3, 1, 4, 5, 3, 2, 1, 0, 0, 5, 4]).long()
     if use_gpu:
         features = torch.rand(16, 2048).cuda()
-        targets = torch.Tensor([0, 1, 2, 3, 2, 3, 1, 4, 5, 3, 2, 1, 0, 0, 5, 4]).cuda()
+        targets = torch.Tensor([0, 1, 2, 3, 2, 3, 1, 4, 5, 3, 2, 1, 0, 0, 5, 4])
 
     loss = center_loss(features, targets)
     print(loss)
