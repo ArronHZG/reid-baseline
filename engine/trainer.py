@@ -125,6 +125,9 @@ def do_train(cfg,
     RunningAverage(output_transform=lambda x: x['triplet']).attach(trainer, 'triplet')
     RunningAverage(output_transform=lambda x: x['center']).attach(trainer, 'center')
 
+    if cfg.LOSS.IF_WITH_CENTER and cfg.LOSS.IF_WITH_DEC:
+        RunningAverage(output_transform=lambda x: x['dec']).attach(trainer, 'dec')
+
     # TODO start epoch
     @trainer.on(Events.STARTED)
     def start_training(engine):
