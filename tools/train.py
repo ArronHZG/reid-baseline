@@ -1,10 +1,9 @@
 import sys
 
-from tools.expand import main, TrainComponent
-
 sys.path.append('.')
 sys.path.append('..')
 
+from tools.expand import main, TrainComponent
 from data import make_data_loader
 from engine.trainer import do_train
 

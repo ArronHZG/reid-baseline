@@ -8,6 +8,7 @@ class DECLoss(nn.Module):
     def __init__(self):
         super(DECLoss, self).__init__()
         self.kl = nn.KLDivLoss(reduction="batchmean")
+        self.alpha = 1
 
     def forward(self, batch: torch.Tensor, cluster_centers: torch.Tensor) -> torch.Tensor:
         """
@@ -37,7 +38,7 @@ class DECLoss(nn.Module):
 
 
 if __name__ == '__main__':
-    clu = ClusterAssignment(10, 2048)
+    clu = DECLoss()
     x = torch.randn(2, 2048)
     initial_cluster_centers = torch.randn(751, 2048)
     nn.init.xavier_uniform_(initial_cluster_centers)

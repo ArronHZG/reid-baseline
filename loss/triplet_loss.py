@@ -86,8 +86,7 @@ class TripletLoss(nn.Module):
     def forward(self, global_feat, labels):
         global_feat = torch.nn.functional.normalize(global_feat, dim=1, p=2)
         dist_mat = euclidean_dist(global_feat, global_feat)
-        dist_ap, dist_an = hard_example_mining(
-            dist_mat, labels)
+        dist_ap, dist_an = hard_example_mining(dist_mat, labels)
         y = dist_an.new().resize_as_(dist_an).fill_(1)
         # If y = 1  then it assumed the first input should be ranked higher
         # (have a larger value) than the second input,

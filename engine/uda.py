@@ -25,6 +25,7 @@ from engine.inference import inference
 from engine.trainer import do_train
 from modeling import build_model
 from tools import TrainComponent
+from utils.distance import euclidean_dist
 from utils.re_ranking import re_ranking
 
 logger = logging.getLogger("reid_baseline.cluster")
@@ -63,6 +64,7 @@ def extract_features(model, device, data_loader, flip):
     labels = []
 
     extractor = create_extractor(model, device, flip)
+
     #
     # pbar = ProgressBar(persist=True)
     # pbar.attach(extractor)
@@ -87,13 +89,8 @@ def compute_dist(feat, if_re_ranking):
         dist_matrix = re_ranking(feat, feat, k1=20, k2=6, lambda_value=0.3)
         dist_matrix = torch.from_numpy(dist_matrix)
     else:
-        m = feat.size(0)
-        dist_matrix = torch.pow(feat, 2).sum(dim=1, keepdim=True).expand(m, m) \
-                      + torch.pow(feat, 2).sum(dim=1, keepdim=True).expand(m, m).t()
-
-        # dist_matrix = dist_matrix -2 feat@feat.T
-        dist_matrix.addmm_(beta=1, alpha=-2, mat1=feat, mat2=feat.t())
-    dist_matrix.clamp_(min=0, max=1e+12)
+        dist_matrix = euclidean_dist(feat, feat)
+    dist_matrix.clamp_(min=1e-12, max=1e+12)
     return dist_matrix
 
 

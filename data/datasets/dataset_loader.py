@@ -6,6 +6,7 @@
 
 import os.path as osp
 from PIL import Image
+import jpeg4py as jpeg
 from torch.utils.data import Dataset
 
 
@@ -18,6 +19,7 @@ def read_image(img_path):
     while not got_img:
         try:
             img = Image.open(img_path).convert('RGB')
+            # img = jpeg.JPEG(img_path).decode()
             got_img = True
         except IOError:
             print("IOError incurred when reading '{}'. Will redo. Don't worry. Just chill.".format(img_path))

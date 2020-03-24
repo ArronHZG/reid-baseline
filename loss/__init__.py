@@ -4,6 +4,7 @@
 @contact: sherlockliao01@gmail.com
 """
 import logging
+from collections import OrderedDict
 
 from ignite.metrics import RunningAverage
 from torch.nn import CrossEntropyLoss
@@ -36,10 +37,10 @@ class Loss:
         # cluster loss
         self.center_loss_weight = cfg.LOSS.CENTER_LOSS_WEIGHT
         self.center = CenterLoss(num_classes=self.num_classes, feat_dim=feat_dim)
-        if cfg.LOSS.IF_DEC:
-            self.dec = DECLoss()
 
-        self.loss_function_map = {}
+        self.dec = DECLoss()
+
+        self.loss_function_map = OrderedDict()
         self.make_loss()
 
     def make_loss(self):
@@ -61,5 +62,11 @@ class Loss:
                 return self.center_loss_weight * self.center(feat, target)
 
             self.loss_function_map["center"] = loss_function
+
+        if self.cfg.LOSS.IF_WITH_CENTER and self.cfg.LOSS.IF_WITH_DEC:
+            def loss_function(score, feat, target):
+                return self.dec(feat, self.center.centers)
+
+            self.loss_function_map["dec"] = loss_function
 
         return self.loss_function_map

@@ -31,6 +31,13 @@ UNDO [jpeg4py](https://github.com/ajkxyz/jpeg4py)
 
 [apex](https://github.com/NVIDIA/apex)
 
+
+```shell script
+
+sudo apt-get install libturbojpeg
+
+```
+
 ## parameter
 
 ## market1501-result

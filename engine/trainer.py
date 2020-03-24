@@ -139,11 +139,11 @@ def do_train(cfg,
         message = f"Epoch[{engine.state.epoch}], " + \
                   f"Iteration[{engine.state.iteration}/{len(train_loader)}], " + \
                   f"Base Lr: {tr_comp.scheduler.get_lr()[0]:.2e}, " + \
-                  f"Loss: {engine.state.metrics['Loss']:.3f}, " + \
-                  f"Acc: {engine.state.metrics['Acc']:.3f}, "
+                  f"Loss: {engine.state.metrics['Loss']:.4f}, " + \
+                  f"Acc: {engine.state.metrics['Acc']:.4f}, "
 
         for loss_name in tr_comp.loss.loss_function_map.keys():
-            message += f"{loss_name}: {engine.state.metrics[loss_name]:.3f}, "
+            message += f"{loss_name}: {engine.state.metrics[loss_name]:.4f}, "
 
         logger.info(message)
 
@@ -175,7 +175,7 @@ def do_train(cfg,
         value = (mAP + cmc[0]) / 2
 
         if saver.best_result < value:
-            logger.info(f'Save best {value}')
+            logger.info(f'Save best: {value:.4f}')
             saver.save_best_value(value)
             saver.best_checkpointer(engine, saver.to_save)
             saver.best_result = value

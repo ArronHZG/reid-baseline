@@ -1,6 +1,7 @@
 import sys
 
 sys.path.append('.')
+sys.path.append('..')
 
 from data import make_data_loader
 from engine.inference import inference

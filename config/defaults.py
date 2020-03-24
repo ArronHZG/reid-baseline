@@ -31,11 +31,10 @@ _C.MODEL.PRETRAIN_CHOICE = 'imagenet'  # Options: 'imagenet','random' or 'self'
 _C.LOSS = CN()
 _C.LOSS.IF_WITH_CENTER = True
 _C.LOSS.IF_LABEL_SMOOTH = True
+_C.LOSS.IF_WITH_DEC = False
 _C.LOSS.LOSS_TYPE = 'softmax_triplet'  # Options: 'softmax' 'triplet' 'softmax_triplet'
 _C.LOSS.CENTER_LOSS_WEIGHT = 0.0005
 _C.LOSS.MARGIN = 0.3
-
-_C.LOSS.IF_DEC = True
 
 _C.OPTIMIZER = CN()
 _C.OPTIMIZER.BASE_LR = 0.00035
@@ -60,7 +59,7 @@ _C.TRAIN.LOG_ITER_PERIOD = 100
 _C.TRAIN.MAX_EPOCHS = 120
 
 _C.EVAL = CN()
-_C.EVAL.EPOCH_PERIOD = 30
+_C.EVAL.EPOCH_PERIOD = 10
 
 _C.SAVER = CN()
 _C.SAVER.OUTPUT_DIR = ""
@@ -82,8 +81,8 @@ _C.TEST = CN()
 _C.TEST.IF_ON = False
 _C.TEST.BATCH_SIZE = 128  # from evaluate and extract feature
 _C.TEST.IF_RE_RANKING = True
-_C.TEST.RUN_ID = 1
 _C.TEST.IF_FEAT_NORM = True
+_C.TEST.RUN_ID = 1
 
 _C.UDA = CN()
 _C.UDA.IF_ON = False
