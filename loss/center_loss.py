@@ -3,6 +3,8 @@ from __future__ import absolute_import
 import torch
 from torch import nn
 
+from utils.distance import euclidean_dist
+
 
 class CenterLoss(nn.Module):
     """Center loss.
@@ -30,17 +32,15 @@ class CenterLoss(nn.Module):
         assert x.size(0) == labels.size(0), "features.size(0) is not equal to labels.size(0)"
 
         batch_size = x.size(0)
-        distmat = torch.pow(x, 2).sum(dim=1, keepdim=True).expand(batch_size, self.num_classes) + \
-                  torch.pow(self.centers, 2).sum(dim=1, keepdim=True).expand(self.num_classes, batch_size).t()
-        # d - 2*x@c.T
-        distmat.addmm_(beta=1, alpha=-2, mat1=x, mat2=self.centers.t())
+        dist_mat = euclidean_dist(x, self.centers)
+
         classes = torch.arange(self.num_classes).long()
-        if self.use_gpu:
+        if self.centers.is_cuda:
             classes = classes.cuda()
         labels = labels.unsqueeze(1).expand(batch_size, self.num_classes)
-        mask = labels.eq(classes.expand(batch_size, self.num_classes))
-        dist = distmat * mask.float()
-        loss = dist.clamp(min=1e-12, max=1e+12).sum() / batch_size
+        mask = labels.eq(classes.expand(batch_size, self.num_classes)).float()
+        dist = dist_mat * mask
+        loss = dist.sum() / batch_size
         return loss
 
 

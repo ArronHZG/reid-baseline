@@ -24,7 +24,7 @@ from data import make_data_loader
 from engine.inference import inference
 from engine.trainer import do_train
 from modeling import build_model
-from script.tools.expand import TrainComponent
+from tools import TrainComponent
 from utils.re_ranking import re_ranking
 
 logger = logging.getLogger("reid_baseline.cluster")

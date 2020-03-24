@@ -35,7 +35,7 @@ _C.LOSS.LOSS_TYPE = 'softmax_triplet'  # Options: 'softmax' 'triplet' 'softmax_t
 _C.LOSS.CENTER_LOSS_WEIGHT = 0.0005
 _C.LOSS.MARGIN = 0.3
 
-_C.LOSS.DEC = True
+_C.LOSS.IF_DEC = True
 
 _C.OPTIMIZER = CN()
 _C.OPTIMIZER.BASE_LR = 0.00035

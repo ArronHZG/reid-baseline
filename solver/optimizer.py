@@ -22,18 +22,11 @@ def make_optimizer(cfg, model, center_criterion=None):
         optimizer = getattr(torch.optim, cfg.OPTIMIZER.NAME)(params, momentum=cfg.SOLVER.MOMENTUM)
     else:
         optimizer = getattr(torch.optim, cfg.OPTIMIZER.NAME)(params)
-    optimizer_center = None
-    if center_criterion is not None:
-        optimizer_center = torch.optim.SGD(center_criterion.parameters(), lr=cfg.OPTIMIZER.CENTER_LR)
+    optimizer_center = torch.optim.SGD(center_criterion.parameters(), lr=cfg.OPTIMIZER.CENTER_LR)
     return optimizer, optimizer_center
 
 
 if __name__ == '__main__':
     from config import cfg
     from torchvision import models
-
-    resnet = models.resnet18()
-
-    print(cfg)
-    opt = make_optimizer_with_center(cfg, resnet)
-    print(opt)
+    pass

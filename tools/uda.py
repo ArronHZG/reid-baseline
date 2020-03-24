@@ -3,7 +3,7 @@ import sys
 sys.path.append('.')
 sys.path.append('..')
 from engine.uda import do_uda
-from script.tools.expand import main
+from tools import main
 
 if __name__ == '__main__':
     cfg, saver = main(["TEST.IF_ON", True, "UDA.IF_ON", True])
