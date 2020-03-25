@@ -16,3 +16,10 @@ def euclidean_dist(x: torch.Tensor, y: torch.Tensor):
     dist.addmm_(beta=1, alpha=-2, mat1=x, mat2=y.t())
     dist = dist.clamp(min=1e-12).sqrt()  # for numerical stability
     return dist
+
+
+if __name__ == '__main__':
+    a = torch.tensor([[0., 0.]])
+    b = torch.tensor([[1., 1.]])
+    dist = euclidean_dist(a, b)
+    print(dist)

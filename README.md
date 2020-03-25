@@ -40,10 +40,10 @@ sudo apt-get install libturbojpeg
 
 ## parameter
 
-## market1501-result
+## market1501
 
 ### original strong-baseline
-```
+```shell script
 Validation Results - Epoch: 120
 mAP: 85.8%
 CMC curve, Rank-1  :94.2%
@@ -51,7 +51,7 @@ CMC curve, Rank-5  :98.3%
 CMC curve, Rank-10 :98.9%
 ```
 ### baseline (resnet50 experiment-1)
-```
+```shell script
 Validation Results - Epoch: 120
 mAP: 85.9%
 CMC curve, Rank-1  :94.2%
@@ -59,7 +59,7 @@ CMC curve, Rank-5  :98.4%
 CMC curve, Rank-10 :99.0%
 ```
 ### apex O1 (resnet50 experiment-2)
-```
+```shell script
 Validation Results - Epoch: 120
 mAP: 85.8%
 CMC curve, Rank-1  :94.2%
@@ -67,7 +67,7 @@ CMC curve, Rank-5  :98.2%
 CMC curve, Rank-10 :99.0%
 ```
 ### batch-size 128 (resnet50 experiment-3)
-```
+```shell script
 Validation Results - Epoch: 120
 mAP: 85.0%
 CMC curve, Rank-1  :93.6%
@@ -75,7 +75,7 @@ CMC curve, Rank-5  :98.0%
 CMC curve, Rank-10 :98.8%
 ```
 ### apex O2 (resnet50 experiment-4)
-```
+```shell script
 Validation Results - Epoch: 120
 mAP: 85.9%
 CMC curve, Rank-1  :94.2%
@@ -111,7 +111,7 @@ CMC curve, Rank-10 :98.0%
 
 ```
 ### baseline (resnet101 experiment-1)
-```
+```shell script
 Validation Results - Epoch: 120
 mAP: 87.1%
 CMC curve, Rank-1  :94.3%
@@ -126,7 +126,7 @@ CMC curve, Rank-5  :98.4%
 CMC curve, Rank-10 :99.2%
 ```
 ### baseline (se_resnet101 experiment-1)
-```
+```shell script
 The test feature is normalized
 Validation Results - Epoch: 120
 mAP: 87.1%
@@ -136,7 +136,7 @@ CMC curve, Rank-10 :99.0%
 Save best
 ```
 ### baseline (se_resnext50_32x4d experiment-1) 1h30m
-```
+```shell script
 Validation Results - Epoch: 120
 mAP: 87.8%
 CMC curve, Rank-1  :95.0%
@@ -144,7 +144,7 @@ CMC curve, Rank-5  :98.5%
 CMC curve, Rank-10 :99.1%
 ```
 ### baseline (se_resnext101_32x4d experiment-1) 2h20m
-```
+```shell script
 Validation Results - Epoch: 120
 mAP: 87.9%
 CMC curve, Rank-1  :94.7%
@@ -152,7 +152,7 @@ CMC curve, Rank-5  :98.5%
 CMC curve, Rank-10 :99.0%
 ```
 ### baseline (resnet50_ibn_a experiment-1)
-```
+```shell script
 Validation Results - Epoch: 120
 mAP: 86.9%
 CMC curve, Rank-1  :94.8%
@@ -160,29 +160,61 @@ CMC curve, Rank-5  :98.5%
 CMC curve, Rank-10 :99.1%
 ```
 ### baseline (resnet101_ibn_a experiment-1)
-```
+```shell script
 Validation Results - Epoch: 120
 mAP: 87.6%
 CMC curve, Rank-1  :94.9%
 CMC curve, Rank-5  :98.5%
 CMC curve, Rank-10 :99.0%
 ```
-##
+## DukeMTMC-reID
 
 ### baseline
-```
+```shell script
 mAP: 76.4%
 CMC curve, Rank-1  :86.7%
 CMC curve, Rank-5  :94.1%
 CMC curve, Rank-10 :96.1%
 ```
 
+## msmt17
 
-### markdt-->duke
-``` epoch-5
+### baseline
+```shell script
+
+```
+
+## market-->duke
+```shell script
+times-5
 Validation Results
 mAP: 44.8%
 CMC curve, Rank-1  :51.8%
 CMC curve, Rank-5  :59.8%
 CMC curve, Rank-10 :65.7%
+```
+
+
+## market1501--DukeMTMC-reID--msmt17 
+
+### baseline and target
+```shell script
+--------------------------------------------------------------------------------
+('/home/arron/dataset/market1501', 3368) Validation Results - Epoch: 120
+mAP: 85.1%
+CMC curve, Rank-1  :93.6%
+CMC curve, Rank-5  :98.0%
+CMC curve, Rank-10 :98.8%
+('/home/arron/dataset/DukeMTMC-reID', 2228) Validation Results - Epoch: 120
+mAP: 77.3%
+CMC curve, Rank-1  :86.8%
+CMC curve, Rank-5  :94.0%
+CMC curve, Rank-10 :95.7%
+('/home/arron/dataset/msmt17', 11659) Validation Results - Epoch: 120
+mAP: 47.0%
+CMC curve, Rank-1  :64.9%
+CMC curve, Rank-5  :77.1%
+CMC curve, Rank-10 :81.5%
+Save best: 0.7579
+--------------------------------------------------------------------------------
 ```

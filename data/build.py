@@ -82,7 +82,7 @@ def make_data_loader(cfg, cluster=False, labels=None):
         num_workers=cfg.DATALOADER.NUM_WORKERS,
         collate_fn=val_collate_fn)
     query_num = len(dataset.query)
-    return train_loader, val_loader, (dataset.dataset_dir, query_num), num_classes
+    return train_loader, [val_loader], [(dataset.dataset_dir, query_num)], num_classes
 
 
 def make_multi_data_loader(cfg):

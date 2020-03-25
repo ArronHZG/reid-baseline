@@ -4,42 +4,14 @@
 @contact: sherlockliao01@gmail.com
 """
 import logging
+from time import sleep
 
 import torch
 import torch.nn as nn
 from ignite.engine import Engine
 
+from engine.trainer import create_supervised_evaluator
 from utils.reid_metric import R1_mAP, R1_mAP_reranking
-
-
-def create_supervised_evaluator(model, metrics,
-                                device=None):
-    """
-    Factory function for creating an evaluator for supervised models
-
-    Args:
-        model (`torch.nn.Module`): the model to train
-        metrics (dict of str - :class:`ignite.metrics.Metric`): a map of metric names to Metrics
-        device (str, optional): device type specification (default: None).
-            Applies to both model and batches.
-    Returns:
-        Engine: an evaluator engine with supervised inference function
-    """
-
-    def _inference(engine, batch):
-        model.eval()
-        with torch.no_grad():
-            data, pids, camids = batch
-            data = data.to(device)
-            feat = model(data)
-            return feat, pids, camids
-
-    engine = Engine(_inference)
-
-    for name, metric in metrics.items():
-        metric.attach(engine, name)
-
-    return engine
 
 
 def inference(
@@ -53,20 +25,28 @@ def inference(
     logger = logging.getLogger("reid_baseline.inference")
     logger.info("Enter inferencing")
 
-    if cfg.TEST.IF_RE_RANKING:
-        logger.info("Create evaluator for reranking")
-        metrics = {'r1_mAP': R1_mAP_reranking(num_query, max_rank=50, if_feat_norm=cfg.TEST.IF_FEAT_NORM)}
-    else:
-        logger.info("Create evaluator")
-        metrics = {'r1_mAP': R1_mAP(num_query, max_rank=50, if_feat_norm=cfg.TEST.IF_FEAT_NORM)}
+    # multi-dataset
+    validation_evaluator_list = []
+    for _, n_q in num_query:
 
-    evaluator = create_supervised_evaluator(model, metrics=metrics, device=device)
+        if cfg.TEST.IF_RE_RANKING:
+            logger.info("Create evaluator for reranking")
+            metrics = {"r1_mAP": R1_mAP_reranking(n_q, max_rank=50, if_feat_norm=cfg.TEST.IF_FEAT_NORM)}
+        else:
+            logger.info("Create evaluator")
+            metrics = {"r1_mAP": R1_mAP(n_q, max_rank=50, if_feat_norm=cfg.TEST.IF_FEAT_NORM)}
 
-    evaluator.run(val_loader)
-    cmc, mAP = evaluator.state.metrics['r1_mAP']
-    logger.info('-' * 60)
-    logger.info('Validation Results')
-    logger.info("mAP: {:.1%}".format(mAP))
-    for r in [1, 5, 10]:
-        logger.info("CMC curve, Rank-{:<3}:{:.1%}".format(r, cmc[r - 1]))
-    logger.info('-' * 60)
+        evaluator = create_supervised_evaluator(model, metrics=metrics, device=device)
+        validation_evaluator_list.append(evaluator)
+
+    for index, evaluator in enumerate(validation_evaluator_list):
+        evaluator.run(val_loader[index])
+        if device == 'cuda':
+            torch.cuda.empty_cache()
+        cmc, mAP = evaluator.state.metrics['r1_mAP']
+        logger.info('-' * 60)
+        logger.info('Validation Results')
+        logger.info("mAP: {:.1%}".format(mAP))
+        for r in [1, 5, 10]:
+            logger.info("CMC curve, Rank-{:<3}:{:.1%}".format(r, cmc[r - 1]))
+        logger.info('-' * 60)
