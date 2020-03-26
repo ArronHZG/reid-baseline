@@ -181,7 +181,10 @@ CMC curve, Rank-10 :96.1%
 
 ### baseline
 ```shell script
-
+mAP: 45.8%
+CMC curve, Rank-1  :64.0%
+CMC curve, Rank-5  :76.6%
+CMC curve, Rank-10 :81.0%
 ```
 
 ## market-->duke

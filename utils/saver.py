@@ -40,7 +40,7 @@ class Saver:
                 self.save_dir = os.path.join(self.up_dir,
                                              "run",
                                              "uda",
-                                             f"{self.cfg.DATASETS.NAMES}--to--{self.cfg.UDA.DATASETS_NAMES}",
+                                             f"{self.cfg.DATASETS.NAME}--to--{self.cfg.UDA.DATASETS_NAMES}",
                                              self.cfg.MODEL.NAME)
                 self.runs = glob.glob(os.path.join(self.save_dir, 'experiment-*'))
                 run_ids = sorted([int(experiment.split('-')[-1]) for experiment in self.runs]) if self.runs else [0]
@@ -67,7 +67,7 @@ class Saver:
         load_dir = os.path.join(self.up_dir,
                                 "run",
                                 "direct",
-                                self.cfg.DATASETS.NAMES,
+                                self.cfg.DATASETS.NAME,
                                 self.cfg.MODEL.NAME)
         run_id = self.cfg.TEST.RUN_ID
         print(f"Loading run_id: {run_id}")
@@ -76,7 +76,7 @@ class Saver:
         return load_dir
 
     def get_save_dir(self):
-        name = self.cfg.DATASETS.NAMES
+        name = self.cfg.DATASETS.NAME
         if len(self.cfg.DATASETS.EXPAND) > 0:
             for n in self.cfg.DATASETS.EXPAND:
                 name += f"--{n}"

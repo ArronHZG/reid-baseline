@@ -1,13 +1,17 @@
 import logging
+from collections import OrderedDict
 
 import torch
 from ignite.engine import Engine, Events
 from ignite.handlers import Timer
 from ignite.metrics import RunningAverage
 
+from engine.inference import get_valid_eval_map, eval_multi_dataset
 from tools.expand import TrainComponent
 from utils.reid_metric import R1_mAP
 from utils.tensorboardX_log import TensorBoardXLog
+
+logger = logging.getLogger("reid_baseline.train")
 
 
 def create_supervised_trainer(model, optimizer, loss_fn_map,
@@ -56,32 +60,11 @@ def create_supervised_trainer(model, optimizer, loss_fn_map,
     return Engine(_update)
 
 
-def create_supervised_evaluator(model, metrics,
-                                device=None):
-    def _inference(engine, batch):
-        model.eval()
-        with torch.no_grad():
-            data, pids, camids = batch
-            data = data.to(device)
-            feat = model(data).to(torch.float16)
-            return feat, pids, camids
-
-    engine = Engine(_inference)
-
-    for name, metric in metrics.items():
-        metric.attach(engine, name)
-
-    return engine
-
-
 def do_train(cfg,
              train_loader,
-             val_loader,
+             valid,
              tr_comp: TrainComponent,
-             num_query,
              saver):
-    logger = logging.getLogger("reid_baseline.train")
-
     tb_log = TensorBoardXLog(cfg, saver.save_dir)
 
     device = cfg.MODEL.DEVICE
@@ -106,15 +89,8 @@ def do_train(cfg,
                               saver.train_checkpointer,
                               saver.to_save)
 
-    # multi-dataset
-    validation_evaluator_list = []
-    if not isinstance(num_query, list):
-        num_query = [num_query]
-
-    for _, n_q in num_query:
-        evaluator = create_supervised_evaluator(tr_comp.model, metrics={
-            'r1_mAP': R1_mAP(n_q, max_rank=50, if_feat_norm=cfg.TEST.IF_FEAT_NORM)}, device=device)
-        validation_evaluator_list.append(evaluator)
+    # multi-valid-dataset
+    validation_evaluator_map = get_valid_eval_map(cfg, device, tr_comp.model, valid)
 
     timer = Timer(average=True)
     timer.attach(trainer,
@@ -176,20 +152,9 @@ def do_train(cfg,
         # for r in [1, 5, 10]:
         #     logger.info("CMC curve, Rank-{:<3}:{:.1%}".format(r, cmc[r - 1]))
 
-        sum_result = 0
-        for index, validation_evaluator in enumerate(validation_evaluator_list):
-            validation_evaluator.run(val_loader[index])
-            if device == 'cuda':
-                torch.cuda.empty_cache()
+        logger.info(f"Valid - Epoch: {engine.state.epoch}")
 
-            cmc, mAP = validation_evaluator.state.metrics['r1_mAP']
-            logger.info(f"{num_query[index]} Validation Results - Epoch: {engine.state.epoch}")
-            logger.info("mAP: {:.1%}".format(mAP))
-            for r in [1, 5, 10]:
-                logger.info("CMC curve, Rank-{:<3}:{:.1%}".format(r, cmc[r - 1]))
-            sum_result += (mAP + cmc[0]) / 2
-
-        sum_result /= index + 1
+        eval_multi_dataset(device, validation_evaluator_map, valid)
 
         if saver.best_result < sum_result:
             logger.info(f'Save best: {sum_result:.4f}')

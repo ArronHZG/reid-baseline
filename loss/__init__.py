@@ -41,9 +41,9 @@ class Loss:
         self.dec = DECLoss()
 
         self.loss_function_map = OrderedDict()
-        self.make_loss()
+        self.make_loss_map()
 
-    def make_loss(self):
+    def make_loss_map(self):
 
         if 'softmax' in self.loss_type:
             def loss_function(score, feat, target):
@@ -68,5 +68,3 @@ class Loss:
                 return self.dec(feat, self.center.centers)
 
             self.loss_function_map["dec"] = loss_function
-
-        return self.loss_function_map

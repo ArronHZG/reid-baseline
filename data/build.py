@@ -2,59 +2,25 @@
 @author:  arron
 """
 import logging
+from collections import OrderedDict
 
 from torch.utils.data import DataLoader
 
-from .collate_batch import train_collate_fn, val_collate_fn
-from .datasets import init_dataset, ImageDataset
-from .samplers import RandomIdentitySampler
-from .transforms import build_transforms
+from data.collate_batch import train_collate_fn, val_collate_fn
+from data.datasets import init_dataset, ImageDataset
+from data.samplers import RandomIdentitySampler
+from data.transforms import build_transforms
 
 logger = logging.getLogger("reid_baseline.dataset")
 
 
-def make_data_loader(cfg, cluster=False, labels=None):
-    # ######
-    # train
-    # ######
-    if labels is None:
-        labels = []
-    labels_flag = len(labels) > 0
-    train_transforms = build_transforms(cfg, is_train=True)
-    # TODO: add multi dataset to train
-    dataset = None
-
-    # for simple train
-    if not cluster and not labels_flag:
-        dataset = init_dataset(cfg.DATASETS.NAMES, root=cfg.DATASETS.ROOT_DIR)
-
-    # get uda data set for extracting features
-    if cluster and not labels_flag:
-        dataset = init_dataset(cfg.UDA.DATASETS_NAMES, root=cfg.DATASETS.ROOT_DIR)
-
-    # using generate labels for uda train
-    if not cluster and labels_flag:
-        dataset = init_dataset(cfg.UDA.DATASETS_NAMES, root=cfg.DATASETS.ROOT_DIR, verbose=False)
-        generate_train = []
-        for i in range(len(labels)):
-            if labels[i] == -1:
-                continue
-            img_path, _, _ = dataset.train[i]
-            generate_train.append((img_path, labels[i], -1))
-        dataset.train = generate_train
-        dataset.print_dataset_statistics(dataset.train, dataset.query, dataset.gallery)
-
-    if cluster and labels_flag:
-        raise ValueError(f" not support")
-
-    num_classes = dataset.num_train_pids if not labels_flag else len(set(labels)) - 1
-    train_set = ImageDataset(dataset.train, train_transforms)
+def _get_train_sampler(cfg, train_set, extract=False):
     shuffle = True
     sampler = None
-    if not cluster:
+    if not extract:
         if cfg.DATALOADER.SAMPLER is 'RandomIdentity':
             shuffle = False
-            sampler = RandomIdentitySampler(dataset.train, cfg.TRAIN.BATCH_SIZE, cfg.DATALOADER.NUM_INSTANCE)
+            sampler = RandomIdentitySampler(train_set, cfg.TRAIN.BATCH_SIZE, cfg.DATALOADER.NUM_INSTANCE)
         if cfg.LOSS.LOSS_TYPE is not 'softmax' and cfg.DATALOADER.SAMPLER is 'None':
             raise ValueError(f"Loss {cfg.LOSS.LOSS_TYPE} should not using {cfg.DATALOADER.SAMPLER} dataloader sampler")
         batch_size = cfg.TRAIN.BATCH_SIZE
@@ -63,6 +29,12 @@ def make_data_loader(cfg, cluster=False, labels=None):
         sampler = None
         batch_size = cfg.TEST.BATCH_SIZE
 
+    return batch_size, sampler, shuffle
+
+
+def _get_train_loader(cfg, batch_size, train_set, sampler, shuffle):
+    train_transforms = build_transforms(cfg, is_train=True)
+    train_set = ImageDataset(train_set, train_transforms)
     train_loader = DataLoader(
         train_set,
         batch_size=batch_size,
@@ -70,29 +42,69 @@ def make_data_loader(cfg, cluster=False, labels=None):
         shuffle=shuffle,
         num_workers=cfg.DATALOADER.NUM_WORKERS,
         collate_fn=train_collate_fn)
-    # ######
-    # valid
-    # ######
-    val_transforms = build_transforms(cfg, is_train=False)
-    val_set = ImageDataset(dataset.query + dataset.gallery, val_transforms)
-    val_loader = DataLoader(
-        val_set,
-        batch_size=cfg.TEST.BATCH_SIZE,
-        shuffle=False,
-        num_workers=cfg.DATALOADER.NUM_WORKERS,
-        collate_fn=val_collate_fn)
-    query_num = len(dataset.query)
-    return train_loader, [val_loader], [(dataset.dataset_dir, query_num)], num_classes
+    return train_loader
 
 
-def make_multi_data_loader(cfg):
+def make_multi_valid_data_loader(cfg, data_set_names, verbose=False):
+    valid = OrderedDict()
+    for name in data_set_names:
+        dataset = init_dataset(name, root=cfg.DATASETS.ROOT_DIR, verbose=verbose)
+        val_transforms = build_transforms(cfg, is_train=False)
+        val_set = ImageDataset(dataset.query + dataset.gallery, val_transforms)
+        val_loader = DataLoader(
+            val_set,
+            batch_size=cfg.TEST.BATCH_SIZE,
+            shuffle=False,
+            num_workers=cfg.DATALOADER.NUM_WORKERS,
+            collate_fn=val_collate_fn)
+        valid[name] = (val_loader, len(dataset.query))
+
+    return valid
+
+
+def make_train_data_loader(cfg, dataset_name):
     # ######
     # train
     # ######
+    dataset = init_dataset(dataset_name, root=cfg.DATASETS.ROOT_DIR)
+    batch_size, sampler, shuffle = _get_train_sampler(cfg, dataset.train)
+    train_loader = _get_train_loader(cfg, batch_size, dataset.train, sampler, shuffle)
+    return train_loader, dataset.num_train_pids
 
-    datasets = [init_dataset(cfg.DATASETS.NAMES, root=cfg.DATASETS.ROOT_DIR)]
-    for expand_dataset_name in cfg.DATASETS.EXPAND:
-        datasets.append(init_dataset(expand_dataset_name, root=cfg.DATASETS.ROOT_DIR))
+
+def make_train_data_loader_for_extract(cfg, dataset_name):
+    # ######
+    # train
+    # ######
+    dataset = init_dataset(dataset_name, root=cfg.DATASETS.ROOT_DIR)
+    batch_size, sampler, shuffle = _get_train_sampler(cfg, dataset.train, extract=True)
+    train_loader = _get_train_loader(cfg, batch_size, dataset.train, sampler, shuffle)
+    return train_loader, dataset.num_train_pids
+
+
+def make_train_data_loader_with_labels(cfg, dataset_name, labels):
+    dataset = init_dataset(dataset_name, root=cfg.DATASETS.ROOT_DIR, verbose=False)
+    generate_train = []
+    for i in range(len(labels)):
+        if labels[i] == -1:
+            continue
+        img_path, _, _ = dataset.train[i]
+        generate_train.append((img_path, labels[i], -1))
+    dataset.train = generate_train
+    dataset.print_dataset_statistics(dataset.train, dataset.query, dataset.gallery)
+
+    batch_size, sampler, shuffle = _get_train_sampler(cfg, dataset.train)
+    train_loader = _get_train_loader(cfg, batch_size, dataset.train, sampler, shuffle)
+    return train_loader, dataset.num_train_pids
+
+
+def make_train_data_loader_with_expand(cfg, data_set_names):
+    # ######
+    # train
+    # ######
+    datasets = []
+    for name in data_set_names:
+        datasets.append(init_dataset(name, root=cfg.DATASETS.ROOT_DIR))
 
     all_dataset_train = []
     num_classes = 0
@@ -113,40 +125,22 @@ def make_multi_data_loader(cfg):
     logger.info("  ----------------------------------------")
     logger.info("  train    | {:5d} | {:8d} | {:9d}".format(num_classes, num_train_imgs, num_train_cams))
 
-    train_transforms = build_transforms(cfg, is_train=True)
-    train_set = ImageDataset(all_dataset_train, train_transforms)
-    shuffle = True
-    sampler = None
-    if cfg.DATALOADER.SAMPLER is 'RandomIdentity':
-        shuffle = False
-        sampler = RandomIdentitySampler(all_dataset_train, cfg.TRAIN.BATCH_SIZE, cfg.DATALOADER.NUM_INSTANCE)
-    if cfg.LOSS.LOSS_TYPE is not 'softmax' and cfg.DATALOADER.SAMPLER is 'None':
-        raise ValueError(f"Loss {cfg.LOSS.LOSS_TYPE} should not using {cfg.DATALOADER.SAMPLER} dataloader sampler")
-    batch_size = cfg.TRAIN.BATCH_SIZE
+    batch_size, sampler, shuffle = _get_train_sampler(cfg, all_dataset_train)
+    train_loader = _get_train_loader(cfg, batch_size, all_dataset_train, sampler, shuffle)
+    return train_loader, num_classes
 
-    train_loader = DataLoader(
-        train_set,
-        batch_size=batch_size,
-        sampler=sampler,
-        shuffle=shuffle,
-        num_workers=cfg.DATALOADER.NUM_WORKERS,
-        collate_fn=train_collate_fn)
 
-    # # ######
-    # # valid
-    # # ######
-    multi_dataset_valid_loader = []
-    multi_name_query_num = []
-    for dataset in datasets:
-        val_transforms = build_transforms(cfg, is_train=False)
-        val_set = ImageDataset(dataset.query + dataset.gallery, val_transforms)
-        val_loader = DataLoader(
-            val_set,
-            batch_size=cfg.TEST.BATCH_SIZE,
-            shuffle=False,
-            num_workers=cfg.DATALOADER.NUM_WORKERS,
-            collate_fn=val_collate_fn)
-        query_num = len(dataset.query)
-        multi_dataset_valid_loader.append(val_loader)
-        multi_name_query_num.append((dataset.dataset_dir, query_num))
-    return train_loader, multi_dataset_valid_loader, multi_name_query_num, num_classes
+def make_data_with_loader_with_feat(cfg, dataset_name, feat):
+    dataset = init_dataset(dataset_name, root=cfg.DATASETS.ROOT_DIR, verbose=False)
+    generate_train = []
+    for i in range(len(feat)):
+        if feat[i] == -1:
+            continue
+        img_path, _, _ = dataset.train[i]
+        generate_train.append((img_path, feat[i], -1))
+    dataset.train = generate_train
+    dataset.print_dataset_statistics(dataset.train, dataset.query, dataset.gallery)
+
+    batch_size, sampler, shuffle = _get_train_sampler(cfg, dataset.train)
+    train_loader = _get_train_loader(cfg, batch_size, dataset.train, sampler, shuffle)
+    return train_loader, dataset.num_train_pids

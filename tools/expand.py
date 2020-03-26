@@ -62,6 +62,47 @@ class TrainComponent:
                                                                              loss_scale=cfg.APEX.LOSS_SCALE[0])
 
 
+class TrainComponentFeat:
+    def __init__(self, cfg, num_classes):
+        self.device = cfg.MODEL.DEVICE
+        self.model = build_model(cfg, num_classes)
+        self.loss = Loss(cfg, num_classes, self.model.in_planes)
+        self.optimizer, self.optimizer_center = make_optimizer(cfg, self.model, self.loss.center)
+        self.scheduler = WarmupMultiStepLR(self.optimizer,
+                                           cfg.WARMUP.STEPS,
+                                           cfg.WARMUP.GAMMA,
+                                           cfg.WARMUP.FACTOR,
+                                           cfg.WARMUP.MAX_EPOCHS,
+                                           cfg.WARMUP.METHOD)
+        if cfg.APEX.IF_ON:
+            logger.info("Using apex")
+            try:
+                import apex
+            except ImportError:
+                raise ImportError("Please install apex from https://www.github.com/nvidia/apex to run this example.")
+            assert torch.backends.cudnn.enabled, "Amp requires cudnn backend to be enabled."
+            #
+            # if cfg.APEX.IF_SYNC_BN:
+            #     logger.info("Using apex synced BN")
+            #     self.model = apex.parallel.convert_syncbn_model(self.model)
+        if self.device is 'cuda':
+            self.model = self.model.cuda()
+            self.loss.center = self.loss.center.cuda()
+            if cfg.APEX.IF_ON:
+                from apex import amp
+                self.model, self.optimizer = amp.initialize(self.model, self.optimizer,
+                                                            opt_level=cfg.APEX.OPT_LEVEL,
+                                                            keep_batchnorm_fp32=None if cfg.APEX.OPT_LEVEL == 'O1' else True,
+                                                            loss_scale=cfg.APEX.LOSS_SCALE[0])
+
+                if cfg.LOSS.IF_WITH_CENTER:
+                    self.loss_center, self.optimizer_center = amp.initialize(self.loss.center,
+                                                                             self.optimizer_center,
+                                                                             opt_level=cfg.APEX.OPT_LEVEL,
+                                                                             keep_batchnorm_fp32=None if cfg.APEX.OPT_LEVEL == 'O1' else True,
+                                                                             loss_scale=cfg.APEX.LOSS_SCALE[0])
+
+
 def main(merge_list=None):
     parser = argparse.ArgumentParser(description="ReID Baseline Training")
     parser.add_argument("--config_file", default="", help="path to config file", type=str)
