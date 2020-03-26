@@ -5,7 +5,7 @@ _C = CN()
 _C.DATASETS = CN()
 _C.DATASETS.NAME = 'market1501'  # market1501, dukemtmc, msmt17
 _C.DATASETS.ROOT_DIR = '/home/arron/dataset'
-_C.DATASETS.EXPAND = ('dukemtmc',)
+_C.DATASETS.EXPAND = ('market1501',)
 
 _C.DATALOADER = CN()
 _C.DATALOADER.NUM_WORKERS = 8

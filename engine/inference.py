@@ -10,6 +10,7 @@ import torch
 from ignite.engine import Engine
 
 from utils.reid_metric import R1_mAP, R1_mAP_reranking
+from utils.tensor_utils import batch_horizontal_flip
 
 logger = logging.getLogger("reid_baseline.eval")
 
@@ -26,14 +27,17 @@ def get_valid_eval_map(cfg, device, model, valid, re_ranking=False):
     return validation_evaluator_map
 
 
-def create_supervised_evaluator(model, metrics,
-                                device=None):
+def create_supervised_evaluator(model, metrics, device, flip=False):
     def _inference(engine, batch):
         model.eval()
         with torch.no_grad():
-            data, pids, camids = batch
-            data = data.to(device)
-            feat = model(data).to(torch.float16)
+            img, pids, camids = batch
+            img = img.to(device)
+            feat = model(img).to(torch.float16)
+            if flip:
+                flip_img = batch_horizontal_flip(img, device)
+                flip_feat = model(flip_img).to(torch.float16)
+                feat += flip_feat
             return feat, pids, camids
 
     engine = Engine(_inference)

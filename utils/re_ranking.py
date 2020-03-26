@@ -10,7 +10,7 @@ import logging
 import numpy as np
 import torch
 
-from utils.distance import euclidean_dist
+from utils.tensor_utils import euclidean_dist
 
 """
 CVPR2017 paper:Zhong Z, Zheng L, Cao D, et al. Re-ranking Person Re-identification with k-reciprocal Encoding[J]. 2017.

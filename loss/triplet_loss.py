@@ -6,7 +6,7 @@
 import torch
 from torch import nn
 
-from utils.distance import euclidean_dist
+from utils.tensor_utils import euclidean_dist
 
 
 def hard_example_mining(dist_mat, labels, return_inds=False):

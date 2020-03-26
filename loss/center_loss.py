@@ -3,7 +3,7 @@ from __future__ import absolute_import
 import torch
 from torch import nn
 
-from utils.distance import euclidean_dist
+from utils.tensor_utils import euclidean_dist
 
 
 class CenterLoss(nn.Module):

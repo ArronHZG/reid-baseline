@@ -1,6 +1,16 @@
 import torch
 
 
+def batch_horizontal_flip(tensor, device):
+    """
+    :param tensor: N x C x H x W
+    :return:
+    """
+    inv_idx = torch.arange(tensor.size(3) - 1, -1, -1).long().to(device)
+    img_flip = tensor.index_select(3, inv_idx)
+    return img_flip
+
+
 def euclidean_dist(x: torch.Tensor, y: torch.Tensor):
     """
     Args:

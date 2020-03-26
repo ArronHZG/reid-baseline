@@ -130,7 +130,7 @@ def make_train_data_loader_with_expand(cfg, data_set_names):
     return train_loader, num_classes
 
 
-def make_data_with_loader_with_feat(cfg, dataset_name, feat):
+def make_data_with_loader_with_feat(cfg, data_set_names, feat):
     dataset = init_dataset(dataset_name, root=cfg.DATASETS.ROOT_DIR, verbose=False)
     generate_train = []
     for i in range(len(feat)):

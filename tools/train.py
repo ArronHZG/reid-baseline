@@ -1,10 +1,10 @@
 import sys
 
-from data import make_train_data_loader, make_train_data_loader_with_expand, make_multi_valid_data_loader
 
 sys.path.append('.')
 sys.path.append('..')
 
+from data import make_train_data_loader, make_train_data_loader_with_expand, make_multi_valid_data_loader
 from tools.expand import main, TrainComponent
 from engine.trainer import do_train
 

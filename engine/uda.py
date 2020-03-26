@@ -25,22 +25,13 @@ from engine.inference import inference
 from engine.trainer import do_train
 from modeling import build_model
 from tools import TrainComponent
-from utils.distance import euclidean_dist
+from utils.tensor_utils import euclidean_dist, batch_horizontal_flip
 from utils.re_ranking import re_ranking
 
 logger = logging.getLogger("reid_baseline.cluster")
 
 
-def create_extractor(model, device=None, flip=False):
-    def horizontal_flip(tensor):
-        """
-        :param tensor: N x C x H x W
-        :return:
-        """
-        inv_idx = torch.arange(tensor.size(3) - 1, -1, -1).long().to(device)
-        img_flip = tensor.index_select(3, inv_idx)
-        return img_flip
-
+def create_extractor(model, device, flip=False):
     def _inference(engine, batch):
         model.eval()
         with torch.no_grad():
@@ -49,7 +40,7 @@ def create_extractor(model, device=None, flip=False):
             target = target.to(device)
             feat = model(img)
             if flip:
-                flip_img = horizontal_flip(img)
+                flip_img = batch_horizontal_flip(img, device)
                 flip_feat = model(flip_img)
                 feat += flip_feat
 
