@@ -5,7 +5,6 @@ _C = CN()
 _C.DATASETS = CN()
 _C.DATASETS.NAME = 'market1501'  # market1501, dukemtmc, msmt17
 _C.DATASETS.ROOT_DIR = '/home/arron/dataset'
-_C.DATASETS.EXPAND = ('market1501',)
 
 _C.DATALOADER = CN()
 _C.DATALOADER.NUM_WORKERS = 8
@@ -63,7 +62,6 @@ _C.EVAL = CN()
 _C.EVAL.EPOCH_PERIOD = 10
 
 _C.SAVER = CN()
-_C.SAVER.OUTPUT_DIR = ""
 _C.SAVER.CHECKPOINT_PERIOD = 1
 _C.SAVER.N_SAVED = 1
 
@@ -79,15 +77,22 @@ _C.APEX.IF_SYNC_BN = False
 _C.APEX.LOSS_SCALE = ("1.0",)
 
 _C.TEST = CN()
-_C.TEST.IF_ON = False
 _C.TEST.BATCH_SIZE = 128  # from evaluate and extract feature
 _C.TEST.IF_RE_RANKING = True
 _C.TEST.IF_FEAT_NORM = True
 _C.TEST.RUN_ID = 1
 
+_C.EXPAND = CN()
+_C.EXPAND.IF_ON = False
+_C.EXPAND.DATASETS_NAME = ("dukemtmc", "msmt17")
+
 _C.UDA = CN()
 _C.UDA.IF_ON = False
-_C.UDA.DATASETS_NAMES = 'dukemtmc'
+_C.UDA.DATASETS_NAME = 'dukemtmc'
 _C.UDA.IF_FLIP = True
 _C.UDA.IF_RE_RANKING = True
 _C.UDA.TIMES = 1
+
+_C.FEAT = CN()
+_C.FEAT.IF_ON = False
+_C.FEAT.DATASETS_NAME = 'dukemtmc'

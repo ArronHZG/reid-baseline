@@ -6,13 +6,12 @@
 import logging
 from collections import OrderedDict
 
-from ignite.metrics import RunningAverage
 from torch.nn import CrossEntropyLoss
 
+from .center_loss import CenterLoss
 from .dec_loss import DECLoss
 from .smoth_loss import CrossEntropyLabelSmooth
 from .triplet_loss import TripletLoss
-from .center_loss import CenterLoss
 
 logger = logging.getLogger("reid_baseline.loss")
 

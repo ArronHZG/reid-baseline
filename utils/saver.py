@@ -19,36 +19,16 @@ class Saver:
         self.cfg = cfg
         self.save_dir = ''
         self.load_dir = ''
-        if cfg.SAVER.OUTPUT_DIR is not "":
-            self.save_dir = cfg.SAVER.OUTPUT_DIR
-        else:
-            dirname_list = os.path.dirname(__file__).split("/")[:-1]
-            self.up_dir = "/".join(dirname_list)
 
-            if not self.cfg.UDA.IF_ON and not self.cfg.TEST.IF_ON:
-                self.save_dir = self.get_save_dir()
-                self.load_dir = self.save_dir
+        dirname_list = os.path.dirname(__file__).split("/")[:-1]
+        self.up_dir = "/".join(dirname_list)
 
-            elif not self.cfg.UDA.IF_ON and self.cfg.TEST.IF_ON:
+        source_name, source_mid_name, target_name, target_mid_name = self._get_some_dir_name(cfg)
+        self.save_dir = self.get_save_dir(target_mid_name, target_name)
+        self.load_dir = self.get_load_dir(source_mid_name, source_name)
 
-                self.load_dir = self.get_loader_dir()
-                self.save_dir = self.load_dir
-
-            elif self.cfg.UDA.IF_ON:
-                self.load_dir = self.get_loader_dir()
-
-                self.save_dir = os.path.join(self.up_dir,
-                                             "run",
-                                             "uda",
-                                             f"{self.cfg.DATASETS.NAME}--to--{self.cfg.UDA.DATASETS_NAMES}",
-                                             self.cfg.MODEL.NAME)
-                self.runs = glob.glob(os.path.join(self.save_dir, 'experiment-*'))
-                run_ids = sorted([int(experiment.split('-')[-1]) for experiment in self.runs]) if self.runs else [0]
-                run_id = run_ids[-1] + 1
-                self.save_dir = os.path.join(self.save_dir, 'experiment-{}'.format(str(run_id)))
-
-            print(f"save dir: {self.save_dir}")
-            print(f"load dir: {self.load_dir}")
+        print(f"save dir: {self.save_dir}")
+        print(f"load dir: {self.load_dir}")
 
         self.train_checkpointer = ModelCheckpoint(self.save_dir,
                                                   "train",
@@ -63,26 +43,49 @@ class Saver:
 
         self.best_result = 0
 
-    def get_loader_dir(self):
+    def _get_some_dir_name(self, cfg):
+
+        source_name = cfg.DATASETS.NAME
+
+        mid_name = None
+        if cfg.FEAT.IF_ON:
+            target_name = cfg.FEAT.DATASETS_NAME
+            target_mid_name = 'feat'
+        elif cfg.UDA.IF_ON:
+            target_name = cfg.UDA.DATASETS_NAME
+            target_mid_name = 'uda'
+
+        elif cfg.EXPAND.IF_ON:
+            name = cfg.DATASETS.NAME
+            for n in cfg.EXPAND.DATASETS_NAME:
+                name += f"--{n}"
+            target_name = name
+            target_mid_name = 'expand'
+
+        else:
+            target_name = cfg.DATASETS.NAME
+            target_mid_name = 'direct'
+
+        source_mid_name = "direct"
+
+        return source_name, source_mid_name, target_name, target_mid_name
+
+    def get_load_dir(self, mid_name, name):
         load_dir = os.path.join(self.up_dir,
                                 "run",
-                                "direct",
-                                self.cfg.DATASETS.NAME,
+                                mid_name,
+                                name,
                                 self.cfg.MODEL.NAME)
         run_id = self.cfg.TEST.RUN_ID
         print(f"Loading run_id: {run_id}")
         load_dir = os.path.join(load_dir, 'experiment-{}'.format(str(run_id)))
-        assert os.path.exists(load_dir)
+        assert os.path.exists(load_dir), load_dir
         return load_dir
 
-    def get_save_dir(self):
-        name = self.cfg.DATASETS.NAME
-        if len(self.cfg.DATASETS.EXPAND) > 0:
-            for n in self.cfg.DATASETS.EXPAND:
-                name += f"--{n}"
+    def get_save_dir(self, mid_name, name):
         first_dir = os.path.join(self.up_dir,
                                  "run",
-                                 "direct",
+                                 mid_name,
                                  name,
                                  self.cfg.MODEL.NAME)
         runs = glob.glob(os.path.join(first_dir, 'experiment-*'))
@@ -142,3 +145,9 @@ class Saver:
             if k not in checkpoint:
                 raise ValueError("Object labeled by '{}' from `to_load` is not found in the checkpoint".format(k))
             obj.load_state_dict(checkpoint[k], strict=False)
+
+
+if __name__ == '__main__':
+    from config import cfg
+
+    Saver(cfg)

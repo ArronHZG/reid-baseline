@@ -20,59 +20,14 @@ from torch import nn
 from ignite.engine import Engine, Events
 from sklearn.cluster import DBSCAN
 
-from data import make_data_loader
+from engine.extract import extract_features
 from engine.inference import inference
 from engine.trainer import do_train
 from modeling import build_model
-from tools import TrainComponent
 from utils.tensor_utils import euclidean_dist, batch_horizontal_flip
 from utils.re_ranking import re_ranking
 
 logger = logging.getLogger("reid_baseline.cluster")
-
-
-def create_extractor(model, device, flip=False):
-    def _inference(engine, batch):
-        model.eval()
-        with torch.no_grad():
-            img, target = batch
-            img = img.to(device)
-            target = target.to(device)
-            feat = model(img)
-            if flip:
-                flip_img = batch_horizontal_flip(img, device)
-                flip_feat = model(flip_img)
-                feat += flip_feat
-
-            return feat, target
-
-    engine = Engine(_inference)
-    return engine
-
-
-def extract_features(model, device, data_loader, flip):
-    features = []
-    labels = []
-
-    extractor = create_extractor(model, device, flip)
-
-    #
-    # pbar = ProgressBar(persist=True)
-    # pbar.attach(extractor)
-
-    @extractor.on(Events.ITERATION_COMPLETED)
-    def get_output(engine):
-        feat, label = extractor.state.output
-        feat = torch.nn.functional.normalize(feat, dim=1, p=2)
-        features.append(feat)
-        labels.append(label)
-
-    extractor.run(data_loader)
-
-    cat_features = torch.cat(features)
-    cat_labels = torch.cat(labels)
-
-    return cat_features, cat_labels
 
 
 def compute_dist(feat, if_re_ranking):

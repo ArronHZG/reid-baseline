@@ -20,5 +20,5 @@ def test(cfg, saver):
 
 
 if __name__ == '__main__':
-    cfg, saver = main(["TEST.IF_ON", True])
+    cfg, saver = main()
     test(cfg, saver)

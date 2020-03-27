@@ -1,6 +1,5 @@
 import sys
 
-
 sys.path.append('.')
 sys.path.append('..')
 
@@ -11,13 +10,12 @@ from engine.trainer import do_train
 
 def train(cfg, saver):
     dataset_name = [cfg.DATASETS.NAME]
-
-    for name in cfg.DATASETS.EXPAND:
-        dataset_name.append(name)
-    if len(dataset_name) == 1:
-        train_loader, num_classes = make_train_data_loader(cfg, dataset_name[0])
-    else:
+    if cfg.EXPAND.IF_ON:
+        for name in cfg.EXPAND.DATASETS_NAME:
+            dataset_name.append(name)
         train_loader, num_classes = make_train_data_loader_with_expand(cfg, dataset_name)
+    else:
+        train_loader, num_classes = make_train_data_loader(cfg, dataset_name[0])
 
     valid = make_multi_valid_data_loader(cfg, dataset_name)
 
