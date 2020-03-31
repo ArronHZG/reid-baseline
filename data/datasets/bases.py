@@ -56,7 +56,7 @@ class BaseImageDataset(BaseDataset):
         num_query_pids, num_query_imgs, num_query_cams = self.get_imagedata_info(query)
         num_gallery_pids, num_gallery_imgs, num_gallery_cams = self.get_imagedata_info(gallery)
 
-        logger.info("Dataset statistics:")
+        # logger.info("Dataset statistics:")
         logger.info("  ----------------------------------------")
         logger.info("  subset   | # ids | # images | # cameras")
         logger.info("  ----------------------------------------")
@@ -86,7 +86,7 @@ class BaseVideoDataset(BaseDataset):
         max_num = np.max(tracklet_stats)
         avg_num = np.mean(tracklet_stats)
 
-        print("Dataset statistics:")
+        # print("Dataset statistics:")
         print("  -------------------------------------------")
         print("  subset   | # ids | # tracklets | # cameras")
         print("  -------------------------------------------")

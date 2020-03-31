@@ -16,13 +16,13 @@ def create_extractor(model, device, flip=False):
             img, target = batch
             img = img.to(device)
             target = target.to(device)
-            feat = model(img)
+            feat_t, feat_c = model(img)
             if flip:
                 flip_img = batch_horizontal_flip(img, device)
                 flip_feat = model(flip_img)
-                feat += flip_feat
+                feat_c += flip_feat
 
-            return feat, target
+            return feat_t, target
 
     engine = Engine(_inference)
     return engine
@@ -42,7 +42,7 @@ def do_extract(cfg,
     @extractor.on(Events.ITERATION_COMPLETED)
     def get_output(engine):
         feat, label = extractor.state.output
-        feat = torch.nn.functional.normalize(feat, dim=1, p=2)
+        # feat = torch.nn.functional.normalize(feat, dim=1, p=2)
         features.append(feat)
         labels.append(label)
 

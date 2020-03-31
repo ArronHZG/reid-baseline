@@ -42,6 +42,6 @@ class Baseline(nn.Module):
 
         if self.training:
             cls_score = self.classifier(feat_c)
-            return feat_t, cls_score  # global feature for triplet loss
+            return feat_t, feat_c, cls_score  # global feature for triplet loss
         else:  # Test with feature after BN
-            return feat_c
+            return feat_t, feat_c

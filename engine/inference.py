@@ -33,12 +33,14 @@ def create_supervised_evaluator(model, metrics, device, flip=False):
         with torch.no_grad():
             img, pids, camids = batch
             img = img.to(device)
-            feat = model(img).to(torch.float16)
+            feat_t, feat_c = model(img)
+            feat_c = feat_c.to(torch.float16)
             if flip:
                 flip_img = batch_horizontal_flip(img, device)
-                flip_feat = model(flip_img).to(torch.float16)
-                feat += flip_feat
-            return feat, pids, camids
+                _, flip_feat = model(flip_img)
+                flip_feat = flip_feat.to(torch.float16)
+                feat_c += flip_feat
+            return feat_c, pids, camids
 
     engine = Engine(_inference)
 

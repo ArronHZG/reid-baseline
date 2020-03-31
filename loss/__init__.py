@@ -6,7 +6,7 @@
 import logging
 from collections import OrderedDict
 
-from torch.nn import CrossEntropyLoss
+from torch import nn
 
 from .center_loss import CenterLoss
 from .dec_loss import DECLoss
@@ -28,7 +28,7 @@ class Loss:
             self.xent = CrossEntropyLabelSmooth(num_classes=self.num_classes)
             logger.info(f"Label smooth on, numclasses: {self.num_classes}")
         else:
-            self.xent = CrossEntropyLoss()
+            self.xent = nn.CrossEntropyLoss()
 
         # m loss
         self.triplet = TripletLoss(self.cfg.LOSS.MARGIN)
@@ -41,6 +41,7 @@ class Loss:
 
         self.loss_function_map = OrderedDict()
         self.make_loss_map()
+        self.feat_loss = nn.MSELoss()
 
     def make_loss_map(self):
 

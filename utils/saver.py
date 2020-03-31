@@ -25,7 +25,10 @@ class Saver:
 
         source_name, source_mid_name, target_name, target_mid_name = self._get_some_dir_name(cfg)
         self.save_dir = self.get_save_dir(target_mid_name, target_name)
-        self.load_dir = self.get_load_dir(source_mid_name, source_name)
+        if target_mid_name == 'direct':
+            self.load_dir = self.save_dir
+        else:
+            self.load_dir = self.get_load_dir(source_mid_name, source_name)
 
         print(f"save dir: {self.save_dir}")
         print(f"load dir: {self.load_dir}")

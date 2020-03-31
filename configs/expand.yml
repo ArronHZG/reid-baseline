@@ -1,2 +1,3 @@
-DATASETS:
-  EXPAND: ('dukemtmc','msmt17')
+EXPAND:
+  IF_ON: True
+  DATASETS_NAME: ("dukemtmc", "msmt17")

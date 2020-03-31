@@ -1,18 +1,22 @@
 import logging
+from collections import OrderedDict
 
 import torch
+from torch import nn
 from ignite.engine import Engine, Events
 from ignite.handlers import Timer
 from ignite.metrics import RunningAverage
 
 from engine.inference import get_valid_eval_map, eval_multi_dataset
+from loss import Loss
 from tools.expand import TrainComponent
+from utils.reid_metric import R1_mAP
 from utils.tensorboardX_log import TensorBoardXLog
 
 logger = logging.getLogger("reid_baseline.train")
 
 
-def create_supervised_trainer(model, optimizer, loss_fn_map,
+def create_supervised_trainer(model, optimizer, loss_class: Loss,
                               apex=False,
                               device=None,
                               has_center=False,
@@ -24,16 +28,24 @@ def create_supervised_trainer(model, optimizer, loss_fn_map,
         optimizer.zero_grad()
         if has_center:
             optimizer_center.zero_grad()
-        img, target = batch
-        img = img.to(device)
-        target = target.to(device)
-        feat_t, feat_c, cls_score = model(img)
+        t_img, t_pid, s_img, s_target_feat = batch
+        t_img = t_img.to(device)
+        t_pid = t_pid.to(device)
+        s_img = s_img.to(device)
+        s_target_feat = s_target_feat.to(device)
+        s_feat_t, s_feat_c, _ = model(s_img)
+        t_feat_t, t_feat_c, t_score = model(t_img)
+
         loss_values = {}
         loss = torch.tensor(.0, requires_grad=True).to(device)
-        for name, loss_fn in loss_fn_map.items():
-            loss_temp = loss_fn(cls_score, feat_t, target)
-            loss += loss_temp
+        for name, loss_fn in loss_class.loss_function_map.items():
+            loss_temp = loss_fn(t_score, t_feat_t, t_pid)
+            # loss += loss_temp
             loss_values[name] = loss_temp.item()
+
+        feat_loss = loss_class.feat_loss(s_feat_c, s_target_feat)
+        loss += feat_loss
+        loss_values['feat'] = feat_loss.item()
 
         if apex:
             from apex import amp
@@ -44,13 +56,13 @@ def create_supervised_trainer(model, optimizer, loss_fn_map,
 
         optimizer.step()
 
-        if has_center:
-            for param in center_criterion.parameters():
-                param.grad.data *= (1. / center_loss_weight)
-            optimizer_center.step()
+        # if has_center:
+        #     for param in center_criterion.parameters():
+        #         param.grad.data *= (1. / center_loss_weight)
+        #     optimizer_center.step()
 
         # compute acc
-        acc = (cls_score.max(1)[1] == target).float().mean()
+        acc = (t_score.max(1)[1] == t_pid).float().mean()
         loss_values["Loss"] = loss.item()
         loss_values["Acc"] = acc.item()
         return loss_values
@@ -58,18 +70,18 @@ def create_supervised_trainer(model, optimizer, loss_fn_map,
     return Engine(_update)
 
 
-def do_train(cfg,
-             train_loader,
-             valid,
-             tr_comp: TrainComponent,
-             saver):
+def do_train_with_feat(cfg,
+                       train_loader,
+                       valid,
+                       tr_comp: TrainComponent,
+                       saver):
     tb_log = TensorBoardXLog(cfg, saver.save_dir)
 
     device = cfg.MODEL.DEVICE
 
     trainer = create_supervised_trainer(tr_comp.model,
                                         tr_comp.optimizer,
-                                        tr_comp.loss.loss_function_map,
+                                        tr_comp.loss,
                                         device=device,
                                         apex=cfg.APEX.IF_ON,
                                         has_center=cfg.LOSS.IF_WITH_CENTER,
@@ -105,6 +117,7 @@ def do_train(cfg,
     RunningAverage(output_transform=lambda x: x['softmax']).attach(trainer, 'softmax')
     RunningAverage(output_transform=lambda x: x['triplet']).attach(trainer, 'triplet')
     RunningAverage(output_transform=lambda x: x['center']).attach(trainer, 'center')
+    RunningAverage(output_transform=lambda x: x['feat']).attach(trainer, 'feat')
 
     if cfg.LOSS.IF_WITH_CENTER and cfg.LOSS.IF_WITH_DEC:
         RunningAverage(output_transform=lambda x: x['dec']).attach(trainer, 'dec')
@@ -122,12 +135,14 @@ def do_train(cfg,
     def log_training_loss(engine):
         message = f"Epoch[{engine.state.epoch}], " + \
                   f"Iteration[{engine.state.iteration}/{len(train_loader)}], " + \
-                  f"Base Lr: {tr_comp.scheduler.get_lr()[0]:.2e}, " + \
+                  f"Lr: {tr_comp.scheduler.get_lr()[0]:.2e}, " + \
                   f"Loss: {engine.state.metrics['Loss']:.4f}, " + \
                   f"Acc: {engine.state.metrics['Acc']:.4f}, "
 
         for loss_name in tr_comp.loss.loss_function_map.keys():
             message += f"{loss_name}: {engine.state.metrics[loss_name]:.4f}, "
+
+        message += f"feat: {engine.state.metrics['feat']:.4f}"
 
         logger.info(message)
 
