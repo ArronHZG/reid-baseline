@@ -129,7 +129,7 @@ def main(merge_list=None):
     logger.info("Running with config:\n{}".format(cfg))
     logger.info("=" * 20)
     if cfg.MODEL.DEVICE == "cuda":
-        os.environ['CUDA_VISIBLE_DEVICES'] = cfg.MODEL.DEVICE_ID
+        os.environ['CUDA_VISIBLE_DEVICES'] = f'{cfg.MODEL.DEVICE_ID}'
         # num_gpus = int(os.environ["WORLD_SIZE"]) if "WORLD_SIZE" in os.environ else 1
         logger.info(f"Using GPU: {cfg.MODEL.DEVICE_ID}")
         logger.info(f"CUDNN VERSION: {cudnn.version()}")

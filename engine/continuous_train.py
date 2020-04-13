@@ -37,7 +37,7 @@ def create_supervised_trainer(source_model,
         target = target.to(device)
 
         # source_feat
-        source_feat_t, source_feat_c = source_model(img)
+        _, source_feat_c = source_model(img)
 
         # current_feat
         current_feat_t, current_feat_c, current_cls_score = current_model(img)
