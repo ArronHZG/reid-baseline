@@ -2,9 +2,9 @@ from yacs.config import CfgNode as CN
 
 _C = CN()
 
-_C.DATASETS = CN()
-_C.DATASETS.NAME = 'market1501'  # market1501, dukemtmc, msmt17
-_C.DATASETS.ROOT_DIR = '/home/arron/dataset'
+_C.DATASET = CN()
+_C.DATASET.NAME = 'market1501'  # market1501, dukemtmc, msmt17
+_C.DATASET.ROOT_DIR = '/home/arron/dataset'
 
 _C.DATALOADER = CN()
 _C.DATALOADER.NUM_WORKERS = 8
@@ -56,7 +56,7 @@ _C.WARMUP.GAMMA = 0.1
 _C.TRAIN = CN()
 _C.TRAIN.BATCH_SIZE = 64
 _C.TRAIN.LOG_ITER_PERIOD = 100
-_C.TRAIN.MAX_EPOCHS = 12000
+_C.TRAIN.MAX_EPOCHS = 150
 
 _C.EVAL = CN()
 _C.EVAL.EPOCH_PERIOD = 10
@@ -84,15 +84,20 @@ _C.TEST.RUN_ID = 1
 
 _C.EXPAND = CN()
 _C.EXPAND.IF_ON = False
-_C.EXPAND.DATASETS_NAME = ("dukemtmc", "msmt17")
+_C.EXPAND.DATASET_NAME = ("dukemtmc", "msmt17")
 
 _C.UDA = CN()
 _C.UDA.IF_ON = False
-_C.UDA.DATASETS_NAME = 'dukemtmc'
+_C.UDA.DATASET_NAME = 'dukemtmc'
 _C.UDA.IF_FLIP = True
 _C.UDA.IF_RE_RANKING = True
 _C.UDA.TIMES = 1
 
 _C.FEAT = CN()
 _C.FEAT.IF_ON = False
-_C.FEAT.DATASETS_NAME = 'dukemtmc'
+_C.FEAT.DATASET_NAME = 'dukemtmc'
+
+_C.CONTINUATION = CN()
+_C.CONTINUATION.IF_ON = False
+_C.CONTINUATION.DATASET_NAME = 'dukemtmc'
+_C.CONTINUATION.T = 0.1

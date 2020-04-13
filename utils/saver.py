@@ -48,25 +48,29 @@ class Saver:
 
     def _get_some_dir_name(self, cfg):
 
-        source_name = cfg.DATASETS.NAME
+        source_name = cfg.DATASET.NAME
 
-        mid_name = None
-        if cfg.FEAT.IF_ON:
-            target_name = cfg.FEAT.DATASETS_NAME
+        if cfg.CONTINUATION.IF_ON:
+            target_name = cfg.CONTINUATION.DATASET_NAME
+            target_mid_name = 'continuation'
+
+        elif cfg.FEAT.IF_ON:
+            target_name = cfg.FEAT.DATASET_NAME
             target_mid_name = 'feat'
+
         elif cfg.UDA.IF_ON:
-            target_name = cfg.UDA.DATASETS_NAME
+            target_name = cfg.UDA.DATASET_NAME
             target_mid_name = 'uda'
 
         elif cfg.EXPAND.IF_ON:
-            name = cfg.DATASETS.NAME
-            for n in cfg.EXPAND.DATASETS_NAME:
+            name = cfg.DATASET.NAME
+            for n in cfg.EXPAND.DATASET_NAME:
                 name += f"--{n}"
             target_name = name
             target_mid_name = 'expand'
 
         else:
-            target_name = cfg.DATASETS.NAME
+            target_name = cfg.DATASET.NAME
             target_mid_name = 'direct'
 
         source_mid_name = "direct"

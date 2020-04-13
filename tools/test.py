@@ -9,7 +9,7 @@ from tools.expand import main, TrainComponent
 
 
 def test(cfg, saver):
-    dataset_name = [cfg.DATASETS.NAME]
+    dataset_name = [cfg.DATASET.NAME]
     valid = make_multi_valid_data_loader(cfg, dataset_name, verbose=True)
 
     tr = TrainComponent(cfg, 0)

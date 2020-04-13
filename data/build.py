@@ -49,7 +49,7 @@ def _get_train_loader(cfg, batch_size, train_set, sampler, shuffle, is_train=Tru
 def make_multi_valid_data_loader(cfg, data_set_names, verbose=False):
     valid = OrderedDict()
     for name in data_set_names:
-        dataset = init_dataset(name, root=cfg.DATASETS.ROOT_DIR, verbose=verbose)
+        dataset = init_dataset(name, root=cfg.DATASET.ROOT_DIR, verbose=verbose)
         val_transforms = build_transforms(cfg, is_train=False)
         val_set = ImageDataset(dataset.query + dataset.gallery, val_transforms)
         val_loader = DataLoader(
@@ -67,7 +67,7 @@ def make_train_data_loader(cfg, dataset_name):
     # ######
     # train
     # ######
-    dataset = init_dataset(dataset_name, root=cfg.DATASETS.ROOT_DIR)
+    dataset = init_dataset(dataset_name, root=cfg.DATASET.ROOT_DIR)
     batch_size, sampler, shuffle = _get_train_sampler(cfg, dataset.train)
     train_loader = _get_train_loader(cfg, batch_size, dataset.train, sampler, shuffle)
     return train_loader, dataset.num_train_pids
@@ -77,14 +77,14 @@ def make_train_data_loader_for_extract(cfg, dataset_name, is_train=False):
     # ######
     # train
     # ######
-    dataset = init_dataset(dataset_name, root=cfg.DATASETS.ROOT_DIR)
+    dataset = init_dataset(dataset_name, root=cfg.DATASET.ROOT_DIR)
     batch_size, sampler, shuffle = _get_train_sampler(cfg, dataset.train, extract=True)
     train_loader = _get_train_loader(cfg, batch_size, dataset.train, sampler, shuffle, is_train)
     return train_loader, dataset.num_train_pids
 
 
 def make_train_data_loader_with_labels(cfg, dataset_name, labels):
-    dataset = init_dataset(dataset_name, root=cfg.DATASETS.ROOT_DIR, verbose=False)
+    dataset = init_dataset(dataset_name, root=cfg.DATASET.ROOT_DIR, verbose=False)
     generate_train = []
     for i in range(len(labels)):
         if labels[i] == -1:
@@ -105,7 +105,7 @@ def make_train_data_loader_with_expand(cfg, data_set_names):
     # ######
     datasets = []
     for name in data_set_names:
-        datasets.append(init_dataset(name, root=cfg.DATASETS.ROOT_DIR))
+        datasets.append(init_dataset(name, root=cfg.DATASET.ROOT_DIR))
 
     all_dataset_train = []
     num_classes = 0
@@ -131,7 +131,7 @@ def make_train_data_loader_with_expand(cfg, data_set_names):
 
 
 def _get_target_data_loader(cfg, target_name):
-    dataset = init_dataset(target_name, root=cfg.DATASETS.ROOT_DIR, verbose=False)
+    dataset = init_dataset(target_name, root=cfg.DATASET.ROOT_DIR, verbose=False)
     batch_size, sampler, shuffle = _get_train_sampler(cfg, dataset.train)
 
     train_transforms = build_transforms(cfg, is_train=True)
@@ -154,7 +154,7 @@ def _get_target_data_loader(cfg, target_name):
 
 
 def _get_feat_data_loader(cfg, source_name, feat):
-    dataset = init_dataset(source_name, root=cfg.DATASETS.ROOT_DIR, verbose=False)
+    dataset = init_dataset(source_name, root=cfg.DATASET.ROOT_DIR, verbose=False)
     generate_train = []
     for i in range(feat.size(0)):
         img_path, _, _ = dataset.train[i]

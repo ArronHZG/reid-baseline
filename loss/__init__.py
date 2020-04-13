@@ -1,8 +1,3 @@
-# encoding: utf-8
-"""
-@author:  liaoxingyu
-@contact: sherlockliao01@gmail.com
-"""
 import logging
 from collections import OrderedDict
 
@@ -12,6 +7,7 @@ from .center_loss import CenterLoss
 from .dec_loss import DECLoss
 from .smoth_loss import CrossEntropyLabelSmooth
 from .triplet_loss import TripletLoss
+from .dist_loss import CrossEntropyDistLoss
 
 logger = logging.getLogger("reid_baseline.loss")
 
@@ -41,30 +37,45 @@ class Loss:
 
         self.loss_function_map = OrderedDict()
         self.make_loss_map()
-        self.feat_loss = nn.MSELoss()
+        self.cross_entropy_dist_loss = CrossEntropyDistLoss(T=cfg.CONTINUATION.T)
 
     def make_loss_map(self):
+        """
+        **kw:
+            feat_t,
+            feat_c,
+            cls_score,
+            target,
+            target_feat_c,
+        :return:
+        """
 
         if 'softmax' in self.loss_type:
-            def loss_function(score, feat, target):
-                return self.xent(score, target)
+            def loss_function(**kw):
+                return self.xent(kw['cls_score'], kw['target'])
 
             self.loss_function_map["softmax"] = loss_function
 
         if 'triplet' in self.loss_type:
-            def loss_function(score, feat, target):
-                return self.triplet(feat, target)
+            def loss_function(**kw):
+                return self.triplet(kw['feat_t'], kw['target'])
 
             self.loss_function_map["triplet"] = loss_function
 
         if self.cfg.LOSS.IF_WITH_CENTER:
-            def loss_function(score, feat, target):
-                return self.center_loss_weight * self.center(feat, target)
+            def loss_function(**kw):
+                return self.center_loss_weight * self.center(kw['feat_t'], kw['target'])
 
             self.loss_function_map["center"] = loss_function
 
         if self.cfg.LOSS.IF_WITH_CENTER and self.cfg.LOSS.IF_WITH_DEC:
-            def loss_function(score, feat, target):
-                return self.dec(feat, self.center.centers)
+            def loss_function(**kw):
+                return self.dec(kw['feat_t'], self.center.centers)
 
             self.loss_function_map["dec"] = loss_function
+
+        if self.cfg.CONTINUATION.IF_ON:
+            def loss_function(**kw):
+                return self.cross_entropy_dist_loss(kw['feat_c'], kw['target_feat_c'])
+
+            self.loss_function_map["dist"] = loss_function

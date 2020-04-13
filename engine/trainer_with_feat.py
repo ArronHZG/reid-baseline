@@ -1,8 +1,6 @@
 import logging
-from collections import OrderedDict
 
 import torch
-from torch import nn
 from ignite.engine import Engine, Events
 from ignite.handlers import Timer
 from ignite.metrics import RunningAverage
@@ -10,7 +8,6 @@ from ignite.metrics import RunningAverage
 from engine.inference import get_valid_eval_map, eval_multi_dataset
 from loss import Loss
 from tools.expand import TrainComponent
-from utils.reid_metric import R1_mAP
 from utils.tensorboardX_log import TensorBoardXLog
 
 logger = logging.getLogger("reid_baseline.train")

@@ -22,8 +22,8 @@ def train(cfg, saver):
         e.g.: train: dukemtmc with market feat
     """
 
-    source_name = cfg.DATASETS.NAME
-    target_name = cfg.FEAT.DATASETS_NAME
+    source_name = cfg.DATASET.NAME
+    target_name = cfg.FEAT.DATASET_NAME
 
     source_loader, _ = make_train_data_loader_for_extract(cfg, source_name)
 

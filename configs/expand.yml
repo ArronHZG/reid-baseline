@@ -1,3 +1,3 @@
 EXPAND:
   IF_ON: True
-  DATASETS_NAME: ("dukemtmc", "msmt17")
+  DATASET_NAME: ("dukemtmc", "msmt17")

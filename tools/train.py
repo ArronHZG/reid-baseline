@@ -9,9 +9,9 @@ from engine.trainer import do_train
 
 
 def train(cfg, saver):
-    dataset_name = [cfg.DATASETS.NAME]
+    dataset_name = [cfg.DATASET.NAME]
     if cfg.EXPAND.IF_ON:
-        for name in cfg.EXPAND.DATASETS_NAME:
+        for name in cfg.EXPAND.DATASET_NAME:
             dataset_name.append(name)
         train_loader, num_classes = make_train_data_loader_with_expand(cfg, dataset_name)
     else:
