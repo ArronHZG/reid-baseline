@@ -6,11 +6,12 @@ from ignite.handlers import Timer
 from ignite.metrics import RunningAverage
 
 from engine.inference import get_valid_eval_map, eval_multi_dataset
+from engine.trainer import Run
 from loss import Loss
 from tools.expand import TrainComponent
 from utils.tensorboardX_log import TensorBoardXLog
 
-logger = logging.getLogger("reid_baseline.continuation")
+logger = logging.getLogger("reid_baseline.continue")
 
 
 def create_supervised_trainer(source_model,
@@ -65,10 +66,10 @@ def create_supervised_trainer(source_model,
 
         optimizer.step()
 
-        # if has_center:
-        #     for param in center_criterion.parameters():
-        #         param.grad.data *= (1. / center_loss_weight)
-        #     optimizer_center.step()
+        if has_center:
+            for param in center_criterion.parameters():
+                param.grad.data *= (1. / center_loss_weight)
+            optimizer_center.step()
 
         # compute acc
         acc = (current_cls_score.max(1)[1] == target).float().mean()
@@ -121,14 +122,11 @@ def do_continuous_train(cfg,
                  step=Events.ITERATION_COMPLETED)
 
     # average metric to attach on trainer
-    RunningAverage(output_transform=lambda x: x["Acc"]).attach(trainer, 'Acc')
-    RunningAverage(output_transform=lambda x: x["Loss"]).attach(trainer, 'Loss')
-    # for name in tr_comp.loss.loss_function_map.keys():
-    #     RunningAverage(output_transform=lambda x: x[2][name]).attach(trainer, name)
-    RunningAverage(output_transform=lambda x: x['softmax']).attach(trainer, 'softmax')
-    RunningAverage(output_transform=lambda x: x['triplet']).attach(trainer, 'triplet')
-    RunningAverage(output_transform=lambda x: x['center']).attach(trainer, 'center')
-    RunningAverage(output_transform=lambda x: x['dist']).attach(trainer, 'dist')
+    names = ["Acc", "Loss"]
+    names.extend(current_tr_comp.loss.loss_function_map.keys())
+
+    for n in names:
+        RunningAverage(output_transform=Run(n)).attach(trainer, n)
 
     # TODO start epoch
     @trainer.on(Events.STARTED)
@@ -164,12 +162,6 @@ def do_continuous_train(cfg,
     @trainer.on(Events.EPOCH_COMPLETED(every=cfg.EVAL.EPOCH_PERIOD),
                 saver=saver)
     def log_validation_results(engine, saver):
-        # train_evaluator.run(train_loader)
-        # cmc, mAP = validation_evaluator.state.metrics['r1_mAP']
-        # logger.info("Train Results - Epoch: {}".format(engine.state.epoch))
-        # logger.info("mAP: {:.1%}".format(mAP))
-        # for r in [1, 5, 10]:
-        #     logger.info("CMC curve, Rank-{:<3}:{:.1%}".format(r, cmc[r - 1]))
 
         logger.info(f"Valid - Epoch: {engine.state.epoch}")
 

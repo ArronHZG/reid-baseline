@@ -6,6 +6,7 @@ from ignite.handlers import Timer
 from ignite.metrics import RunningAverage
 
 from engine.inference import get_valid_eval_map, eval_multi_dataset
+from engine.trainer import Run
 from loss import Loss
 from tools.expand import TrainComponent
 from utils.tensorboardX_log import TensorBoardXLog
@@ -107,17 +108,11 @@ def do_train_with_feat(cfg,
                  step=Events.ITERATION_COMPLETED)
 
     # average metric to attach on trainer
-    RunningAverage(output_transform=lambda x: x["Acc"]).attach(trainer, 'Acc')
-    RunningAverage(output_transform=lambda x: x["Loss"]).attach(trainer, 'Loss')
-    # for name in tr_comp.loss.loss_function_map.keys():
-    #     RunningAverage(output_transform=lambda x: x[2][name]).attach(trainer, name)
-    RunningAverage(output_transform=lambda x: x['softmax']).attach(trainer, 'softmax')
-    RunningAverage(output_transform=lambda x: x['triplet']).attach(trainer, 'triplet')
-    RunningAverage(output_transform=lambda x: x['center']).attach(trainer, 'center')
-    RunningAverage(output_transform=lambda x: x['feat']).attach(trainer, 'feat')
+    names = ["Acc", "Loss"]
+    names.extend(tr_comp.loss.loss_function_map.keys())
 
-    if cfg.LOSS.IF_WITH_CENTER and cfg.LOSS.IF_WITH_DEC:
-        RunningAverage(output_transform=lambda x: x['dec']).attach(trainer, 'dec')
+    for n in names:
+        RunningAverage(output_transform=Run(n)).attach(trainer, n)
 
     # TODO start epoch
     @trainer.on(Events.STARTED)

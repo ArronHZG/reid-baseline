@@ -1,0 +1,2 @@
+LOSS:
+  LOSS_TYPE: 'softmax_arcface_triplet'

@@ -1,4 +1,5 @@
 import logging
+from copy import copy
 
 import torch
 from ignite.engine import Engine, Events
@@ -10,6 +11,14 @@ from tools.expand import TrainComponent
 from utils.tensorboardX_log import TensorBoardXLog
 
 logger = logging.getLogger("reid_baseline.train")
+
+
+class Run:
+    def __init__(self, name):
+        self.name = name
+
+    def __call__(self, x):
+        return x[self.name]
 
 
 def create_supervised_trainer(model, optimizer, loss_fn_map,
@@ -104,16 +113,11 @@ def do_train(cfg,
                  step=Events.ITERATION_COMPLETED)
 
     # average metric to attach on trainer
-    RunningAverage(output_transform=lambda x: x["Acc"]).attach(trainer, 'Acc')
-    RunningAverage(output_transform=lambda x: x["Loss"]).attach(trainer, 'Loss')
-    # for name in tr_comp.loss.loss_function_map.keys():
-    #     RunningAverage(output_transform=lambda x: x[2][name]).attach(trainer, name)
-    RunningAverage(output_transform=lambda x: x['softmax']).attach(trainer, 'softmax')
-    RunningAverage(output_transform=lambda x: x['triplet']).attach(trainer, 'triplet')
-    RunningAverage(output_transform=lambda x: x['center']).attach(trainer, 'center')
+    names = ["Acc", "Loss"]
+    names.extend(tr_comp.loss.loss_function_map.keys())
 
-    if cfg.LOSS.IF_WITH_CENTER and cfg.LOSS.IF_WITH_DEC:
-        RunningAverage(output_transform=lambda x: x['dec']).attach(trainer, 'dec')
+    for n in names:
+        RunningAverage(output_transform=Run(n)).attach(trainer, n)
 
     # TODO start epoch
     @trainer.on(Events.STARTED)
@@ -149,13 +153,6 @@ def do_train(cfg,
     @trainer.on(Events.EPOCH_COMPLETED(every=cfg.EVAL.EPOCH_PERIOD),
                 saver=saver)
     def log_validation_results(engine, saver):
-        # train_evaluator.run(train_loader)
-        # cmc, mAP = validation_evaluator.state.metrics['r1_mAP']
-        # logger.info("Train Results - Epoch: {}".format(engine.state.epoch))
-        # logger.info("mAP: {:.1%}".format(mAP))
-        # for r in [1, 5, 10]:
-        #     logger.info("CMC curve, Rank-{:<3}:{:.1%}".format(r, cmc[r - 1]))
-
         logger.info(f"Valid - Epoch: {engine.state.epoch}")
 
         sum_result = eval_multi_dataset(device, validation_evaluator_map, valid)

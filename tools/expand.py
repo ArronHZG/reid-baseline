@@ -64,7 +64,6 @@ class TrainComponent:
 
 class TrainComponentFeat:
     def __init__(self, cfg, num_classes):
-        self.device = cfg.MODEL.DEVICE
         self.model = build_model(cfg, num_classes)
         self.loss = Loss(cfg, num_classes, self.model.in_planes)
         self.optimizer, self.optimizer_center = make_optimizer(cfg, self.model, self.loss.center)
@@ -85,7 +84,7 @@ class TrainComponentFeat:
             # if cfg.APEX.IF_SYNC_BN:
             #     logger.info("Using apex synced BN")
             #     self.model = apex.parallel.convert_syncbn_model(self.model)
-        if self.device is 'cuda':
+        if cfg.MODEL.DEVICE is 'cuda':
             self.model = self.model.cuda()
             self.loss.center = self.loss.center.cuda()
             if cfg.APEX.IF_ON:
