@@ -1,8 +1,11 @@
 import torch
 from torch import nn
+import logging
+
+logger = logging.getLogger("reid_baseline.loss")
 
 
-class CrossEntropyLabelSmooth(nn.Module):
+class MyCrossEntropy(nn.Module):
     """Cross entropy loss with label smoothing regularizer.
 
     Reference:
@@ -14,11 +17,21 @@ class CrossEntropyLabelSmooth(nn.Module):
         epsilon (float): weight.
     """
 
-    def __init__(self, num_classes, epsilon=0.1):
-        super(CrossEntropyLabelSmooth, self).__init__()
+    def __init__(self, num_classes, label_smooth=False, learning_weight=False):
+        super(MyCrossEntropy, self).__init__()
+        self.label_smooth = label_smooth
+        self.learning_weight = learning_weight
         self.num_classes = num_classes
-        self.epsilon = epsilon
         self.log_softmax = nn.LogSoftmax(dim=1)
+        self.epsilon = 0
+
+        if self.learning_weight:
+            self.uncertainty = nn.Parameter(torch.randn(1), requires_grad=True)
+            logger.info("learning weight for cross entropy loss")
+
+        if self.label_smooth:
+            logger.info(f"Label smooth on, num_classes: {num_classes}")
+            self.epsilon = 0.1
 
     def forward(self, inputs, targets):
         """
@@ -30,12 +43,20 @@ class CrossEntropyLabelSmooth(nn.Module):
         one_hot = torch.zeros_like(log_prob).scatter_(1, targets.unsqueeze(1), 1)
         soft_hot = (1 - self.epsilon) * one_hot + self.epsilon / self.num_classes
         cross_entropy = (- soft_hot * log_prob).mean(0).sum()
+
+        if self.learning_weight:
+            cross_entropy = torch.exp(-self.uncertainty) * cross_entropy + 0.5 * self.uncertainty
+            cross_entropy = cross_entropy.squeeze(-1)
         return cross_entropy
 
 
 if __name__ == '__main__':
     i = torch.randn(2, 4).cuda()
     o = torch.randint(4, (2,)).cuda()
-    loss = CrossEntropyLabelSmooth(4)
+    loss = MyCrossEntropy(4, False, True).cuda()
     l = loss(i, o)
     print(l)
+
+    loss2 = nn.CrossEntropyLoss()
+    l2 = loss2(i, o)
+    print(l2)

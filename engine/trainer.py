@@ -134,7 +134,8 @@ def do_train(cfg,
                   f"Iteration[{engine.state.iteration}/{len(train_loader)}], " + \
                   f"Base Lr: {tr_comp.scheduler.get_lr()[0]:.2e}, " + \
                   f"Loss: {engine.state.metrics['Loss']:.4f}, " + \
-                  f"Acc: {engine.state.metrics['Acc']:.4f}, "
+                  f"Acc: {engine.state.metrics['Acc']:.4f}, " + \
+                  f"xentWeight: {tr_comp.loss.xent.uncertainty.item():.4f}, "
 
         for loss_name in tr_comp.loss.loss_function_map.keys():
             message += f"{loss_name}: {engine.state.metrics[loss_name]:.4f}, "

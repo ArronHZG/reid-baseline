@@ -45,5 +45,4 @@ def train(cfg, saver):
 
 if __name__ == '__main__':
     cfg, saver = main(["CONTINUATION.IF_ON", True, "TEST.IF_RE_RANKING", False])
-    saver.best_result = 0
     train(cfg, saver)

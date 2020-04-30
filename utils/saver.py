@@ -90,7 +90,7 @@ class Saver:
                                 self.cfg.MODEL.NAME)
         run_id = self.cfg.TEST.RUN_ID
         print(f"Loading run_id: {run_id}")
-        load_dir = os.path.join(load_dir, 'experiment-{}'.format(str(run_id)))
+        load_dir = os.path.join(load_dir, 'experiment-{}'.format(str(run_id).zfill(2)))
         assert os.path.exists(load_dir), load_dir
         return load_dir
 
@@ -103,7 +103,7 @@ class Saver:
         runs = glob.glob(os.path.join(first_dir, 'experiment-*'))
         run_ids = sorted([int(experiment.split('-')[-1]) for experiment in runs]) if runs else [0]
         run_id = run_ids[-1] + 1
-        return os.path.join(first_dir, 'experiment-{}'.format(str(run_id)))
+        return os.path.join(first_dir, 'experiment-{}'.format(str(run_id).zfill(2)))
 
     def load_checkpoint(self, is_best=False):
         try:
@@ -116,7 +116,7 @@ class Saver:
             raise RuntimeError("checkpoint doesn't exist.")
 
         self.load_objects(self.to_save, checkpoint)
-        self.best_result = np.load(glob.glob(os.path.join(self.load_dir, "*.npy"))[0])
+        # self.best_result = np.load(glob.glob(os.path.join(self.load_dir, "*.npy"))[0])
         if 'trainer' in self.to_save.keys():
             self.to_save['trainer'].state.max_epochs = self.cfg.TRAIN.MAX_EPOCHS
 

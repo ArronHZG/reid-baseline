@@ -6,7 +6,7 @@ from torch import nn
 from .arcface_loss import ArcfaceLoss
 from .center_loss import CenterLoss
 from .dec_loss import DECLoss
-from .smoth_loss import CrossEntropyLabelSmooth
+from .smoth_loss import MyCrossEntropy
 from .triplet_loss import TripletLoss
 from .dist_loss import CrossEntropyDistLoss
 
@@ -28,12 +28,12 @@ class Loss:
 
         # ID loss
         if 'softmax' in self.loss_type:
+            self.xent = MyCrossEntropy(num_classes=num_classes,
+                                       label_smooth=cfg.LOSS.IF_LABEL_SMOOTH,
+                                       learning_weight=cfg.LOSS.IF_LEARNING_WEIGHT)
 
-            if cfg.LOSS.IF_LABEL_SMOOTH:
-                self.xent = CrossEntropyLabelSmooth(num_classes=num_classes)
-                logger.info(f"Label smooth on, num_classes: {num_classes}")
-            else:
-                self.xent = nn.CrossEntropyLoss()
+            if cfg.MODEL.DEVICE is 'cuda':
+                self.xent = self.xent.cuda()
 
             def loss_function(**kw):
                 return self.xent(kw['cls_score'], kw['target'])

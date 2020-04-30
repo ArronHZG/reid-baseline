@@ -95,7 +95,7 @@ class TrainComponentFeat:
                                                             loss_scale=cfg.APEX.LOSS_SCALE[0])
 
                 if cfg.LOSS.IF_WITH_CENTER:
-                    self.loss_center, self.optimizer_center = amp.initialize(self.loss.center,
+                    self.loss.center, self.optimizer_center = amp.initialize(self.loss.center,
                                                                              self.optimizer_center,
                                                                              opt_level=cfg.APEX.OPT_LEVEL,
                                                                              keep_batchnorm_fp32=None if cfg.APEX.OPT_LEVEL == 'O1' else True,

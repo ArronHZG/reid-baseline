@@ -53,5 +53,4 @@ def train(cfg, saver):
 
 if __name__ == '__main__':
     cfg, saver = main(["FEAT.IF_ON", True])
-    saver.best_result = 0
     train(cfg, saver)

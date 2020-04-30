@@ -9,5 +9,4 @@ python ../tools/continuous_train.py --config_file='../configs/continual_learning
 python ../tools/continuous_train.py --config_file='../configs/continual_learning.yml' CONTINUATION.T 0.07
 python ../tools/continuous_train.py --config_file='../configs/continual_learning.yml' CONTINUATION.T 0.08
 python ../tools/continuous_train.py --config_file='../configs/continual_learning.yml' CONTINUATION.T 0.09
-pytho  ../tools/train.py --config_file='../configs/ranger.yml'
-
+python  ../tools/train.py --config_file='../configs/ranger.yml'
