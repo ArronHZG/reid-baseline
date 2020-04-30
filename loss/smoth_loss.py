@@ -28,6 +28,7 @@ class MyCrossEntropy(nn.Module):
         if self.learning_weight:
             self.uncertainty = nn.Parameter(torch.randn(1), requires_grad=True)
             logger.info("learning weight for cross entropy loss")
+            self.optimizer = None
 
         if self.label_smooth:
             logger.info(f"Label smooth on, num_classes: {num_classes}")

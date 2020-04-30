@@ -28,8 +28,8 @@ def create_supervised_trainer(model, optimizer, groupLoss: Loss,
     def _update(engine, batch):
         model.train()
         optimizer.zero_grad()
-        if groupLoss.has_center:
-            groupLoss.center.optimizer.zero_grad()
+        groupLoss.zero_grad()
+
         img, target = batch
         img = img.to(device)
         target = target.to(device)
@@ -55,11 +55,7 @@ def create_supervised_trainer(model, optimizer, groupLoss: Loss,
             loss.backward()
 
         optimizer.step()
-
-        if groupLoss.has_center:
-            for param in groupLoss.center.parameters():
-                param.grad.data *= (1. / groupLoss.center.loss_weight)
-            groupLoss.center.optimizer.step()
+        groupLoss.step()
 
         # compute acc
         acc = (cls_score.max(1)[1] == target).float().mean()
@@ -127,8 +123,10 @@ def do_train(cfg,
                   f"Iteration[{engine.state.iteration}/{len(train_loader)}], " + \
                   f"Base Lr: {tr_comp.scheduler.get_lr()[0]:.2e}, " + \
                   f"Loss: {engine.state.metrics['Loss']:.4f}, " + \
-                  f"Acc: {engine.state.metrics['Acc']:.4f}, "  # + \
-        # f"xentWeight: {tr_comp.loss.xent.uncertainty.item():.4f}, "
+                  f"Acc: {engine.state.metrics['Acc']:.4f}, "
+
+        if tr_comp.loss.xent and tr_comp.loss.xent.learning_weight:
+            message += f"xentWeight: {tr_comp.loss.xent.uncertainty.item():.4f}, "
 
         for loss_name in tr_comp.loss.loss_function_map.keys():
             message += f"{loss_name}: {engine.state.metrics[loss_name]:.4f}, "

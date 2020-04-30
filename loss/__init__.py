@@ -28,6 +28,7 @@ class Loss:
         #     target_feat_c,
 
         # ID loss
+        self.xent = None
         if 'softmax' in self.loss_type:
             self.xent = MyCrossEntropy(num_classes=num_classes,
                                        label_smooth=cfg.LOSS.IF_LABEL_SMOOTH,
@@ -35,6 +36,9 @@ class Loss:
 
             if cfg.MODEL.DEVICE is 'cuda':
                 self.xent = self.xent.cuda()
+
+            if self.xent.learning_weight:
+                self.xent.optimizer = torch.optim.SGD(self.xent.parameters(), lr=cfg.OPTIMIZER.LOSS_LR)
 
             def loss_function(**kw):
                 return self.xent(kw['cls_score'], kw['target'])
@@ -53,6 +57,7 @@ class Loss:
             self.loss_function_map["arcface"] = loss_function
 
         # metric loss
+        self.triplet = None
         if 'triplet' in self.loss_type:
             self.triplet = TripletLoss(cfg.LOSS.MARGIN)
 
@@ -62,8 +67,8 @@ class Loss:
             self.loss_function_map["triplet"] = loss_function
 
         # cluster loss
-        self.has_center = cfg.LOSS.IF_WITH_CENTER
-        if self.has_center:
+        self.center = None
+        if cfg.LOSS.IF_WITH_CENTER:
             self.center = CenterLoss(num_classes=num_classes,
                                      feat_dim=feat_dim,
                                      loss_weight=cfg.LOSS.CENTER_LOSS_WEIGHT)
@@ -86,6 +91,7 @@ class Loss:
                 self.loss_function_map["dec"] = loss_function
 
         # dist loss
+        self.cross_entropy_dist_loss = None
         if cfg.CONTINUATION.IF_ON:
             self.cross_entropy_dist_loss = CrossEntropyDistLoss(T=cfg.CONTINUATION.T)
 
@@ -93,3 +99,19 @@ class Loss:
                 return self.cross_entropy_dist_loss(kw['feat_c'], kw['target_feat_c'])
 
             self.loss_function_map["dist"] = loss_function
+
+    def zero_grad(self):
+        if self.center:
+            self.center.optimizer.zero_grad()
+
+        if self.xent and self.xent.learning_weight:
+            self.xent.optimizer.zero_grad()
+
+    def step(self):
+        if self.center:
+            for param in self.center.parameters():
+                param.grad.data *= (1. / self.center.loss_weight)
+            self.center.optimizer.step()
+
+        if self.xent and self.xent.learning_weight:
+            self.xent.optimizer.step()
