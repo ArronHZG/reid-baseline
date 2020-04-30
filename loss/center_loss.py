@@ -17,11 +17,13 @@ class CenterLoss(nn.Module):
         feat_dim (int): feature dimension.
     """
 
-    def __init__(self, num_classes, feat_dim):
+    def __init__(self, num_classes, feat_dim, loss_weight):
         super(CenterLoss, self).__init__()
+        self.loss_weight = loss_weight
         self.num_classes = num_classes
         self.feat_dim = feat_dim
         self.centers = nn.Parameter(torch.randn(self.num_classes, self.feat_dim), requires_grad=True)
+        self.optimizer = None
 
     def forward(self, x, labels):
         """

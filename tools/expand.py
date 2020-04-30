@@ -26,7 +26,7 @@ class TrainComponent:
         self.device = cfg.MODEL.DEVICE
         self.model = build_model(cfg, num_classes)
         self.loss = Loss(cfg, num_classes, self.model.in_planes)
-        self.optimizer, self.optimizer_center = make_optimizer(cfg, self.model, self.loss.center)
+        self.optimizer = make_optimizer(cfg, self.model)
         self.scheduler = WarmupMultiStepLR(self.optimizer,
                                            cfg.WARMUP.STEPS,
                                            cfg.WARMUP.GAMMA,
@@ -54,19 +54,12 @@ class TrainComponent:
                                                             keep_batchnorm_fp32=None if cfg.APEX.OPT_LEVEL == 'O1' else True,
                                                             loss_scale=cfg.APEX.LOSS_SCALE[0])
 
-                if cfg.LOSS.IF_WITH_CENTER:
-                    self.loss_center, self.optimizer_center = amp.initialize(self.loss.center,
-                                                                             self.optimizer_center,
-                                                                             opt_level=cfg.APEX.OPT_LEVEL,
-                                                                             keep_batchnorm_fp32=None if cfg.APEX.OPT_LEVEL == 'O1' else True,
-                                                                             loss_scale=cfg.APEX.LOSS_SCALE[0])
-
 
 class TrainComponentFeat:
     def __init__(self, cfg, num_classes):
         self.model = build_model(cfg, num_classes)
         self.loss = Loss(cfg, num_classes, self.model.in_planes)
-        self.optimizer, self.optimizer_center = make_optimizer(cfg, self.model, self.loss.center)
+        self.optimizer = make_optimizer(cfg, self.model)
         self.scheduler = WarmupMultiStepLR(self.optimizer,
                                            cfg.WARMUP.STEPS,
                                            cfg.WARMUP.GAMMA,
@@ -93,13 +86,6 @@ class TrainComponentFeat:
                                                             opt_level=cfg.APEX.OPT_LEVEL,
                                                             keep_batchnorm_fp32=None if cfg.APEX.OPT_LEVEL == 'O1' else True,
                                                             loss_scale=cfg.APEX.LOSS_SCALE[0])
-
-                if cfg.LOSS.IF_WITH_CENTER:
-                    self.loss.center, self.optimizer_center = amp.initialize(self.loss.center,
-                                                                             self.optimizer_center,
-                                                                             opt_level=cfg.APEX.OPT_LEVEL,
-                                                                             keep_batchnorm_fp32=None if cfg.APEX.OPT_LEVEL == 'O1' else True,
-                                                                             loss_scale=cfg.APEX.LOSS_SCALE[0])
 
 
 def main(merge_list=None):

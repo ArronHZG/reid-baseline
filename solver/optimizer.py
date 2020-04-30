@@ -9,7 +9,7 @@ import torch
 from solver.ranger import Ranger
 
 
-def make_optimizer(cfg, model, center_criterion=None):
+def make_optimizer(cfg, model):
     params = []
     for key, value in model.named_parameters():
         if not value.requires_grad:
@@ -38,8 +38,7 @@ def make_optimizer(cfg, model, center_criterion=None):
         optimizer = getattr(torch.optim, cfg.OPTIMIZER.NAME)(params, momentum=cfg.SOLVER.MOMENTUM)
     else:
         optimizer = getattr(torch.optim, cfg.OPTIMIZER.NAME)(params)
-    optimizer_center = torch.optim.SGD(center_criterion.parameters(), lr=cfg.OPTIMIZER.CENTER_LR)
-    return optimizer, optimizer_center
+    return optimizer
 
 
 if __name__ == '__main__':

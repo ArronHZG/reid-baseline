@@ -7,6 +7,7 @@ from ignite.handlers import Timer
 from ignite.metrics import RunningAverage
 
 from engine.inference import get_valid_eval_map, eval_multi_dataset
+from loss import Loss
 from tools.expand import TrainComponent
 from utils.tensorboardX_log import TensorBoardXLog
 
@@ -21,18 +22,14 @@ class Run:
         return x[self.name]
 
 
-def create_supervised_trainer(model, optimizer, loss_fn_map,
+def create_supervised_trainer(model, optimizer, groupLoss: Loss,
                               apex=False,
-                              device=None,
-                              has_center=False,
-                              center_criterion=None,
-                              optimizer_center=None,
-                              center_loss_weight=None):
+                              device=None):
     def _update(engine, batch):
         model.train()
         optimizer.zero_grad()
-        if has_center:
-            optimizer_center.zero_grad()
+        if groupLoss.has_center:
+            groupLoss.center.optimizer.zero_grad()
         img, target = batch
         img = img.to(device)
         target = target.to(device)
@@ -45,7 +42,7 @@ def create_supervised_trainer(model, optimizer, loss_fn_map,
                      "target_feat_c": None}
 
         loss = torch.tensor(.0, requires_grad=True).to(device)
-        for name, loss_fn in loss_fn_map.items():
+        for name, loss_fn in groupLoss.loss_function_map.items():
             loss_temp = loss_fn(**loss_args)
             loss += loss_temp
             loss_values[name] = loss_temp.item()
@@ -59,10 +56,10 @@ def create_supervised_trainer(model, optimizer, loss_fn_map,
 
         optimizer.step()
 
-        if has_center:
-            for param in center_criterion.parameters():
-                param.grad.data *= (1. / center_loss_weight)
-            optimizer_center.step()
+        if groupLoss.has_center:
+            for param in groupLoss.center.parameters():
+                param.grad.data *= (1. / groupLoss.center.loss_weight)
+            groupLoss.center.optimizer.step()
 
         # compute acc
         acc = (cls_score.max(1)[1] == target).float().mean()
@@ -84,19 +81,15 @@ def do_train(cfg,
 
     trainer = create_supervised_trainer(tr_comp.model,
                                         tr_comp.optimizer,
-                                        tr_comp.loss.loss_function_map,
+                                        tr_comp.loss,
                                         device=device,
-                                        apex=cfg.APEX.IF_ON,
-                                        has_center=cfg.LOSS.IF_WITH_CENTER,
-                                        center_criterion=tr_comp.loss.center,
-                                        optimizer_center=tr_comp.optimizer_center,
-                                        center_loss_weight=cfg.LOSS.CENTER_LOSS_WEIGHT)
+                                        apex=cfg.APEX.IF_ON)
 
     saver.to_save = {'trainer': trainer,
-                     'model': tr_comp.model,
-                     'optimizer': tr_comp.optimizer,
-                     'center_param': tr_comp.loss_center,
-                     'optimizer_center': tr_comp.optimizer_center}
+                     'model': tr_comp.model}
+    # 'optimizer': tr_comp.optimizer,
+    # 'center_param': tr_comp.loss_center,
+    # 'optimizer_center': tr_comp.optimizer_center}
 
     trainer.add_event_handler(Events.EPOCH_COMPLETED(every=cfg.SAVER.CHECKPOINT_PERIOD),
                               saver.train_checkpointer,
@@ -134,8 +127,8 @@ def do_train(cfg,
                   f"Iteration[{engine.state.iteration}/{len(train_loader)}], " + \
                   f"Base Lr: {tr_comp.scheduler.get_lr()[0]:.2e}, " + \
                   f"Loss: {engine.state.metrics['Loss']:.4f}, " + \
-                  f"Acc: {engine.state.metrics['Acc']:.4f}, " + \
-                  f"xentWeight: {tr_comp.loss.xent.uncertainty.item():.4f}, "
+                  f"Acc: {engine.state.metrics['Acc']:.4f}, "  # + \
+        # f"xentWeight: {tr_comp.loss.xent.uncertainty.item():.4f}, "
 
         for loss_name in tr_comp.loss.loss_function_map.keys():
             message += f"{loss_name}: {engine.state.metrics[loss_name]:.4f}, "

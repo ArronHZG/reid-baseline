@@ -1,6 +1,7 @@
 import logging
 from collections import OrderedDict
 
+import torch
 from torch import nn
 
 from .arcface_loss import ArcfaceLoss
@@ -61,11 +62,15 @@ class Loss:
             self.loss_function_map["triplet"] = loss_function
 
         # cluster loss
-        if cfg.LOSS.IF_WITH_CENTER:
-            self.center = CenterLoss(num_classes=num_classes, feat_dim=feat_dim)
+        self.has_center = cfg.LOSS.IF_WITH_CENTER
+        if self.has_center:
+            self.center = CenterLoss(num_classes=num_classes,
+                                     feat_dim=feat_dim,
+                                     loss_weight=cfg.LOSS.CENTER_LOSS_WEIGHT)
 
             if cfg.MODEL.DEVICE is 'cuda':
                 self.center = self.center.cuda()
+            self.center.optimizer = torch.optim.SGD(self.center.parameters(), lr=cfg.OPTIMIZER.LOSS_LR)
 
             def loss_function(**kw):
                 return cfg.LOSS.CENTER_LOSS_WEIGHT * self.center(kw['feat_t'], kw['target'])
