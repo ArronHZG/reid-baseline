@@ -128,6 +128,12 @@ def do_train(cfg,
         if tr_comp.loss.xent and tr_comp.loss.xent.learning_weight:
             message += f"xentWeight: {tr_comp.loss.xent.uncertainty.item():.4f}, "
 
+        if tr_comp.loss.triplet and tr_comp.loss.triplet.learning_weight:
+            message += f"tripletWeight: {tr_comp.loss.triplet.uncertainty.item():.4f}, "
+
+        if tr_comp.loss.center and tr_comp.loss.center.learning_weight:
+            message += f"centerWeight: {tr_comp.loss.center.uncertainty.item():.4f}, "
+
         for loss_name in tr_comp.loss.loss_function_map.keys():
             message += f"{loss_name}: {engine.state.metrics[loss_name]:.4f}, "
 

@@ -59,7 +59,14 @@ class Loss:
         # metric loss
         self.triplet = None
         if 'triplet' in self.loss_type:
-            self.triplet = TripletLoss(cfg.LOSS.MARGIN)
+            self.triplet = TripletLoss(cfg.LOSS.MARGIN,
+                                       learning_weight=cfg.LOSS.IF_LEARNING_WEIGHT)
+
+            if cfg.MODEL.DEVICE is 'cuda':
+                self.triplet = self.triplet.cuda()
+
+            if self.triplet.learning_weight:
+                self.triplet.optimizer = torch.optim.SGD(self.triplet.parameters(), lr=cfg.OPTIMIZER.LOSS_LR)
 
             def loss_function(**kw):
                 return cfg.LOSS.METRIC_LOSS_WEIGHT * self.triplet(kw['feat_t'], kw['target'])
@@ -71,7 +78,8 @@ class Loss:
         if cfg.LOSS.IF_WITH_CENTER:
             self.center = CenterLoss(num_classes=num_classes,
                                      feat_dim=feat_dim,
-                                     loss_weight=cfg.LOSS.CENTER_LOSS_WEIGHT)
+                                     loss_weight=cfg.LOSS.CENTER_LOSS_WEIGHT,
+                                     learning_weight=cfg.LOSS.IF_LEARNING_WEIGHT)
 
             if cfg.MODEL.DEVICE is 'cuda':
                 self.center = self.center.cuda()
@@ -107,6 +115,9 @@ class Loss:
         if self.xent and self.xent.learning_weight:
             self.xent.optimizer.zero_grad()
 
+        if self.triplet and self.triplet.learning_weight:
+            self.triplet.optimizer.zero_grad()
+
     def step(self):
         if self.center:
             for param in self.center.parameters():
@@ -115,3 +126,6 @@ class Loss:
 
         if self.xent and self.xent.learning_weight:
             self.xent.optimizer.step()
+
+        if self.triplet and self.triplet.learning_weight:
+            self.triplet.optimizer.step()

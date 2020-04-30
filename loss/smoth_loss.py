@@ -1,8 +1,5 @@
 import torch
 from torch import nn
-import logging
-
-logger = logging.getLogger("reid_baseline.loss")
 
 
 class MyCrossEntropy(nn.Module):
@@ -26,12 +23,10 @@ class MyCrossEntropy(nn.Module):
         self.epsilon = 0
 
         if self.learning_weight:
-            self.uncertainty = nn.Parameter(torch.randn(1), requires_grad=True)
-            logger.info("learning weight for cross entropy loss")
+            self.uncertainty = nn.Parameter(torch.tensor(0.0), requires_grad=True)
             self.optimizer = None
 
         if self.label_smooth:
-            logger.info(f"Label smooth on, num_classes: {num_classes}")
             self.epsilon = 0.1
 
     def forward(self, inputs, targets):

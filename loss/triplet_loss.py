@@ -69,8 +69,9 @@ class TripletLoss(nn.Module):
     Related Triplet Loss theory can be found in paper 'In Defense of the Triplet
     Loss for Person Re-Identification'."""
 
-    def __init__(self, margin=None):
+    def __init__(self, margin=None, learning_weight=False):
         super(TripletLoss, self).__init__()
+        self.learning_weight = learning_weight
         self.margin = margin
         self.MarginRankingLoss = nn.MarginRankingLoss(margin=margin)
         self.SoftMarginLoss = nn.SoftMarginLoss()
@@ -83,6 +84,10 @@ class TripletLoss(nn.Module):
 
             self.ranking_loss = my_soft_margin_loss
 
+        if self.learning_weight:
+            self.uncertainty = nn.Parameter(torch.tensor(1.64), requires_grad=True)
+            self.optimizer = None
+
     def forward(self, global_feat, labels):
         global_feat = torch.nn.functional.normalize(global_feat, dim=1, p=2)
         dist_mat = euclidean_dist(global_feat, global_feat)
@@ -93,4 +98,9 @@ class TripletLoss(nn.Module):
         # and vice-versa for y = -1.
         loss = self.ranking_loss(dist_an, dist_ap, y)
         # return loss, dist_ap, dist_an
+
+        if self.learning_weight:
+            loss = 0.5 * torch.exp(-self.uncertainty) * loss + self.uncertainty
+            loss = loss.squeeze(-1)
+
         return loss
