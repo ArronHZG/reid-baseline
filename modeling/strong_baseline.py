@@ -2,10 +2,11 @@ from torch import nn
 
 from modeling.backbone.resnet import resnet18, resnet50, resnet101, resnet152, \
     resnext50_32x4d, resnext101_32x8d, \
-    wide_resnet50_2, wide_resnet101_2
+    wide_resnet50_2, wide_resnet101_2, resnet34
 from modeling.model_initial import weights_init_kaiming, weights_init_classifier
 
 model_map = {'resnet18': resnet18,
+             'resnet34': resnet34,
              'resnet50': resnet50,
              'resnet101': resnet101,
              'resnet152': resnet152,
@@ -15,15 +16,22 @@ model_map = {'resnet18': resnet18,
              'wide_resnet101_2': wide_resnet101_2}
 
 
-# TODO se_resnet
-# TODO ibn_resnet
-
 class Baseline(nn.Module):
 
-    def __init__(self, num_classes, last_stride, model_name, pretrain_choice):
+    def __init__(self,
+                 num_classes,
+                 last_stride,
+                 model_name,
+                 pretrain_choice,
+                 se=False,
+                 ibn_a=False,
+                 ibn_b=False):
         super(Baseline, self).__init__()
         self.base = model_map[model_name](last_stride=last_stride,
-                                          pretrained=True if pretrain_choice == 'ibn-net' else False)
+                                          pretrained=True if pretrain_choice == 'imagenet' else False,
+                                          se=se,
+                                          ibn_a=ibn_a,
+                                          ibn_b=ibn_b)
 
         self.GAP = nn.AdaptiveAvgPool2d(1)
         self.num_classes = num_classes

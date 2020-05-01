@@ -26,7 +26,10 @@ _C.MODEL.DEVICE_ID = 0
 _C.MODEL.IF_DETERMINISTIC = True
 _C.MODEL.NAME = 'resnet50'
 _C.MODEL.LAST_STRIDE = 1
-_C.MODEL.PRETRAIN_CHOICE = 'ibn-net'  # Options: 'ibn-net','random' or 'self'
+_C.MODEL.PRETRAIN_CHOICE = 'imagenet'  # Options: 'imagenet','random' or 'self'
+_C.MODEL.IF_IBN_A = False
+_C.MODEL.IF_IBN_B = False
+_C.MODEL.SE = False
 
 _C.LOSS = CN()
 _C.LOSS.IF_WITH_CENTER = True

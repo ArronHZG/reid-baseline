@@ -1,0 +1,647 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="1b0344a7-c05c-4a3c-9dfc-141d92b1a83a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/modeling/backbone/model/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/modeling/backbone/model/ibn_model.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/model_shape.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/model_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/defaults.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/defaults.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modeling/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/modeling/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modeling/backbone/ibn-net/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/modeling/backbone/ibn-net/densenet_ibn_a.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/modeling/backbone/ibn-net/resnet_ibn_a.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/modeling/backbone/ibn-net/resnet_ibn_b.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/modeling/backbone/ibn-net/resnext_ibn_a.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/modeling/backbone/ibn-net/se_module.py" beforeDir="false" afterPath="$PROJECT_DIR$/modeling/backbone/model/se_module.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modeling/backbone/ibn-net/se_resnet.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/modeling/backbone/ibn-net/se_resnet_ibn_a.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/modeling/backbone/ibn-net/se_resnet_ibn_b.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/modeling/backbone/resnet.py" beforeDir="false" afterPath="$PROJECT_DIR$/modeling/backbone/resnet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modeling/strong_baseline.py" beforeDir="false" afterPath="$PROJECT_DIR$/modeling/strong_baseline.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="$PROJECT_DIR$/.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectId" id="1ZBHh8aawdcCOytZgntDl4kt88C" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
+    <property name="add_unversioned_files" value="$PROJECT_DIR$/run/strong.log" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/modeling/backbone" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/modeling/backbone/model" />
+      <recent name="$PROJECT_DIR$/modeling/backbone" />
+      <recent name="$PROJECT_DIR$/test" />
+      <recent name="$PROJECT_DIR$/test/delving_into_model" />
+      <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/modeling/backbone" />
+      <recent name="$PROJECT_DIR$/script" />
+      <recent name="$PROJECT_DIR$/configs" />
+      <recent name="$PROJECT_DIR$/engine" />
+      <recent name="$PROJECT_DIR$/tools" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.model_test">
+    <configuration name="def_test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="reid-baseline" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/unit_test" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/unit_test/def_test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="model_test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="reid-baseline" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test/model_test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="resnet" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="reid-baseline" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/modeling/backbone" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/modeling/backbone/resnet.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="smoth_loss" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="reid-baseline" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/loss" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/loss/smoth_loss.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="train" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="reid-baseline" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tools" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tools/train.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.model_test" />
+        <item itemvalue="Python.resnet" />
+        <item itemvalue="Python.train" />
+        <item itemvalue="Python.smoth_loss" />
+        <item itemvalue="Python.def_test" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1b0344a7-c05c-4a3c-9dfc-141d92b1a83a" name="Default Changelist" comment="" />
+      <created>1584305683903</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1584305683903</updated>
+      <workItem from="1584305685551" duration="9100000" />
+      <workItem from="1584435038762" duration="22845000" />
+      <workItem from="1584476007426" duration="28908000" />
+      <workItem from="1584558954284" duration="373000" />
+      <workItem from="1584594283743" duration="5159000" />
+      <workItem from="1584614084405" duration="7135000" />
+      <workItem from="1584643656258" duration="16310000" />
+      <workItem from="1584725490146" duration="51922000" />
+      <workItem from="1584958731336" duration="4511000" />
+      <workItem from="1584969253260" duration="1646000" />
+      <workItem from="1585036464343" duration="8939000" />
+      <workItem from="1585057623661" duration="32377000" />
+      <workItem from="1585207647182" duration="15399000" />
+      <workItem from="1585236053439" duration="16743000" />
+      <workItem from="1585314387536" duration="4816000" />
+      <workItem from="1585639410546" duration="1456000" />
+      <workItem from="1586794680401" duration="7612000" />
+      <workItem from="1586855286103" duration="730000" />
+      <workItem from="1586876251788" duration="714000" />
+      <workItem from="1586884671842" duration="75000" />
+      <workItem from="1586884765420" duration="15033000" />
+      <workItem from="1588174200419" duration="2779000" />
+      <workItem from="1588182775981" duration="785000" />
+      <workItem from="1588263097782" duration="26071000" />
+    </task>
+    <task id="LOCAL-00001" summary="auto download backbone weight">
+      <created>1584559275020</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1584559275020</updated>
+    </task>
+    <task id="LOCAL-00002" summary="backbone">
+      <created>1584613875967</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1584613875967</updated>
+    </task>
+    <task id="LOCAL-00003" summary="build new backbone">
+      <created>1584645523991</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1584645523991</updated>
+    </task>
+    <task id="LOCAL-00004" summary="inference">
+      <created>1584648942554</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1584648942554</updated>
+    </task>
+    <task id="LOCAL-00005" summary="extractor">
+      <created>1584732550560</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1584732550560</updated>
+    </task>
+    <task id="LOCAL-00006" summary="cluster">
+      <created>1584866223109</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1584866223109</updated>
+    </task>
+    <task id="LOCAL-00007" summary="uda">
+      <created>1584904775403</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1584904775403</updated>
+    </task>
+    <task id="LOCAL-00008" summary="debug uda">
+      <created>1584951862723</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1584951862723</updated>
+    </task>
+    <task id="LOCAL-00009" summary="dec loss">
+      <created>1585046194704</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1585046194704</updated>
+    </task>
+    <task id="LOCAL-00010" summary="show each loss value">
+      <created>1585067071724</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1585067071724</updated>
+    </task>
+    <task id="LOCAL-00011" summary="dec loss">
+      <created>1585071266452</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1585071266452</updated>
+    </task>
+    <task id="LOCAL-00012" summary=" dec loss is too small">
+      <created>1585071673471</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1585071673471</updated>
+    </task>
+    <task id="LOCAL-00013" summary="make_multi_data_loader">
+      <created>1585079670105</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1585079670105</updated>
+    </task>
+    <task id="LOCAL-00014" summary="multi dataset result">
+      <created>1585161652971</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1585161652971</updated>
+    </task>
+    <task id="LOCAL-00015" summary="rewrite dataset">
+      <created>1585230621949</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1585230621949</updated>
+    </task>
+    <task id="LOCAL-00016" summary="flip test">
+      <created>1585232464089</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1585232464089</updated>
+    </task>
+    <task id="LOCAL-00017" summary="config and saver">
+      <created>1585286317313</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1585286317313</updated>
+    </task>
+    <task id="LOCAL-00018" summary="config and saver">
+      <created>1585641002697</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1585641002697</updated>
+    </task>
+    <task id="LOCAL-00019" summary=" distillation loss using cross-entropy for Continual Learning">
+      <created>1586801050202</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1586801050202</updated>
+    </task>
+    <task id="LOCAL-00020" summary=" Continual Learning test">
+      <created>1586802794846</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1586802794846</updated>
+    </task>
+    <task id="LOCAL-00021" summary="arcface">
+      <created>1586898750786</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1586898750786</updated>
+    </task>
+    <task id="LOCAL-00022" summary="learning loss weight">
+      <created>1588265371266</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1588265371266</updated>
+    </task>
+    <task id="LOCAL-00023" summary="center loss">
+      <created>1588267023832</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1588267023832</updated>
+    </task>
+    <task id="LOCAL-00024" summary="learning weight for CELoss">
+      <created>1588267890870</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1588267890870</updated>
+    </task>
+    <task id="LOCAL-00025" summary="learning weight for tripletLoss">
+      <created>1588274033183</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1588274033183</updated>
+    </task>
+    <task id="LOCAL-00026" summary="model test and visable">
+      <created>1588339321778</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1588339321778</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.log" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="auto download backbone weight" />
+    <MESSAGE value="backbone" />
+    <MESSAGE value="build new backbone" />
+    <MESSAGE value="inference" />
+    <MESSAGE value="extractor" />
+    <MESSAGE value="cluster" />
+    <MESSAGE value="uda" />
+    <MESSAGE value="debug uda" />
+    <MESSAGE value="show each loss value" />
+    <MESSAGE value="dec loss" />
+    <MESSAGE value=" dec loss is too small" />
+    <MESSAGE value="make_multi_data_loader" />
+    <MESSAGE value="multi dataset result" />
+    <MESSAGE value="rewrite dataset" />
+    <MESSAGE value="flip test" />
+    <MESSAGE value="config and saver" />
+    <MESSAGE value=" distillation loss using cross-entropy for Continual Learning" />
+    <MESSAGE value=" Continual Learning test" />
+    <MESSAGE value="arcface" />
+    <MESSAGE value="learning loss weight" />
+    <MESSAGE value="center loss" />
+    <MESSAGE value="learning weight for CELoss" />
+    <MESSAGE value="learning weight for tripletLoss" />
+    <MESSAGE value="model test and visable" />
+    <option name="LAST_COMMIT_MESSAGE" value="model test and visable" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="368" y="145" key="#Deployment" timestamp="1588263119879">
+      <screen x="0" y="0" width="1536" height="960" />
+    </state>
+    <state x="368" y="145" key="#Deployment/0.0.1536.960@0.0.1536.960" timestamp="1588263119879" />
+    <state x="232" y="142" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1586796465996">
+      <screen x="0" y="0" width="1536" height="960" />
+    </state>
+    <state x="232" y="142" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.960@0.0.1536.960" timestamp="1586796465996" />
+    <state x="495" y="280" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1588341435643">
+      <screen x="0" y="0" width="1536" height="960" />
+    </state>
+    <state x="495" y="280" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.960@0.0.1536.960" timestamp="1588341435643" />
+    <state x="506" y="234" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1585039242962">
+      <screen x="0" y="0" width="1536" height="960" />
+    </state>
+    <state x="506" y="234" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.960@0.0.1536.960" timestamp="1585039242962" />
+    <state x="347" y="23" width="841" height="937" key="CommitChangelistDialog2" timestamp="1588360048261">
+      <screen x="0" y="0" width="1536" height="960" />
+    </state>
+    <state x="347" y="23" width="841" height="937" key="CommitChangelistDialog2/0.0.1536.960@0.0.1536.960" timestamp="1588360048261" />
+    <state x="100" y="100" width="1336" height="760" key="DiffContextDialog" timestamp="1585132909011">
+      <screen x="0" y="0" width="1536" height="960" />
+    </state>
+    <state x="100" y="100" width="1336" height="760" key="DiffContextDialog/0.0.1536.960@0.0.1536.960" timestamp="1585132909011" />
+    <state x="627" y="381" key="Github.ShareDialog" timestamp="1584551126194">
+      <screen x="0" y="0" width="1536" height="960" />
+    </state>
+    <state x="627" y="381" key="Github.ShareDialog/0.0.1536.960@0.0.1536.960" timestamp="1584551126194" />
+    <state x="519" y="110" key="Github.UntrackedFilesDialog" timestamp="1584551148102">
+      <screen x="0" y="0" width="1536" height="960" />
+    </state>
+    <state x="519" y="110" key="Github.UntrackedFilesDialog/0.0.1536.960@0.0.1536.960" timestamp="1584551148102" />
+    <state width="1494" height="383" key="GridCell.Tab.0.bottom" timestamp="1588360020193">
+      <screen x="0" y="0" width="1536" height="960" />
+    </state>
+    <state width="1494" height="383" key="GridCell.Tab.0.bottom/0.0.1536.960@0.0.1536.960" timestamp="1588360020193" />
+    <state width="1494" height="320" key="GridCell.Tab.0.bottom/0.23.1536.937@0.23.1536.937" timestamp="1585235324417" />
+    <state width="1494" height="383" key="GridCell.Tab.0.center" timestamp="1588360020192">
+      <screen x="0" y="0" width="1536" height="960" />
+    </state>
+    <state width="1494" height="383" key="GridCell.Tab.0.center/0.0.1536.960@0.0.1536.960" timestamp="1588360020192" />
+    <state width="1494" height="320" key="GridCell.Tab.0.center/0.23.1536.937@0.23.1536.937" timestamp="1585235324416" />
+    <state width="1494" height="383" key="GridCell.Tab.0.left" timestamp="1588360020191">
+      <screen x="0" y="0" width="1536" height="960" />
+    </state>
+    <state width="1494" height="383" key="GridCell.Tab.0.left/0.0.1536.960@0.0.1536.960" timestamp="1588360020191" />
+    <state width="1494" height="320" key="GridCell.Tab.0.left/0.23.1536.937@0.23.1536.937" timestamp="1585235324415" />
+    <state width="1494" height="383" key="GridCell.Tab.0.right" timestamp="1588360020192">
+      <screen x="0" y="0" width="1536" height="960" />
+    </state>
+    <state width="1494" height="383" key="GridCell.Tab.0.right/0.0.1536.960@0.0.1536.960" timestamp="1588360020192" />
+    <state width="1494" height="320" key="GridCell.Tab.0.right/0.23.1536.937@0.23.1536.937" timestamp="1585235324417" />
+    <state width="1494" height="308" key="GridCell.Tab.1.bottom" timestamp="1586898513631">
+      <screen x="0" y="0" width="1536" height="960" />
+    </state>
+    <state width="1494" height="308" key="GridCell.Tab.1.bottom/0.0.1536.960@0.0.1536.960" timestamp="1586898513631" />
+    <state width="1494" height="308" key="GridCell.Tab.1.center" timestamp="1586898513630">
+      <screen x="0" y="0" width="1536" height="960" />
+    </state>
+    <state width="1494" height="308" key="GridCell.Tab.1.center/0.0.1536.960@0.0.1536.960" timestamp="1586898513630" />
+    <state width="1494" height="308" key="GridCell.Tab.1.left" timestamp="1586898513630">
+      <screen x="0" y="0" width="1536" height="960" />
+    </state>
+    <state width="1494" height="308" key="GridCell.Tab.1.left/0.0.1536.960@0.0.1536.960" timestamp="1586898513630" />
+    <state width="1494" height="308" key="GridCell.Tab.1.right" timestamp="1586898513631">
+      <screen x="0" y="0" width="1536" height="960" />
+    </state>
+    <state width="1494" height="308" key="GridCell.Tab.1.right/0.0.1536.960@0.0.1536.960" timestamp="1586898513631" />
+    <state x="569" y="405" key="ReplaceDuplicatesPrompt" timestamp="1584898749240">
+      <screen x="0" y="0" width="1536" height="960" />
+    </state>
+    <state x="569" y="405" key="ReplaceDuplicatesPrompt/0.0.1536.960@0.0.1536.960" timestamp="1584898749240" />
+    <state x="505" y="113" key="RollbackChangesDialog" timestamp="1585130832450">
+      <screen x="0" y="0" width="1536" height="960" />
+    </state>
+    <state x="505" y="113" key="RollbackChangesDialog/0.0.1536.960@0.0.1536.960" timestamp="1585130832450" />
+    <state x="269" y="119" key="SettingsEditor" timestamp="1588339747967">
+      <screen x="0" y="0" width="1536" height="960" />
+    </state>
+    <state x="269" y="119" key="SettingsEditor/0.0.1536.960@0.0.1536.960" timestamp="1588339747967" />
+    <state x="368" y="216" key="Vcs.Push.Dialog.v2" timestamp="1588339337786">
+      <screen x="0" y="0" width="1536" height="960" />
+    </state>
+    <state x="368" y="216" key="Vcs.Push.Dialog.v2/0.0.1536.960@0.0.1536.960" timestamp="1588339337786" />
+    <state x="428" y="312" key="com.intellij.ide.util.TipDialog" timestamp="1588174200557">
+      <screen x="0" y="0" width="1536" height="960" />
+    </state>
+    <state x="428" y="312" key="com.intellij.ide.util.TipDialog/0.0.1536.960@0.0.1536.960" timestamp="1588174200557" />
+    <state x="335" y="85" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1584474851693">
+      <screen x="0" y="0" width="1536" height="960" />
+    </state>
+    <state x="335" y="85" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1536.960@0.0.1536.960" timestamp="1584474851693" />
+    <state x="550" y="399" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1584697153932">
+      <screen x="0" y="0" width="1536" height="960" />
+    </state>
+    <state x="550" y="399" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.960@0.0.1536.960" timestamp="1584697153932" />
+    <state x="416" y="221" width="858" height="582" key="find.popup" timestamp="1586894577998">
+      <screen x="0" y="0" width="1536" height="960" />
+    </state>
+    <state x="416" y="221" width="858" height="582" key="find.popup/0.0.1536.960@0.0.1536.960" timestamp="1586894577998" />
+    <state x="674" y="137" width="386" height="685" key="ftp.server.browser" timestamp="1584505015886">
+      <screen x="0" y="0" width="1536" height="960" />
+    </state>
+    <state x="674" y="137" width="386" height="685" key="ftp.server.browser/0.0.1536.960@0.0.1536.960" timestamp="1584505015886" />
+    <state x="433" y="211" width="670" height="676" key="search.everywhere.popup" timestamp="1588360052104">
+      <screen x="0" y="0" width="1536" height="960" />
+    </state>
+    <state x="433" y="211" width="670" height="676" key="search.everywhere.popup/0.0.1536.960@0.0.1536.960" timestamp="1588360052104" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/data/build.py</url>
+          <line>170</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/reid_baseline$dec.coverage" NAME="dec Coverage Results" MODIFIED="1585039054734" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/modeling/backbone" />
+    <SUITE FILE_PATH="coverage/reid_baseline$visdom_test.coverage" NAME="visdom_test Coverage Results" MODIFIED="1584818175454" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/unit_test" />
+    <SUITE FILE_PATH="coverage/reid_baseline$saver.coverage" NAME="saver Coverage Results" MODIFIED="1585251959455" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
+    <SUITE FILE_PATH="coverage/reid_baseline$center_loss.coverage" NAME="center_loss Coverage Results" MODIFIED="1585062791978" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/loss" />
+    <SUITE FILE_PATH="coverage/reid_baseline$python_test.coverage" NAME="python_test Coverage Results" MODIFIED="1585045459366" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/unit_test" />
+    <SUITE FILE_PATH="coverage/reid_baseline$embeddings.coverage" NAME="embeddings Coverage Results" MODIFIED="1584352750517" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/reid_baseline$resnet.coverage" NAME="resnet Coverage Results" MODIFIED="1588358852056" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/modeling/backbone" />
+    <SUITE FILE_PATH="coverage/reid_baseline$sing.coverage" NAME="sing Coverage Results" MODIFIED="1584803839224" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tools" />
+    <SUITE FILE_PATH="coverage/reid_baseline$distance.coverage" NAME="distance Coverage Results" MODIFIED="1585127423348" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
+    <SUITE FILE_PATH="coverage/reid_baseline$train.coverage" NAME="train Coverage Results" MODIFIED="1588273601189" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tools" />
+    <SUITE FILE_PATH="coverage/reid_baseline$Unittests_in_test_build_py.coverage" NAME="Unittests in test_build.py Coverage Results" MODIFIED="1584893671905" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/unit_test" />
+    <SUITE FILE_PATH="coverage/reid_baseline$re_ranking.coverage" NAME="re_ranking Coverage Results" MODIFIED="1585138580554" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
+    <SUITE FILE_PATH="coverage/reid_baseline$smoth_loss.coverage" NAME="smoth_loss Coverage Results" MODIFIED="1588265107427" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/loss" />
+    <SUITE FILE_PATH="coverage/reid_baseline$def_test.coverage" NAME="def_test Coverage Results" MODIFIED="1586898510920" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/unit_test" />
+    <SUITE FILE_PATH="coverage/reid_baseline$visdom_embedding.coverage" NAME="visdom-embedding Coverage Results" MODIFIED="1584821481896" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/unit_test" />
+    <SUITE FILE_PATH="coverage/reid_baseline$train_with_feat.coverage" NAME="train_with_feat Coverage Results" MODIFIED="1586796382422" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tools" />
+    <SUITE FILE_PATH="coverage/reid_baseline$test.coverage" NAME="test Coverage Results" MODIFIED="1586889794348" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tools" />
+    <SUITE FILE_PATH="coverage/reid_baseline$multi_data.coverage" NAME="multi_data Coverage Results" MODIFIED="1585075122223" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/unit_test" />
+    <SUITE FILE_PATH="coverage/reid_baseline$Continuous_train.coverage" NAME="continuous_train Coverage Results" MODIFIED="1586800987846" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tools" />
+    <SUITE FILE_PATH="coverage/reid_baseline$dec_loss.coverage" NAME="dec_loss Coverage Results" MODIFIED="1585068967404" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/loss" />
+    <SUITE FILE_PATH="coverage/reid_baseline$test_model.coverage" NAME="test-model Coverage Results" MODIFIED="1584611900363" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/reid_baseline$trainer.coverage" NAME="trainer Coverage Results" MODIFIED="1585063192226" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/engine" />
+    <SUITE FILE_PATH="coverage/reid_baseline$arcface_loss.coverage" NAME="arcface_loss Coverage Results" MODIFIED="1586897796542" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/loss" />
+    <SUITE FILE_PATH="coverage/reid_baseline$optimizer.coverage" NAME="optimizer Coverage Results" MODIFIED="1584437169889" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/solver" />
+    <SUITE FILE_PATH="coverage/reid_baseline$mnist_cluster.coverage" NAME="mnist_cluster Coverage Results" MODIFIED="1584823443431" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/unit_test" />
+    <SUITE FILE_PATH="coverage/reid_baseline$model_test.coverage" NAME="model_test Coverage Results" MODIFIED="1588359763195" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
+    <SUITE FILE_PATH="coverage/reid_baseline$SSG.coverage" NAME="SSG Coverage Results" MODIFIED="1584618776957" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/modeling" />
+    <SUITE FILE_PATH="coverage/reid_baseline$visdiom_mnist.coverage" NAME="visdiom-mnist Coverage Results" MODIFIED="1584821834099" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/unit_test" />
+    <SUITE FILE_PATH="coverage/reid_baseline$cluster.coverage" NAME="uda Coverage Results" MODIFIED="1584804222024" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tools" />
+    <SUITE FILE_PATH="coverage/reid_baseline$inference.coverage" NAME="inference Coverage Results" MODIFIED="1585230549521" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/engine" />
+    <SUITE FILE_PATH="coverage/reid_baseline$build.coverage" NAME="build Coverage Results" MODIFIED="1585302092159" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data" />
+    <SUITE FILE_PATH="coverage/reid_baseline$uda__1_.coverage" NAME="uda (1) Coverage Results" MODIFIED="1584952513484" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tools" />
+    <SUITE FILE_PATH="coverage/reid_baseline$trainer_with_feat.coverage" NAME="trainer_with_feat Coverage Results" MODIFIED="1585301359025" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/engine" />
+    <SUITE FILE_PATH="coverage/reid_baseline$uda.coverage" NAME="uda Coverage Results" MODIFIED="1584902042738" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/engine" />
+    <SUITE FILE_PATH="coverage/reid_baseline$mnist_with_tensorboard_logger.coverage" NAME="mnist_with_tensorboard_logger Coverage Results" MODIFIED="1584492338650" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+</project>

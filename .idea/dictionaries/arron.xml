@@ -1,0 +1,23 @@
+<component name="ProjectDictionaryState">
+  <dictionary name="arron">
+    <words>
+      <w>arcface</w>
+      <w>bnneck</w>
+      <w>checkpointer</w>
+      <w>cuda</w>
+      <w>dataloader</w>
+      <w>datasets</w>
+      <w>downsample</w>
+      <w>imagenet</w>
+      <w>inplanes</w>
+      <w>iters</w>
+      <w>pbar</w>
+      <w>pretrain</w>
+      <w>resnet</w>
+      <w>softmax</w>
+      <w>tensorboardx</w>
+      <w>warmup</w>
+      <w>xent</w>
+    </words>
+  </dictionary>
+</component>
