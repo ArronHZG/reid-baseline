@@ -60,7 +60,7 @@ class Loss:
         self.triplet = None
         if 'triplet' in self.loss_type:
             self.triplet = TripletLoss(cfg.LOSS.MARGIN,
-                                       learning_weight=cfg.LOSS.IF_LEARNING_WEIGHT)
+                                       learning_weight=False)
 
             if cfg.MODEL.DEVICE is 'cuda':
                 self.triplet = self.triplet.cuda()
@@ -79,7 +79,7 @@ class Loss:
             self.center = CenterLoss(num_classes=num_classes,
                                      feat_dim=feat_dim,
                                      loss_weight=cfg.LOSS.CENTER_LOSS_WEIGHT,
-                                     learning_weight=cfg.LOSS.IF_LEARNING_WEIGHT)
+                                     learning_weight=False)
 
             if cfg.MODEL.DEVICE is 'cuda':
                 self.center = self.center.cuda()

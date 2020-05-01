@@ -7,7 +7,7 @@ from modeling.strong_baseline import Baseline
 class SSG(Baseline):
     def __init__(self, num_classes, last_stride=1, if_bnneck=True,
                  neck_feat='after', model_name='resnet50',
-                 pretrain_choice='imagenet'):
+                 pretrain_choice='ibn-net'):
         super(SSG, self).__init__(num_classes, last_stride,
                                   if_bnneck, neck_feat,
                                   model_name, pretrain_choice)

@@ -150,7 +150,7 @@ class Baseline(nn.Module):
         elif model_name == 'resnet101_ibn_a':
             self.base = resnet101_ibn_a(last_stride)
 
-        if pretrain_choice == 'imagenet':
+        if pretrain_choice == 'ibn-net':
             state_dict = load_state_dict_from_url(model_urls[model_name])
             self.base.load_state_dict(state_dict, strict=False)
             # self.base.load_param(model_path)
