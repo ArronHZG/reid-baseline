@@ -2,24 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1b0344a7-c05c-4a3c-9dfc-141d92b1a83a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/modeling/backbone/model/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/modeling/backbone/model/ibn_model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/model_shape.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/model_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/defaults.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/defaults.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modeling/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/modeling/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modeling/backbone/ibn-net/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/modeling/backbone/ibn-net/densenet_ibn_a.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/modeling/backbone/ibn-net/resnet_ibn_a.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/modeling/backbone/ibn-net/resnet_ibn_b.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/modeling/backbone/ibn-net/resnext_ibn_a.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/modeling/backbone/ibn-net/se_module.py" beforeDir="false" afterPath="$PROJECT_DIR$/modeling/backbone/model/se_module.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modeling/backbone/ibn-net/se_resnet.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/modeling/backbone/ibn-net/se_resnet_ibn_a.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/modeling/backbone/ibn-net/se_resnet_ibn_b.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/modeling/backbone/resnet.py" beforeDir="false" afterPath="$PROJECT_DIR$/modeling/backbone/resnet.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modeling/strong_baseline.py" beforeDir="false" afterPath="$PROJECT_DIR$/modeling/strong_baseline.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -266,7 +249,7 @@
       <workItem from="1586884765420" duration="15033000" />
       <workItem from="1588174200419" duration="2779000" />
       <workItem from="1588182775981" duration="785000" />
-      <workItem from="1588263097782" duration="26071000" />
+      <workItem from="1588263097782" duration="26213000" />
     </task>
     <task id="LOCAL-00001" summary="auto download backbone weight">
       <created>1584559275020</created>
@@ -450,7 +433,14 @@
       <option name="project" value="LOCAL" />
       <updated>1588339321778</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="senet ibn-a ibn-b">
+      <created>1588360075946</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1588360075946</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -484,7 +474,8 @@
     <MESSAGE value="learning weight for CELoss" />
     <MESSAGE value="learning weight for tripletLoss" />
     <MESSAGE value="model test and visable" />
-    <option name="LAST_COMMIT_MESSAGE" value="model test and visable" />
+    <MESSAGE value="senet ibn-a ibn-b" />
+    <option name="LAST_COMMIT_MESSAGE" value="senet ibn-a ibn-b" />
   </component>
   <component name="WindowStateProjectService">
     <state x="368" y="145" key="#Deployment" timestamp="1588263119879">
@@ -503,10 +494,10 @@
       <screen x="0" y="0" width="1536" height="960" />
     </state>
     <state x="506" y="234" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.960@0.0.1536.960" timestamp="1585039242962" />
-    <state x="347" y="23" width="841" height="937" key="CommitChangelistDialog2" timestamp="1588360048261">
+    <state x="347" y="23" width="841" height="937" key="CommitChangelistDialog2" timestamp="1588360075691">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
-    <state x="347" y="23" width="841" height="937" key="CommitChangelistDialog2/0.0.1536.960@0.0.1536.960" timestamp="1588360048261" />
+    <state x="347" y="23" width="841" height="937" key="CommitChangelistDialog2/0.0.1536.960@0.0.1536.960" timestamp="1588360075691" />
     <state x="100" y="100" width="1336" height="760" key="DiffContextDialog" timestamp="1585132909011">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
@@ -519,25 +510,25 @@
       <screen x="0" y="0" width="1536" height="960" />
     </state>
     <state x="519" y="110" key="Github.UntrackedFilesDialog/0.0.1536.960@0.0.1536.960" timestamp="1584551148102" />
-    <state width="1494" height="383" key="GridCell.Tab.0.bottom" timestamp="1588360020193">
+    <state width="1494" height="383" key="GridCell.Tab.0.bottom" timestamp="1588360115798">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
-    <state width="1494" height="383" key="GridCell.Tab.0.bottom/0.0.1536.960@0.0.1536.960" timestamp="1588360020193" />
+    <state width="1494" height="383" key="GridCell.Tab.0.bottom/0.0.1536.960@0.0.1536.960" timestamp="1588360115798" />
     <state width="1494" height="320" key="GridCell.Tab.0.bottom/0.23.1536.937@0.23.1536.937" timestamp="1585235324417" />
-    <state width="1494" height="383" key="GridCell.Tab.0.center" timestamp="1588360020192">
+    <state width="1494" height="383" key="GridCell.Tab.0.center" timestamp="1588360115797">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
-    <state width="1494" height="383" key="GridCell.Tab.0.center/0.0.1536.960@0.0.1536.960" timestamp="1588360020192" />
+    <state width="1494" height="383" key="GridCell.Tab.0.center/0.0.1536.960@0.0.1536.960" timestamp="1588360115797" />
     <state width="1494" height="320" key="GridCell.Tab.0.center/0.23.1536.937@0.23.1536.937" timestamp="1585235324416" />
-    <state width="1494" height="383" key="GridCell.Tab.0.left" timestamp="1588360020191">
+    <state width="1494" height="383" key="GridCell.Tab.0.left" timestamp="1588360115795">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
-    <state width="1494" height="383" key="GridCell.Tab.0.left/0.0.1536.960@0.0.1536.960" timestamp="1588360020191" />
+    <state width="1494" height="383" key="GridCell.Tab.0.left/0.0.1536.960@0.0.1536.960" timestamp="1588360115795" />
     <state width="1494" height="320" key="GridCell.Tab.0.left/0.23.1536.937@0.23.1536.937" timestamp="1585235324415" />
-    <state width="1494" height="383" key="GridCell.Tab.0.right" timestamp="1588360020192">
+    <state width="1494" height="383" key="GridCell.Tab.0.right" timestamp="1588360115797">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
-    <state width="1494" height="383" key="GridCell.Tab.0.right/0.0.1536.960@0.0.1536.960" timestamp="1588360020192" />
+    <state width="1494" height="383" key="GridCell.Tab.0.right/0.0.1536.960@0.0.1536.960" timestamp="1588360115797" />
     <state width="1494" height="320" key="GridCell.Tab.0.right/0.23.1536.937@0.23.1536.937" timestamp="1585235324417" />
     <state width="1494" height="308" key="GridCell.Tab.1.bottom" timestamp="1586898513631">
       <screen x="0" y="0" width="1536" height="960" />
@@ -567,14 +558,14 @@
       <screen x="0" y="0" width="1536" height="960" />
     </state>
     <state x="269" y="119" key="SettingsEditor/0.0.1536.960@0.0.1536.960" timestamp="1588339747967" />
-    <state x="368" y="216" key="Vcs.Push.Dialog.v2" timestamp="1588339337786">
+    <state x="368" y="216" key="Vcs.Push.Dialog.v2" timestamp="1588360077539">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
-    <state x="368" y="216" key="Vcs.Push.Dialog.v2/0.0.1536.960@0.0.1536.960" timestamp="1588339337786" />
-    <state x="428" y="312" key="com.intellij.ide.util.TipDialog" timestamp="1588174200557">
+    <state x="368" y="216" key="Vcs.Push.Dialog.v2/0.0.1536.960@0.0.1536.960" timestamp="1588360077539" />
+    <state x="428" y="312" key="com.intellij.ide.util.TipDialog" timestamp="1588360138226">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
-    <state x="428" y="312" key="com.intellij.ide.util.TipDialog/0.0.1536.960@0.0.1536.960" timestamp="1588174200557" />
+    <state x="428" y="312" key="com.intellij.ide.util.TipDialog/0.0.1536.960@0.0.1536.960" timestamp="1588360138226" />
     <state x="335" y="85" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1584474851693">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
