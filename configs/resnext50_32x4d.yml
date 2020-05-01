@@ -1,5 +1,5 @@
 MODEL:
-  NAME: resnet101_ibn_a
+  NAME: resnext50_32x4d
 EVAL:
   EPOCH_PERIOD: 30
 TENSORBOARDX:

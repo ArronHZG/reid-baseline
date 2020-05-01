@@ -1,6 +1,6 @@
 MODEL:
-  NAME: resnet50_ibn_a
+  NAME: resnet50
 EVAL:
   EPOCH_PERIOD: 30
 TENSORBOARDX:
-    IF_ON: False
+  IF_ON: False

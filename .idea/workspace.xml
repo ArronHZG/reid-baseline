@@ -2,7 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1b0344a7-c05c-4a3c-9dfc-141d92b1a83a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/configs/resnet50.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configs/resnext101_32x8d.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configs/resnext50_32x4d.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configs/wide_resnet101_2.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configs/wide_resnet50_2.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/script/05-02-2020.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/defaults.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/defaults.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/resnet101_ibn_a.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/resnet50_ibn_a.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/se_resnet101.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/se_resnet50.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/se_resnext101.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/se_resnext50.yml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +71,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="add_unversioned_files" value="$PROJECT_DIR$/run/strong.log" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/modeling/backbone" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/script" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -68,19 +81,19 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/script" />
+      <recent name="$PROJECT_DIR$/configs" />
+      <recent name="$PROJECT_DIR$/modeling/backbone" />
+      <recent name="$PROJECT_DIR$/engine" />
+      <recent name="$PROJECT_DIR$/tools" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/modeling/backbone/model" />
       <recent name="$PROJECT_DIR$/modeling/backbone" />
       <recent name="$PROJECT_DIR$/test" />
       <recent name="$PROJECT_DIR$/test/delving_into_model" />
       <recent name="$PROJECT_DIR$" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/modeling/backbone" />
-      <recent name="$PROJECT_DIR$/script" />
-      <recent name="$PROJECT_DIR$/configs" />
-      <recent name="$PROJECT_DIR$/engine" />
-      <recent name="$PROJECT_DIR$/tools" />
     </key>
   </component>
   <component name="RunManager" selected="Python.model_test">
@@ -250,6 +263,7 @@
       <workItem from="1588174200419" duration="2779000" />
       <workItem from="1588182775981" duration="785000" />
       <workItem from="1588263097782" duration="26213000" />
+      <workItem from="1588360137652" duration="1662000" />
     </task>
     <task id="LOCAL-00001" summary="auto download backbone weight">
       <created>1584559275020</created>
@@ -440,7 +454,14 @@
       <option name="project" value="LOCAL" />
       <updated>1588360075946</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="senet ibn-a ibn-b">
+      <created>1588360146579</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1588360146579</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -494,10 +515,10 @@
       <screen x="0" y="0" width="1536" height="960" />
     </state>
     <state x="506" y="234" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.960@0.0.1536.960" timestamp="1585039242962" />
-    <state x="347" y="23" width="841" height="937" key="CommitChangelistDialog2" timestamp="1588360075691">
+    <state x="347" y="23" width="841" height="937" key="CommitChangelistDialog2" timestamp="1588360146215">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
-    <state x="347" y="23" width="841" height="937" key="CommitChangelistDialog2/0.0.1536.960@0.0.1536.960" timestamp="1588360075691" />
+    <state x="347" y="23" width="841" height="937" key="CommitChangelistDialog2/0.0.1536.960@0.0.1536.960" timestamp="1588360146215" />
     <state x="100" y="100" width="1336" height="760" key="DiffContextDialog" timestamp="1585132909011">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
@@ -558,10 +579,10 @@
       <screen x="0" y="0" width="1536" height="960" />
     </state>
     <state x="269" y="119" key="SettingsEditor/0.0.1536.960@0.0.1536.960" timestamp="1588339747967" />
-    <state x="368" y="216" key="Vcs.Push.Dialog.v2" timestamp="1588360077539">
+    <state x="368" y="216" key="Vcs.Push.Dialog.v2" timestamp="1588360168820">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
-    <state x="368" y="216" key="Vcs.Push.Dialog.v2/0.0.1536.960@0.0.1536.960" timestamp="1588360077539" />
+    <state x="368" y="216" key="Vcs.Push.Dialog.v2/0.0.1536.960@0.0.1536.960" timestamp="1588360168820" />
     <state x="428" y="312" key="com.intellij.ide.util.TipDialog" timestamp="1588360138226">
       <screen x="0" y="0" width="1536" height="960" />
     </state>

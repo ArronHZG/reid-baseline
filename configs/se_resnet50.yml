@@ -1,6 +1,0 @@
-MODEL:
-  NAME: se_resnet50
-EVAL:
-  EPOCH_PERIOD: 30
-TENSORBOARDX:
-    IF_ON: False

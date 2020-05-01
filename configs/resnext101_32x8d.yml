@@ -1,5 +1,5 @@
 MODEL:
-  NAME: se_resnext50_32x4d
+  NAME: resnext101_32x8d
 EVAL:
   EPOCH_PERIOD: 30
 TENSORBOARDX:

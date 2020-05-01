@@ -1,5 +1,5 @@
 MODEL:
-  NAME: se_resnet101
+  NAME: wide_resnet101_2
 EVAL:
   EPOCH_PERIOD: 30
 TENSORBOARDX:
