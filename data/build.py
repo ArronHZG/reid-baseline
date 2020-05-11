@@ -69,6 +69,13 @@ def make_train_data_loader(cfg, dataset_name):
     # ######
     dataset = init_dataset(dataset_name, root=cfg.DATASET.ROOT_DIR)
     batch_size, sampler, shuffle = _get_train_sampler(cfg, dataset.train)
+    # print(sampler)
+    # i = 0
+    # for item in sampler:
+    #     print(item)
+    #     i += 1
+    #     if i == 30:
+    #         break
     train_loader = _get_train_loader(cfg, batch_size, dataset.train, sampler, shuffle)
     return train_loader, dataset.num_train_pids
 
@@ -225,10 +232,8 @@ if __name__ == '__main__':
     from config import cfg
 
     source_name = "market1501"
-    target_name = "dukemtmc"
     feat = torch.zeros(12936, 2048)
     a, b = make_train_data_loader(cfg, source_name)
-    print(dir(a))
     # make_data_with_loader_with_feat_label(cfg, source_name, target_name, feat)
 
 # class MyNumbers:

@@ -77,4 +77,5 @@ def inference(
     device = cfg.MODEL.DEVICE
     # multi-dataset
     validation_evaluator_map = get_valid_eval_map(cfg, device, model, valid, cfg.TEST.IF_RE_RANKING)
-    eval_multi_dataset(device, validation_evaluator_map, valid)
+    sum_result = eval_multi_dataset(device, validation_evaluator_map, valid)
+    logger.info(f'Sum result: {sum_result:.4f}')

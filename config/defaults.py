@@ -38,7 +38,7 @@ _C.LOSS.IF_LABEL_SMOOTH = True
 _C.LOSS.IF_WITH_DEC = False
 # Options: 'softmax' 'triplet' 'softmax_triplet' 'softmax_arcface_triplet'
 _C.LOSS.LOSS_TYPE = 'softmax_triplet'
-_C.LOSS.METRIC_LOSS_WEIGHT = 1.0
+_C.LOSS.METRIC_LOSS_WEIGHT = 2.0
 _C.LOSS.MARGIN = 0.3
 _C.LOSS.IF_LEARNING_WEIGHT = True
 
@@ -87,7 +87,7 @@ _C.TEST.IF_ON = False
 _C.TEST.BATCH_SIZE = 128  # from evaluate and extract feature
 _C.TEST.IF_RE_RANKING = True
 _C.TEST.IF_FEAT_NORM = True
-_C.TEST.RUN_ID = 1
+_C.TEST.RUN_ID = '01'
 
 _C.EXPAND = CN()
 _C.EXPAND.IF_ON = False

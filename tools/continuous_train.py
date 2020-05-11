@@ -5,7 +5,7 @@ sys.path.append('.')
 sys.path.append('..')
 
 from tools.expand import main, TrainComponent
-from engine.continuous_train import do_continuous_train
+from engine.continuous_trainer import do_continuous_train
 from engine.inference import inference
 from data import make_multi_valid_data_loader, make_train_data_loader
 

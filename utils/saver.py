@@ -90,7 +90,7 @@ class Saver:
                                 self.cfg.MODEL.NAME)
         run_id = self.cfg.TEST.RUN_ID
         print(f"Loading run_id: {run_id}")
-        load_dir = os.path.join(load_dir, 'experiment-{}'.format(str(run_id).zfill(2)))
+        load_dir = os.path.join(load_dir, f'experiment-{run_id}')
         assert os.path.exists(load_dir), load_dir
         return load_dir
 

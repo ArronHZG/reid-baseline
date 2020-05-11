@@ -2,73 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1b0344a7-c05c-4a3c-9dfc-141d92b1a83a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/script/05-11-2020.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/unit_test/test_optim.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/reid-baseline.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/reid-baseline.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configs/test-best.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/script/05-11-2020-2.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/defaults.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/defaults.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/trainer.py" beforeDir="false" afterPath="$PROJECT_DIR$/engine/trainer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/build.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/build.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/samplers/triplet_sampler.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/samplers/triplet_sampler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/continuous_train.py" beforeDir="false" afterPath="$PROJECT_DIR$/engine/continuous_trainer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/inference.py" beforeDir="false" afterPath="$PROJECT_DIR$/engine/inference.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/loss/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/loss/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loss/smoth_loss.py" beforeDir="false" afterPath="$PROJECT_DIR$/loss/smoth_loss.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/solver/optimizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/solver/optimizer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/log.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet101/events.out.tfevents.1588345782.MacBookPro.local.89198.3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet101_ibn_a/events.out.tfevents.1588359811.MacBookPro.local.90839.18" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet101_ibn_b/events.out.tfevents.1588359816.MacBookPro.local.90839.19" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet101_se/events.out.tfevents.1588359795.MacBookPro.local.90839.15" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet101_se_ibn_a/events.out.tfevents.1588359800.MacBookPro.local.90839.16" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet101_se_ibn_b/events.out.tfevents.1588359806.MacBookPro.local.90839.17" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet152/events.out.tfevents.1588345786.MacBookPro.local.89198.4" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet152_ibn_a/events.out.tfevents.1588359846.MacBookPro.local.90839.23" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet152_ibn_b/events.out.tfevents.1588359853.MacBookPro.local.90839.24" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet152_se/events.out.tfevents.1588359821.MacBookPro.local.90839.20" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet152_se_ibn_a/events.out.tfevents.1588359829.MacBookPro.local.90839.21" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet152_se_ibn_b/events.out.tfevents.1588359838.MacBookPro.local.90839.22" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet18/events.out.tfevents.1588345776.MacBookPro.local.89198.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet18_ibn_a/events.out.tfevents.1588359770.MacBookPro.local.90839.3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet18_ibn_b/events.out.tfevents.1588359771.MacBookPro.local.90839.4" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet18_se/events.out.tfevents.1588359767.MacBookPro.local.90839.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet18_se_ibn_a/events.out.tfevents.1588359768.MacBookPro.local.90839.1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet18_se_ibn_b/events.out.tfevents.1588359769.MacBookPro.local.90839.2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet34/events.out.tfevents.1588345777.MacBookPro.local.89198.1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet34_ibn_a/events.out.tfevents.1588359779.MacBookPro.local.90839.8" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet34_ibn_b/events.out.tfevents.1588359780.MacBookPro.local.90839.9" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet34_se/events.out.tfevents.1588359772.MacBookPro.local.90839.5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet34_se_ibn_a/events.out.tfevents.1588359774.MacBookPro.local.90839.6" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet34_se_ibn_b/events.out.tfevents.1588359776.MacBookPro.local.90839.7" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet50/events.out.tfevents.1588345779.MacBookPro.local.89198.2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet50_ibn_a/events.out.tfevents.1588359790.MacBookPro.local.90839.13" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet50_ibn_b/events.out.tfevents.1588359793.MacBookPro.local.90839.14" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet50_se/events.out.tfevents.1588359782.MacBookPro.local.90839.10" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet50_se_ibn_a/events.out.tfevents.1588359785.MacBookPro.local.90839.11" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet50_se_ibn_b/events.out.tfevents.1588359788.MacBookPro.local.90839.12" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnext101_32x8d/events.out.tfevents.1588345794.MacBookPro.local.89198.6" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnext101_32x8d_ibn_a/events.out.tfevents.1588359897.MacBookPro.local.90839.33" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnext101_32x8d_ibn_b/events.out.tfevents.1588359904.MacBookPro.local.90839.34" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnext101_32x8d_se/events.out.tfevents.1588359875.MacBookPro.local.90839.30" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnext101_32x8d_se_ibn_a/events.out.tfevents.1588359882.MacBookPro.local.90839.31" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnext101_32x8d_se_ibn_b/events.out.tfevents.1588359890.MacBookPro.local.90839.32" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnext50_32x4d/events.out.tfevents.1588345791.MacBookPro.local.89198.5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnext50_32x4d_ibn_a/events.out.tfevents.1588359868.MacBookPro.local.90839.28" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnext50_32x4d_ibn_b/events.out.tfevents.1588359870.MacBookPro.local.90839.29" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnext50_32x4d_se/events.out.tfevents.1588359858.MacBookPro.local.90839.25" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnext50_32x4d_se_ibn_a/events.out.tfevents.1588359861.MacBookPro.local.90839.26" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnext50_32x4d_se_ibn_b/events.out.tfevents.1588359865.MacBookPro.local.90839.27" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/wide_resnet101_2/events.out.tfevents.1588345804.MacBookPro.local.89198.8" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/wide_resnet101_2_ibn_a/events.out.tfevents.1588359960.MacBookPro.local.90839.43" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/wide_resnet101_2_ibn_b/events.out.tfevents.1588359968.MacBookPro.local.90839.44" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/wide_resnet101_2_se/events.out.tfevents.1588359934.MacBookPro.local.90839.40" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/wide_resnet101_2_se_ibn_a/events.out.tfevents.1588359943.MacBookPro.local.90839.41" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/wide_resnet101_2_se_ibn_b/events.out.tfevents.1588359952.MacBookPro.local.90839.42" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/wide_resnet50_2/events.out.tfevents.1588345799.MacBookPro.local.89198.7" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/wide_resnet50_2_ibn_a/events.out.tfevents.1588359925.MacBookPro.local.90839.38" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/wide_resnet50_2_ibn_b/events.out.tfevents.1588359929.MacBookPro.local.90839.39" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/wide_resnet50_2_se/events.out.tfevents.1588359910.MacBookPro.local.90839.35" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/wide_resnet50_2_se_ibn_a/events.out.tfevents.1588359915.MacBookPro.local.90839.36" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/delving_into_model/wide_resnet50_2_se_ibn_b/events.out.tfevents.1588359920.MacBookPro.local.90839.37" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/model_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/model_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loss/triplet_loss.py" beforeDir="false" afterPath="$PROJECT_DIR$/loss/triplet_loss.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/script/4-15-2020.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/script/continual.sh" beforeDir="false" afterPath="$PROJECT_DIR$/script/continual.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/script/continual1.sh" beforeDir="false" afterPath="$PROJECT_DIR$/script/continual1.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/continuous_train.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/continuous_train.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/saver.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/saver.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,7 +73,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="add_unversioned_files" value="$PROJECT_DIR$/run/strong.log" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/script" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/configs" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -134,6 +83,13 @@
     <property name="settings.editor.selected.configurable" value="MTConfigurable" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/configs" />
+      <recent name="$PROJECT_DIR$/script" />
+      <recent name="$PROJECT_DIR$/modeling/backbone" />
+      <recent name="$PROJECT_DIR$/engine" />
+      <recent name="$PROJECT_DIR$/tools" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/modeling/backbone/model" />
       <recent name="$PROJECT_DIR$/modeling/backbone" />
@@ -141,16 +97,9 @@
       <recent name="$PROJECT_DIR$/test/delving_into_model" />
       <recent name="$PROJECT_DIR$" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/script" />
-      <recent name="$PROJECT_DIR$/configs" />
-      <recent name="$PROJECT_DIR$/modeling/backbone" />
-      <recent name="$PROJECT_DIR$/engine" />
-      <recent name="$PROJECT_DIR$/tools" />
-    </key>
   </component>
-  <component name="RunManager" selected="Python.train">
-    <configuration name="__init__" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.test">
+    <configuration name="build" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="reid-baseline" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -158,12 +107,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/loss" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/data" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/loss/__init__.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data/build.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -194,7 +143,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="resnet" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="reid-baseline" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -202,34 +151,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/modeling/backbone" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tools" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/modeling/backbone/resnet.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="test_optim" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="reid-baseline" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/unit_test" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/unit_test/test_optim.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tools/test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -260,13 +187,35 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="triplet_loss" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="reid-baseline" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/loss" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/loss/triplet_loss.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.test" />
         <item itemvalue="Python.train" />
+        <item itemvalue="Python.triplet_loss" />
+        <item itemvalue="Python.build" />
         <item itemvalue="Python.model_test" />
-        <item itemvalue="Python.test_optim" />
-        <item itemvalue="Python.__init__" />
-        <item itemvalue="Python.resnet" />
       </list>
     </recent_temporary>
   </component>
@@ -323,7 +272,7 @@
       <workItem from="1588501519375" duration="7058000" />
       <workItem from="1588836403580" duration="90000" />
       <workItem from="1589145633888" duration="4171000" />
-      <workItem from="1589180327195" duration="294000" />
+      <workItem from="1589180327195" duration="13196000" />
     </task>
     <task id="LOCAL-00001" summary="auto download backbone weight">
       <created>1584559275020</created>
@@ -535,7 +484,14 @@
       <option name="project" value="LOCAL" />
       <updated>1588362122098</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="loss scheduler">
+      <created>1589180721844</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1589180721844</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -545,7 +501,6 @@
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.log" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="backbone" />
     <MESSAGE value="build new backbone" />
     <MESSAGE value="inference" />
     <MESSAGE value="extractor" />
@@ -570,7 +525,8 @@
     <MESSAGE value="model test and visable" />
     <MESSAGE value="senet ibn-a ibn-b" />
     <MESSAGE value="train a lot of models" />
-    <option name="LAST_COMMIT_MESSAGE" value="train a lot of models" />
+    <MESSAGE value="loss scheduler" />
+    <option name="LAST_COMMIT_MESSAGE" value="loss scheduler" />
   </component>
   <component name="WindowStateProjectService">
     <state x="368" y="145" key="#Deployment" timestamp="1588263119879">
@@ -581,18 +537,18 @@
       <screen x="0" y="0" width="1536" height="960" />
     </state>
     <state x="232" y="142" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.960@0.0.1536.960" timestamp="1586796465996" />
-    <state x="495" y="280" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1588341435643">
+    <state x="495" y="280" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1589194452569">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
-    <state x="495" y="280" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.960@0.0.1536.960" timestamp="1588341435643" />
+    <state x="495" y="280" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.960@0.0.1536.960" timestamp="1589194452569" />
     <state x="506" y="234" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1585039242962">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
     <state x="506" y="234" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.960@0.0.1536.960" timestamp="1585039242962" />
-    <state x="347" y="23" width="841" height="937" key="CommitChangelistDialog2" timestamp="1588362121954">
+    <state x="347" y="23" width="841" height="937" key="CommitChangelistDialog2" timestamp="1589180721511">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
-    <state x="347" y="23" width="841" height="937" key="CommitChangelistDialog2/0.0.1536.960@0.0.1536.960" timestamp="1588362121954" />
+    <state x="347" y="23" width="841" height="937" key="CommitChangelistDialog2/0.0.1536.960@0.0.1536.960" timestamp="1589180721511" />
     <state x="100" y="100" width="1336" height="760" key="DiffContextDialog" timestamp="1585132909011">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
@@ -605,26 +561,26 @@
       <screen x="0" y="0" width="1536" height="960" />
     </state>
     <state x="519" y="110" key="Github.UntrackedFilesDialog/0.0.1536.960@0.0.1536.960" timestamp="1584551148102" />
-    <state width="1494" height="373" key="GridCell.Tab.0.bottom" timestamp="1589180533039">
-      <screen x="0" y="0" width="1536" height="960" />
+    <state width="1494" height="290" key="GridCell.Tab.0.bottom" timestamp="1589197767853">
+      <screen x="0" y="23" width="1536" height="937" />
     </state>
-    <state width="1494" height="373" key="GridCell.Tab.0.bottom/0.0.1536.960@0.0.1536.960" timestamp="1589180533039" />
-    <state width="1494" height="330" key="GridCell.Tab.0.bottom/0.23.1536.937@0.23.1536.937" timestamp="1589180302493" />
-    <state width="1494" height="373" key="GridCell.Tab.0.center" timestamp="1589180533038">
-      <screen x="0" y="0" width="1536" height="960" />
+    <state width="1494" height="138" key="GridCell.Tab.0.bottom/0.0.1536.960@0.0.1536.960" timestamp="1589196857686" />
+    <state width="1494" height="290" key="GridCell.Tab.0.bottom/0.23.1536.937@0.23.1536.937" timestamp="1589197767853" />
+    <state width="1494" height="290" key="GridCell.Tab.0.center" timestamp="1589197767853">
+      <screen x="0" y="23" width="1536" height="937" />
     </state>
-    <state width="1494" height="373" key="GridCell.Tab.0.center/0.0.1536.960@0.0.1536.960" timestamp="1589180533038" />
-    <state width="1494" height="330" key="GridCell.Tab.0.center/0.23.1536.937@0.23.1536.937" timestamp="1589180302492" />
-    <state width="1494" height="373" key="GridCell.Tab.0.left" timestamp="1589180533038">
-      <screen x="0" y="0" width="1536" height="960" />
+    <state width="1494" height="138" key="GridCell.Tab.0.center/0.0.1536.960@0.0.1536.960" timestamp="1589196857684" />
+    <state width="1494" height="290" key="GridCell.Tab.0.center/0.23.1536.937@0.23.1536.937" timestamp="1589197767853" />
+    <state width="1494" height="290" key="GridCell.Tab.0.left" timestamp="1589197767852">
+      <screen x="0" y="23" width="1536" height="937" />
     </state>
-    <state width="1494" height="373" key="GridCell.Tab.0.left/0.0.1536.960@0.0.1536.960" timestamp="1589180533038" />
-    <state width="1494" height="330" key="GridCell.Tab.0.left/0.23.1536.937@0.23.1536.937" timestamp="1589180302492" />
-    <state width="1494" height="373" key="GridCell.Tab.0.right" timestamp="1589180533039">
-      <screen x="0" y="0" width="1536" height="960" />
+    <state width="1494" height="138" key="GridCell.Tab.0.left/0.0.1536.960@0.0.1536.960" timestamp="1589196857683" />
+    <state width="1494" height="290" key="GridCell.Tab.0.left/0.23.1536.937@0.23.1536.937" timestamp="1589197767852" />
+    <state width="1494" height="290" key="GridCell.Tab.0.right" timestamp="1589197767853">
+      <screen x="0" y="23" width="1536" height="937" />
     </state>
-    <state width="1494" height="373" key="GridCell.Tab.0.right/0.0.1536.960@0.0.1536.960" timestamp="1589180533039" />
-    <state width="1494" height="330" key="GridCell.Tab.0.right/0.23.1536.937@0.23.1536.937" timestamp="1589180302493" />
+    <state width="1494" height="138" key="GridCell.Tab.0.right/0.0.1536.960@0.0.1536.960" timestamp="1589196857685" />
+    <state width="1494" height="290" key="GridCell.Tab.0.right/0.23.1536.937@0.23.1536.937" timestamp="1589197767853" />
     <state width="1494" height="308" key="GridCell.Tab.1.bottom" timestamp="1586898513631">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
@@ -653,10 +609,10 @@
       <screen x="0" y="0" width="1536" height="960" />
     </state>
     <state x="269" y="119" key="SettingsEditor/0.0.1536.960@0.0.1536.960" timestamp="1589179954769" />
-    <state x="368" y="216" key="Vcs.Push.Dialog.v2" timestamp="1588362124367">
+    <state x="368" y="216" key="Vcs.Push.Dialog.v2" timestamp="1589180723610">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
-    <state x="368" y="216" key="Vcs.Push.Dialog.v2/0.0.1536.960@0.0.1536.960" timestamp="1588362124367" />
+    <state x="368" y="216" key="Vcs.Push.Dialog.v2/0.0.1536.960@0.0.1536.960" timestamp="1589180723610" />
     <state x="428" y="312" key="com.intellij.ide.util.TipDialog" timestamp="1589180327774">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
@@ -669,31 +625,38 @@
       <screen x="0" y="0" width="1536" height="960" />
     </state>
     <state x="550" y="399" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.960@0.0.1536.960" timestamp="1584697153932" />
-    <state x="416" y="221" width="858" height="582" key="find.popup" timestamp="1589179226910">
-      <screen x="0" y="0" width="1536" height="960" />
+    <state x="416" y="239" width="858" height="569" key="find.popup" timestamp="1589198153947">
+      <screen x="0" y="23" width="1536" height="937" />
     </state>
-    <state x="416" y="221" width="858" height="582" key="find.popup/0.0.1536.960@0.0.1536.960" timestamp="1589179226910" />
+    <state x="416" y="221" width="858" height="582" key="find.popup/0.0.1536.960@0.0.1536.960" timestamp="1589185412527" />
+    <state x="416" y="239" width="858" height="569" key="find.popup/0.23.1536.937@0.23.1536.937" timestamp="1589198153947" />
     <state x="674" y="137" width="386" height="685" key="ftp.server.browser" timestamp="1584505015886">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
     <state x="674" y="137" width="386" height="685" key="ftp.server.browser/0.0.1536.960@0.0.1536.960" timestamp="1584505015886" />
-    <state x="433" y="211" width="670" height="676" key="search.everywhere.popup" timestamp="1589179662831">
-      <screen x="0" y="0" width="1536" height="960" />
+    <state x="433" y="229" width="670" height="660" key="search.everywhere.popup" timestamp="1589199090471">
+      <screen x="0" y="23" width="1536" height="937" />
     </state>
     <state x="433" y="211" width="670" height="676" key="search.everywhere.popup/0.0.1536.960@0.0.1536.960" timestamp="1589179662831" />
+    <state x="433" y="229" width="670" height="660" key="search.everywhere.popup/0.23.1536.937@0.23.1536.937" timestamp="1589199090471" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/data/build.py</url>
-          <line>170</line>
+          <line>177</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$USER_HOME$/miniconda3/lib/python3.7/site-packages/torch/optim/rmsprop.py</url>
           <line>84</line>
           <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/data/samplers/triplet_sampler.py</url>
+          <line>124</line>
+          <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -709,14 +672,14 @@
     <SUITE FILE_PATH="coverage/reid_baseline$test_optim.coverage" NAME="test_optim Coverage Results" MODIFIED="1588529579729" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/unit_test" />
     <SUITE FILE_PATH="coverage/reid_baseline$sing.coverage" NAME="sing Coverage Results" MODIFIED="1584803839224" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tools" />
     <SUITE FILE_PATH="coverage/reid_baseline$distance.coverage" NAME="distance Coverage Results" MODIFIED="1585127423348" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
-    <SUITE FILE_PATH="coverage/reid_baseline$train.coverage" NAME="train Coverage Results" MODIFIED="1589180370831" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tools" />
+    <SUITE FILE_PATH="coverage/reid_baseline$train.coverage" NAME="train Coverage Results" MODIFIED="1589187775862" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tools" />
     <SUITE FILE_PATH="coverage/reid_baseline$Unittests_in_test_build_py.coverage" NAME="Unittests in test_build.py Coverage Results" MODIFIED="1584893671905" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/unit_test" />
     <SUITE FILE_PATH="coverage/reid_baseline$re_ranking.coverage" NAME="re_ranking Coverage Results" MODIFIED="1585138580554" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
     <SUITE FILE_PATH="coverage/reid_baseline$smoth_loss.coverage" NAME="smoth_loss Coverage Results" MODIFIED="1588265107427" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/loss" />
     <SUITE FILE_PATH="coverage/reid_baseline$def_test.coverage" NAME="def_test Coverage Results" MODIFIED="1586898510920" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/unit_test" />
     <SUITE FILE_PATH="coverage/reid_baseline$visdom_embedding.coverage" NAME="visdom-embedding Coverage Results" MODIFIED="1584821481896" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/unit_test" />
     <SUITE FILE_PATH="coverage/reid_baseline$train_with_feat.coverage" NAME="train_with_feat Coverage Results" MODIFIED="1586796382422" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tools" />
-    <SUITE FILE_PATH="coverage/reid_baseline$test.coverage" NAME="test Coverage Results" MODIFIED="1586889794348" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tools" />
+    <SUITE FILE_PATH="coverage/reid_baseline$test.coverage" NAME="test Coverage Results" MODIFIED="1589197628210" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tools" />
     <SUITE FILE_PATH="coverage/reid_baseline$multi_data.coverage" NAME="multi_data Coverage Results" MODIFIED="1585075122223" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/unit_test" />
     <SUITE FILE_PATH="coverage/reid_baseline$Continuous_train.coverage" NAME="continuous_train Coverage Results" MODIFIED="1586800987846" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tools" />
     <SUITE FILE_PATH="coverage/reid_baseline$dec_loss.coverage" NAME="dec_loss Coverage Results" MODIFIED="1585068967404" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/loss" />
@@ -730,10 +693,11 @@
     <SUITE FILE_PATH="coverage/reid_baseline$visdiom_mnist.coverage" NAME="visdiom-mnist Coverage Results" MODIFIED="1584821834099" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/unit_test" />
     <SUITE FILE_PATH="coverage/reid_baseline$cluster.coverage" NAME="uda Coverage Results" MODIFIED="1584804222024" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tools" />
     <SUITE FILE_PATH="coverage/reid_baseline$inference.coverage" NAME="inference Coverage Results" MODIFIED="1585230549521" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/engine" />
-    <SUITE FILE_PATH="coverage/reid_baseline$build.coverage" NAME="build Coverage Results" MODIFIED="1585302092159" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data" />
+    <SUITE FILE_PATH="coverage/reid_baseline$build.coverage" NAME="build Coverage Results" MODIFIED="1589183897577" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data" />
     <SUITE FILE_PATH="coverage/reid_baseline$uda__1_.coverage" NAME="uda (1) Coverage Results" MODIFIED="1584952513484" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tools" />
     <SUITE FILE_PATH="coverage/reid_baseline$trainer_with_feat.coverage" NAME="trainer_with_feat Coverage Results" MODIFIED="1585301359025" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/engine" />
     <SUITE FILE_PATH="coverage/reid_baseline$__init__.coverage" NAME="__init__ Coverage Results" MODIFIED="1588505460309" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/loss" />
+    <SUITE FILE_PATH="coverage/reid_baseline$triplet_loss.coverage" NAME="triplet_loss Coverage Results" MODIFIED="1589187731837" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/loss" />
     <SUITE FILE_PATH="coverage/reid_baseline$uda.coverage" NAME="uda Coverage Results" MODIFIED="1584902042738" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/engine" />
     <SUITE FILE_PATH="coverage/reid_baseline$mnist_with_tensorboard_logger.coverage" NAME="mnist_with_tensorboard_logger Coverage Results" MODIFIED="1584492338650" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>

@@ -7,7 +7,7 @@
 import copy
 import random
 import torch
-from collections import defaultdict
+from collections import defaultdict, Iterable
 
 import numpy as np
 from torch.utils.data.sampler import Sampler
@@ -21,6 +21,12 @@ class RandomIdentitySampler(Sampler):
     - data_source (list): list of (img_path, pid, camid).
     - num_instances (int): number of instances per identity in a batch.
     - batch_size (int): number of examples in a batch.
+    得到所有的ids
+    整理 每个 id 中
+    找到 含有 小于 instances 的数量 的 id  num += instances
+    找到 含有 大于等于 instances 的数量 的 id  去掉 num % self.num_instances
+
+    保证每个id 图片数都为 instances 的倍数
     """
 
     def __init__(self, data_source, batch_size, num_instances):
@@ -45,10 +51,11 @@ class RandomIdentitySampler(Sampler):
     def __iter__(self):
         batch_idxs_dict = defaultdict(list)
 
+        # 按照 self.num_instances 补充样例, 并且 对batch_idx 分组
         for pid in self.pids:
             idxs = copy.deepcopy(self.index_dic[pid])
             if len(idxs) < self.num_instances:
-                idxs = np.random.choice(idxs, size=self.num_instances, replace=True)
+                idxs.extend(np.random.choice(idxs, size=self.num_instances - len(idxs), replace=True))
             random.shuffle(idxs)
             batch_idxs = []
             for idx in idxs:
@@ -57,11 +64,20 @@ class RandomIdentitySampler(Sampler):
                     batch_idxs_dict[pid].append(batch_idxs)
                     batch_idxs = []
 
+        # for item in batch_idxs_dict.items():
+        #     print(f"{item[0]} len: {len(item[1])}")
+        #     if len(item[1]) == 1:
+        #         print(item[1])
+        #         print(self.index_dic[item[0]])
+        # i = 1
         avai_pids = copy.deepcopy(self.pids)
         final_idxs = []
 
         while len(avai_pids) >= self.num_pids_per_batch:
             selected_pids = random.sample(avai_pids, self.num_pids_per_batch)
+            # if i == 1:
+            #     print(self.index_dic[selected_pids[0]])
+            #     i += 1
             for pid in selected_pids:
                 batch_idxs = batch_idxs_dict[pid].pop(0)
                 final_idxs.extend(batch_idxs)
@@ -73,6 +89,19 @@ class RandomIdentitySampler(Sampler):
 
     def __len__(self):
         return self.length
+
+    def __str__(self):
+        str = ""
+        for item in dir(self):
+            if item[0] is not '_':
+                print(item)
+                tmp = getattr(self, item)
+                if isinstance(tmp, Iterable):
+                    print(f"len: {len(tmp)} --- {tmp[0]}")
+                else:
+                    print(tmp)
+
+        return str
 
 
 # New add by gu

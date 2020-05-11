@@ -98,7 +98,7 @@ class Loss:
                                                     nesterov=True)
 
             self.center.scheduler = ExponentialLR(self.center.optimizer,
-                                                  gamma=0.95,
+                                                  gamma=0.995,
                                                   last_epoch=-1)
 
             def loss_function(**kw):

@@ -17,20 +17,14 @@ logger = logging.getLogger("reid_baseline.continue")
 def create_supervised_trainer(source_model,
                               current_model,
                               optimizer,
-                              loss_class: Loss,
+                              groupLoss: Loss,
                               apex=False,
-                              device=None,
-                              has_center=False,
-                              center_criterion=None,
-                              optimizer_center=None,
-                              center_loss_weight=None):
+                              device=None):
     def _update(engine, batch):
         source_model.eval()
         current_model.train()
-
         optimizer.zero_grad()
-        if has_center:
-            optimizer_center.zero_grad()
+        groupLoss.optimizer_zero_grad()
 
         # data
         img, target = batch
@@ -52,7 +46,7 @@ def create_supervised_trainer(source_model,
 
         # train current model
         loss = torch.tensor(.0, requires_grad=True).to(device)
-        for name, loss_fn in loss_class.loss_function_map.items():
+        for name, loss_fn in groupLoss.loss_function_map.items():
             loss_temp = loss_fn(**loss_args)
             loss += loss_temp
             loss_values[name] = loss_temp.item()
@@ -65,11 +59,7 @@ def create_supervised_trainer(source_model,
             loss.backward()
 
         optimizer.step()
-
-        if has_center:
-            for param in center_criterion.parameters():
-                param.grad.data *= (1. / center_loss_weight)
-            optimizer_center.step()
+        groupLoss.optimizer_step()
 
         # compute acc
         acc = (current_cls_score.max(1)[1] == target).float().mean()
@@ -95,17 +85,13 @@ def do_continuous_train(cfg,
                                         current_tr_comp.optimizer,
                                         current_tr_comp.loss,
                                         device=device,
-                                        apex=cfg.APEX.IF_ON,
-                                        has_center=cfg.LOSS.IF_WITH_CENTER,
-                                        center_criterion=current_tr_comp.loss.center,
-                                        optimizer_center=current_tr_comp.optimizer_center,
-                                        center_loss_weight=cfg.LOSS.CENTER_LOSS_WEIGHT)
+                                        apex=cfg.APEX.IF_ON)
 
     saver.to_save = {'trainer': trainer,
-                     'model': current_tr_comp.model,
-                     'optimizer': current_tr_comp.optimizer,
-                     'center_param': current_tr_comp.loss_center,
-                     'optimizer_center': current_tr_comp.optimizer_center}
+                     'model': current_tr_comp.model}
+    # 'optimizer': tr_comp.optimizer,
+    # 'center_param': tr_comp.loss_center,
+    # 'optimizer_center': tr_comp.optimizer_center}
 
     trainer.add_event_handler(Events.EPOCH_COMPLETED(every=cfg.SAVER.CHECKPOINT_PERIOD),
                               saver.train_checkpointer,
@@ -136,6 +122,7 @@ def do_continuous_train(cfg,
     @trainer.on(Events.EPOCH_STARTED)
     def adjust_learning_rate(engine):
         current_tr_comp.scheduler.step()
+        current_tr_comp.loss.scheduler_step()
 
     @trainer.on(Events.ITERATION_COMPLETED(every=cfg.TRAIN.LOG_ITER_PERIOD))
     def log_training_loss(engine):
@@ -146,6 +133,18 @@ def do_continuous_train(cfg,
                   f"Acc: {engine.state.metrics['Acc']:.4f}, "
 
         for loss_name in current_tr_comp.loss.loss_function_map.keys():
+            message += f"{loss_name}: {engine.state.metrics[loss_name]:.4f}, "
+
+        if current_tr_comp.loss.xent and tr_comp.loss.xent.learning_weight:
+            message += f"xentWeight: {tr_comp.loss.xent.uncertainty.item():.4f}, "
+
+        if current_tr_comp.loss.triplet and tr_comp.loss.triplet.learning_weight:
+            message += f"tripletWeight: {tr_comp.loss.triplet.uncertainty.item():.4f}, "
+
+        if current_tr_comp.loss.center and tr_comp.loss.center.learning_weight:
+            message += f"centerWeight: {tr_comp.loss.center.uncertainty.item():.4f}, "
+
+        for loss_name in tr_comp.loss.loss_function_map.keys():
             message += f"{loss_name}: {engine.state.metrics[loss_name]:.4f}, "
 
         logger.info(message)

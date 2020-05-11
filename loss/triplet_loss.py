@@ -5,6 +5,7 @@
 """
 import torch
 from torch import nn
+from torch.nn import TripletMarginLoss
 
 from utils.tensor_utils import euclidean_dist
 
@@ -69,20 +70,12 @@ class TripletLoss(nn.Module):
     Related Triplet Loss theory can be found in paper 'In Defense of the Triplet
     Loss for Person Re-Identification'."""
 
-    def __init__(self, margin=None, learning_weight=False):
+    def __init__(self, margin=0.3, learning_weight=False):
         super(TripletLoss, self).__init__()
         self.learning_weight = learning_weight
         self.margin = margin
-        self.MarginRankingLoss = nn.MarginRankingLoss(margin=margin)
-        self.SoftMarginLoss = nn.SoftMarginLoss()
-
-        if margin:
-            self.ranking_loss = self.MarginRankingLoss
-        else:
-            def my_soft_margin_loss(dist_an, dist_ap, y):
-                return self.SoftMarginLoss(dist_an - dist_ap, y)
-
-            self.ranking_loss = my_soft_margin_loss
+        # max(0,-y(x1-x2)+margin)
+        self.ranking_loss = nn.MarginRankingLoss(margin=margin)
 
         if self.learning_weight:
             self.uncertainty = nn.Parameter(torch.tensor(1.64), requires_grad=True)
@@ -92,15 +85,36 @@ class TripletLoss(nn.Module):
         global_feat = torch.nn.functional.normalize(global_feat, dim=1, p=2)
         dist_mat = euclidean_dist(global_feat, global_feat)
         dist_ap, dist_an = hard_example_mining(dist_mat, labels)
-        y = dist_an.new().resize_as_(dist_an).fill_(1)
+        # y = dist_an.new().resize_as_(dist_an).fill_(1)
+        zero = torch.zeros_like(dist_an)
+        y = torch.zeros_like(dist_an).fill_(1)
         # If y = 1  then it assumed the first input should be ranked higher
         # (have a larger value) than the second input,
         # and vice-versa for y = -1.
-        loss = self.ranking_loss(dist_an, dist_ap, y)
-        # return loss, dist_ap, dist_an
+
+        # print(torch.mean(dist_ap - dist_an + self.margin))
+        ################################################################################
+        # Person re-identification by multi-channel parts-based CNN with improved triplet loss function.
+        # loss = ap + (ap - an + mergin)+
+        ################################################################################
+
+        # ap_an_margin = dist_ap - dist_an + self.margin
+        # ap_an_margin = torch.max(torch.stack((ap_an_margin, zero)), 0)
+        # loss = (dist_ap + ap_an_margin[0]).mean()
+        loss = self.ranking_loss(dist_an, 2 * dist_ap, y)
 
         if self.learning_weight:
             loss = 0.5 * torch.exp(-self.uncertainty) * loss + self.uncertainty
             loss = loss.squeeze(-1)
 
+        # return loss, dist_ap, dist_an
         return loss
+
+
+if __name__ == '__main__':
+    feat = torch.randn(6, 100)
+    label = torch.tensor([1, 1, 1, 2, 2, 2]).int()
+    tr = TripletLoss(margin=0.3)
+    lo = tr(feat, label)
+    print(lo)
+    TripletMarginLoss()
