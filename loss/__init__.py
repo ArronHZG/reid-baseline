@@ -3,13 +3,14 @@ from collections import OrderedDict
 
 import torch
 from torch import nn
+from torch.optim.lr_scheduler import ExponentialLR
 
-from .arcface_loss import ArcfaceLoss
-from .center_loss import CenterLoss
-from .dec_loss import DECLoss
-from .smoth_loss import MyCrossEntropy
-from .triplet_loss import TripletLoss
-from .dist_loss import CrossEntropyDistLoss
+from loss.arcface_loss import ArcfaceLoss
+from loss.center_loss import CenterLoss
+from loss.dec_loss import DECLoss
+from loss.smoth_loss import MyCrossEntropy
+from loss.triplet_loss import TripletLoss
+from loss.dist_loss import CrossEntropyDistLoss
 
 logger = logging.getLogger("reid_baseline.loss")
 
@@ -38,7 +39,14 @@ class Loss:
                 self.xent = self.xent.cuda()
 
             if self.xent.learning_weight:
-                self.xent.optimizer = torch.optim.SGD(self.xent.parameters(), lr=cfg.OPTIMIZER.LOSS_LR)
+                self.xent.optimizer = torch.optim.SGD(self.xent.parameters(),
+                                                      lr=cfg.OPTIMIZER.LOSS_LR,
+                                                      momentum=0.9,
+                                                      weight_decay=10 ** -4,
+                                                      nesterov=True)
+                self.xent.scheduler = ExponentialLR(self.xent.optimizer,
+                                                    gamma=0.95,
+                                                    last_epoch=-1)
 
             def loss_function(**kw):
                 return self.xent(kw['cls_score'], kw['target'])
@@ -83,7 +91,15 @@ class Loss:
 
             if cfg.MODEL.DEVICE is 'cuda':
                 self.center = self.center.cuda()
-            self.center.optimizer = torch.optim.SGD(self.center.parameters(), lr=cfg.OPTIMIZER.LOSS_LR)
+            self.center.optimizer = torch.optim.SGD(self.center.parameters(),
+                                                    lr=cfg.OPTIMIZER.LOSS_LR,
+                                                    momentum=0.9,
+                                                    weight_decay=10 ** -4,
+                                                    nesterov=True)
+
+            self.center.scheduler = ExponentialLR(self.center.optimizer,
+                                                  gamma=0.95,
+                                                  last_epoch=-1)
 
             def loss_function(**kw):
                 return cfg.LOSS.CENTER_LOSS_WEIGHT * self.center(kw['feat_t'], kw['target'])
@@ -108,7 +124,7 @@ class Loss:
 
             self.loss_function_map["dist"] = loss_function
 
-    def zero_grad(self):
+    def optimizer_zero_grad(self):
         if self.center:
             self.center.optimizer.zero_grad()
 
@@ -118,7 +134,7 @@ class Loss:
         if self.triplet and self.triplet.learning_weight:
             self.triplet.optimizer.zero_grad()
 
-    def step(self):
+    def optimizer_step(self):
         if self.center:
             for param in self.center.parameters():
                 param.grad.data *= (1. / self.center.loss_weight)
@@ -129,3 +145,10 @@ class Loss:
 
         if self.triplet and self.triplet.learning_weight:
             self.triplet.optimizer.step()
+
+    def scheduler_step(self):
+        if self.center:
+            self.center.scheduler.step()
+
+        if self.xent and self.xent.learning_weight:
+            self.xent.scheduler.step()

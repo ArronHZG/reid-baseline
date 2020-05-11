@@ -28,7 +28,7 @@ def create_supervised_trainer(model, optimizer, groupLoss: Loss,
     def _update(engine, batch):
         model.train()
         optimizer.zero_grad()
-        groupLoss.zero_grad()
+        groupLoss.optimizer_zero_grad()
 
         img, target = batch
         img = img.to(device)
@@ -55,7 +55,7 @@ def create_supervised_trainer(model, optimizer, groupLoss: Loss,
             loss.backward()
 
         optimizer.step()
-        groupLoss.step()
+        groupLoss.optimizer_step()
 
         # compute acc
         acc = (cls_score.max(1)[1] == target).float().mean()
@@ -116,6 +116,7 @@ def do_train(cfg,
     @trainer.on(Events.EPOCH_STARTED)
     def adjust_learning_rate(engine):
         tr_comp.scheduler.step()
+        tr_comp.loss.scheduler_step()
 
     @trainer.on(Events.ITERATION_COMPLETED(every=cfg.TRAIN.LOG_ITER_PERIOD))
     def log_training_loss(engine):

@@ -35,7 +35,9 @@ def make_optimizer(cfg, model):
                            betas=(.90, 0.999))
 
     elif cfg.OPTIMIZER.NAME == 'SGD':
-        optimizer = getattr(torch.optim, cfg.OPTIMIZER.NAME)(params, momentum=cfg.SOLVER.MOMENTUM)
+        optimizer = getattr(torch.optim, cfg.OPTIMIZER.NAME)(params,
+                                                             momentum=cfg.SOLVER.MOMENTUM,
+                                                             nesterov=True)
     else:
         optimizer = getattr(torch.optim, cfg.OPTIMIZER.NAME)(params)
     return optimizer

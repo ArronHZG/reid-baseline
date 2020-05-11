@@ -1,7 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1b0344a7-c05c-4a3c-9dfc-141d92b1a83a" name="Default Changelist" comment="" />
+    <list default="true" id="1b0344a7-c05c-4a3c-9dfc-141d92b1a83a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/script/05-11-2020.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/unit_test/test_optim.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/reid-baseline.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/reid-baseline.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/defaults.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/defaults.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/trainer.py" beforeDir="false" afterPath="$PROJECT_DIR$/engine/trainer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loss/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/loss/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loss/smoth_loss.py" beforeDir="false" afterPath="$PROJECT_DIR$/loss/smoth_loss.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/solver/optimizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/solver/optimizer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/log.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet101/events.out.tfevents.1588345782.MacBookPro.local.89198.3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet101_ibn_a/events.out.tfevents.1588359811.MacBookPro.local.90839.18" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet101_ibn_b/events.out.tfevents.1588359816.MacBookPro.local.90839.19" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet101_se/events.out.tfevents.1588359795.MacBookPro.local.90839.15" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet101_se_ibn_a/events.out.tfevents.1588359800.MacBookPro.local.90839.16" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet101_se_ibn_b/events.out.tfevents.1588359806.MacBookPro.local.90839.17" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet152/events.out.tfevents.1588345786.MacBookPro.local.89198.4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet152_ibn_a/events.out.tfevents.1588359846.MacBookPro.local.90839.23" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet152_ibn_b/events.out.tfevents.1588359853.MacBookPro.local.90839.24" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet152_se/events.out.tfevents.1588359821.MacBookPro.local.90839.20" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet152_se_ibn_a/events.out.tfevents.1588359829.MacBookPro.local.90839.21" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet152_se_ibn_b/events.out.tfevents.1588359838.MacBookPro.local.90839.22" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet18/events.out.tfevents.1588345776.MacBookPro.local.89198.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet18_ibn_a/events.out.tfevents.1588359770.MacBookPro.local.90839.3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet18_ibn_b/events.out.tfevents.1588359771.MacBookPro.local.90839.4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet18_se/events.out.tfevents.1588359767.MacBookPro.local.90839.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet18_se_ibn_a/events.out.tfevents.1588359768.MacBookPro.local.90839.1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet18_se_ibn_b/events.out.tfevents.1588359769.MacBookPro.local.90839.2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet34/events.out.tfevents.1588345777.MacBookPro.local.89198.1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet34_ibn_a/events.out.tfevents.1588359779.MacBookPro.local.90839.8" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet34_ibn_b/events.out.tfevents.1588359780.MacBookPro.local.90839.9" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet34_se/events.out.tfevents.1588359772.MacBookPro.local.90839.5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet34_se_ibn_a/events.out.tfevents.1588359774.MacBookPro.local.90839.6" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet34_se_ibn_b/events.out.tfevents.1588359776.MacBookPro.local.90839.7" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet50/events.out.tfevents.1588345779.MacBookPro.local.89198.2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet50_ibn_a/events.out.tfevents.1588359790.MacBookPro.local.90839.13" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet50_ibn_b/events.out.tfevents.1588359793.MacBookPro.local.90839.14" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet50_se/events.out.tfevents.1588359782.MacBookPro.local.90839.10" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet50_se_ibn_a/events.out.tfevents.1588359785.MacBookPro.local.90839.11" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnet50_se_ibn_b/events.out.tfevents.1588359788.MacBookPro.local.90839.12" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnext101_32x8d/events.out.tfevents.1588345794.MacBookPro.local.89198.6" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnext101_32x8d_ibn_a/events.out.tfevents.1588359897.MacBookPro.local.90839.33" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnext101_32x8d_ibn_b/events.out.tfevents.1588359904.MacBookPro.local.90839.34" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnext101_32x8d_se/events.out.tfevents.1588359875.MacBookPro.local.90839.30" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnext101_32x8d_se_ibn_a/events.out.tfevents.1588359882.MacBookPro.local.90839.31" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnext101_32x8d_se_ibn_b/events.out.tfevents.1588359890.MacBookPro.local.90839.32" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnext50_32x4d/events.out.tfevents.1588345791.MacBookPro.local.89198.5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnext50_32x4d_ibn_a/events.out.tfevents.1588359868.MacBookPro.local.90839.28" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnext50_32x4d_ibn_b/events.out.tfevents.1588359870.MacBookPro.local.90839.29" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnext50_32x4d_se/events.out.tfevents.1588359858.MacBookPro.local.90839.25" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnext50_32x4d_se_ibn_a/events.out.tfevents.1588359861.MacBookPro.local.90839.26" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/resnext50_32x4d_se_ibn_b/events.out.tfevents.1588359865.MacBookPro.local.90839.27" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/wide_resnet101_2/events.out.tfevents.1588345804.MacBookPro.local.89198.8" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/wide_resnet101_2_ibn_a/events.out.tfevents.1588359960.MacBookPro.local.90839.43" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/wide_resnet101_2_ibn_b/events.out.tfevents.1588359968.MacBookPro.local.90839.44" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/wide_resnet101_2_se/events.out.tfevents.1588359934.MacBookPro.local.90839.40" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/wide_resnet101_2_se_ibn_a/events.out.tfevents.1588359943.MacBookPro.local.90839.41" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/wide_resnet101_2_se_ibn_b/events.out.tfevents.1588359952.MacBookPro.local.90839.42" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/wide_resnet50_2/events.out.tfevents.1588345799.MacBookPro.local.89198.7" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/wide_resnet50_2_ibn_a/events.out.tfevents.1588359925.MacBookPro.local.90839.38" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/wide_resnet50_2_ibn_b/events.out.tfevents.1588359929.MacBookPro.local.90839.39" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/wide_resnet50_2_se/events.out.tfevents.1588359910.MacBookPro.local.90839.35" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/wide_resnet50_2_se_ibn_a/events.out.tfevents.1588359915.MacBookPro.local.90839.36" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/delving_into_model/wide_resnet50_2_se_ibn_b/events.out.tfevents.1588359920.MacBookPro.local.90839.37" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/model_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/model_test.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -63,16 +131,9 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="settings.github" />
+    <property name="settings.editor.selected.configurable" value="MTConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/script" />
-      <recent name="$PROJECT_DIR$/configs" />
-      <recent name="$PROJECT_DIR$/modeling/backbone" />
-      <recent name="$PROJECT_DIR$/engine" />
-      <recent name="$PROJECT_DIR$/tools" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/modeling/backbone/model" />
       <recent name="$PROJECT_DIR$/modeling/backbone" />
@@ -80,9 +141,16 @@
       <recent name="$PROJECT_DIR$/test/delving_into_model" />
       <recent name="$PROJECT_DIR$" />
     </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/script" />
+      <recent name="$PROJECT_DIR$/configs" />
+      <recent name="$PROJECT_DIR$/modeling/backbone" />
+      <recent name="$PROJECT_DIR$/engine" />
+      <recent name="$PROJECT_DIR$/tools" />
+    </key>
   </component>
-  <component name="RunManager" selected="Python.model_test">
-    <configuration name="def_test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.train">
+    <configuration name="__init__" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="reid-baseline" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -90,12 +158,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/unit_test" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/loss" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/unit_test/def_test.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/loss/__init__.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -148,7 +216,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="smoth_loss" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="test_optim" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="reid-baseline" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -156,12 +224,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/loss" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/unit_test" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/loss/smoth_loss.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/unit_test/test_optim.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -194,11 +262,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.model_test" />
-        <item itemvalue="Python.resnet" />
         <item itemvalue="Python.train" />
-        <item itemvalue="Python.smoth_loss" />
-        <item itemvalue="Python.def_test" />
+        <item itemvalue="Python.model_test" />
+        <item itemvalue="Python.test_optim" />
+        <item itemvalue="Python.__init__" />
+        <item itemvalue="Python.resnet" />
       </list>
     </recent_temporary>
   </component>
@@ -248,7 +316,14 @@
       <workItem from="1588174200419" duration="2779000" />
       <workItem from="1588182775981" duration="785000" />
       <workItem from="1588263097782" duration="26213000" />
-      <workItem from="1588360137652" duration="1796000" />
+      <workItem from="1588360137652" duration="2076000" />
+      <workItem from="1588397606341" duration="206000" />
+      <workItem from="1588482567470" duration="200000" />
+      <workItem from="1588489508748" duration="1186000" />
+      <workItem from="1588501519375" duration="7058000" />
+      <workItem from="1588836403580" duration="90000" />
+      <workItem from="1589145633888" duration="4171000" />
+      <workItem from="1589180327195" duration="294000" />
     </task>
     <task id="LOCAL-00001" summary="auto download backbone weight">
       <created>1584559275020</created>
@@ -453,7 +528,14 @@
       <option name="project" value="LOCAL" />
       <updated>1588362046170</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="train a lot of models">
+      <created>1588362122098</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1588362122098</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -507,10 +589,10 @@
       <screen x="0" y="0" width="1536" height="960" />
     </state>
     <state x="506" y="234" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.960@0.0.1536.960" timestamp="1585039242962" />
-    <state x="347" y="23" width="841" height="937" key="CommitChangelistDialog2" timestamp="1588362045993">
+    <state x="347" y="23" width="841" height="937" key="CommitChangelistDialog2" timestamp="1588362121954">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
-    <state x="347" y="23" width="841" height="937" key="CommitChangelistDialog2/0.0.1536.960@0.0.1536.960" timestamp="1588362045993" />
+    <state x="347" y="23" width="841" height="937" key="CommitChangelistDialog2/0.0.1536.960@0.0.1536.960" timestamp="1588362121954" />
     <state x="100" y="100" width="1336" height="760" key="DiffContextDialog" timestamp="1585132909011">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
@@ -523,26 +605,26 @@
       <screen x="0" y="0" width="1536" height="960" />
     </state>
     <state x="519" y="110" key="Github.UntrackedFilesDialog/0.0.1536.960@0.0.1536.960" timestamp="1584551148102" />
-    <state width="1494" height="383" key="GridCell.Tab.0.bottom" timestamp="1588360115798">
+    <state width="1494" height="373" key="GridCell.Tab.0.bottom" timestamp="1589180533039">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
-    <state width="1494" height="383" key="GridCell.Tab.0.bottom/0.0.1536.960@0.0.1536.960" timestamp="1588360115798" />
-    <state width="1494" height="320" key="GridCell.Tab.0.bottom/0.23.1536.937@0.23.1536.937" timestamp="1585235324417" />
-    <state width="1494" height="383" key="GridCell.Tab.0.center" timestamp="1588360115797">
+    <state width="1494" height="373" key="GridCell.Tab.0.bottom/0.0.1536.960@0.0.1536.960" timestamp="1589180533039" />
+    <state width="1494" height="330" key="GridCell.Tab.0.bottom/0.23.1536.937@0.23.1536.937" timestamp="1589180302493" />
+    <state width="1494" height="373" key="GridCell.Tab.0.center" timestamp="1589180533038">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
-    <state width="1494" height="383" key="GridCell.Tab.0.center/0.0.1536.960@0.0.1536.960" timestamp="1588360115797" />
-    <state width="1494" height="320" key="GridCell.Tab.0.center/0.23.1536.937@0.23.1536.937" timestamp="1585235324416" />
-    <state width="1494" height="383" key="GridCell.Tab.0.left" timestamp="1588360115795">
+    <state width="1494" height="373" key="GridCell.Tab.0.center/0.0.1536.960@0.0.1536.960" timestamp="1589180533038" />
+    <state width="1494" height="330" key="GridCell.Tab.0.center/0.23.1536.937@0.23.1536.937" timestamp="1589180302492" />
+    <state width="1494" height="373" key="GridCell.Tab.0.left" timestamp="1589180533038">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
-    <state width="1494" height="383" key="GridCell.Tab.0.left/0.0.1536.960@0.0.1536.960" timestamp="1588360115795" />
-    <state width="1494" height="320" key="GridCell.Tab.0.left/0.23.1536.937@0.23.1536.937" timestamp="1585235324415" />
-    <state width="1494" height="383" key="GridCell.Tab.0.right" timestamp="1588360115797">
+    <state width="1494" height="373" key="GridCell.Tab.0.left/0.0.1536.960@0.0.1536.960" timestamp="1589180533038" />
+    <state width="1494" height="330" key="GridCell.Tab.0.left/0.23.1536.937@0.23.1536.937" timestamp="1589180302492" />
+    <state width="1494" height="373" key="GridCell.Tab.0.right" timestamp="1589180533039">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
-    <state width="1494" height="383" key="GridCell.Tab.0.right/0.0.1536.960@0.0.1536.960" timestamp="1588360115797" />
-    <state width="1494" height="320" key="GridCell.Tab.0.right/0.23.1536.937@0.23.1536.937" timestamp="1585235324417" />
+    <state width="1494" height="373" key="GridCell.Tab.0.right/0.0.1536.960@0.0.1536.960" timestamp="1589180533039" />
+    <state width="1494" height="330" key="GridCell.Tab.0.right/0.23.1536.937@0.23.1536.937" timestamp="1589180302493" />
     <state width="1494" height="308" key="GridCell.Tab.1.bottom" timestamp="1586898513631">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
@@ -567,18 +649,18 @@
       <screen x="0" y="0" width="1536" height="960" />
     </state>
     <state x="505" y="113" key="RollbackChangesDialog/0.0.1536.960@0.0.1536.960" timestamp="1585130832450" />
-    <state x="269" y="119" key="SettingsEditor" timestamp="1588362114633">
+    <state x="269" y="119" key="SettingsEditor" timestamp="1589179954769">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
-    <state x="269" y="119" key="SettingsEditor/0.0.1536.960@0.0.1536.960" timestamp="1588362114633" />
-    <state x="368" y="216" key="Vcs.Push.Dialog.v2" timestamp="1588362047739">
+    <state x="269" y="119" key="SettingsEditor/0.0.1536.960@0.0.1536.960" timestamp="1589179954769" />
+    <state x="368" y="216" key="Vcs.Push.Dialog.v2" timestamp="1588362124367">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
-    <state x="368" y="216" key="Vcs.Push.Dialog.v2/0.0.1536.960@0.0.1536.960" timestamp="1588362047739" />
-    <state x="428" y="312" key="com.intellij.ide.util.TipDialog" timestamp="1588360138226">
+    <state x="368" y="216" key="Vcs.Push.Dialog.v2/0.0.1536.960@0.0.1536.960" timestamp="1588362124367" />
+    <state x="428" y="312" key="com.intellij.ide.util.TipDialog" timestamp="1589180327774">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
-    <state x="428" y="312" key="com.intellij.ide.util.TipDialog/0.0.1536.960@0.0.1536.960" timestamp="1588360138226" />
+    <state x="428" y="312" key="com.intellij.ide.util.TipDialog/0.0.1536.960@0.0.1536.960" timestamp="1589180327774" />
     <state x="335" y="85" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1584474851693">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
@@ -587,18 +669,18 @@
       <screen x="0" y="0" width="1536" height="960" />
     </state>
     <state x="550" y="399" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.960@0.0.1536.960" timestamp="1584697153932" />
-    <state x="416" y="221" width="858" height="582" key="find.popup" timestamp="1586894577998">
+    <state x="416" y="221" width="858" height="582" key="find.popup" timestamp="1589179226910">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
-    <state x="416" y="221" width="858" height="582" key="find.popup/0.0.1536.960@0.0.1536.960" timestamp="1586894577998" />
+    <state x="416" y="221" width="858" height="582" key="find.popup/0.0.1536.960@0.0.1536.960" timestamp="1589179226910" />
     <state x="674" y="137" width="386" height="685" key="ftp.server.browser" timestamp="1584505015886">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
     <state x="674" y="137" width="386" height="685" key="ftp.server.browser/0.0.1536.960@0.0.1536.960" timestamp="1584505015886" />
-    <state x="433" y="211" width="670" height="676" key="search.everywhere.popup" timestamp="1588360052104">
+    <state x="433" y="211" width="670" height="676" key="search.everywhere.popup" timestamp="1589179662831">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
-    <state x="433" y="211" width="670" height="676" key="search.everywhere.popup/0.0.1536.960@0.0.1536.960" timestamp="1588360052104" />
+    <state x="433" y="211" width="670" height="676" key="search.everywhere.popup/0.0.1536.960@0.0.1536.960" timestamp="1589179662831" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -607,6 +689,11 @@
           <url>file://$PROJECT_DIR$/data/build.py</url>
           <line>170</line>
           <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$USER_HOME$/miniconda3/lib/python3.7/site-packages/torch/optim/rmsprop.py</url>
+          <line>84</line>
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -619,9 +706,10 @@
     <SUITE FILE_PATH="coverage/reid_baseline$python_test.coverage" NAME="python_test Coverage Results" MODIFIED="1585045459366" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/unit_test" />
     <SUITE FILE_PATH="coverage/reid_baseline$embeddings.coverage" NAME="embeddings Coverage Results" MODIFIED="1584352750517" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/reid_baseline$resnet.coverage" NAME="resnet Coverage Results" MODIFIED="1588358852056" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/modeling/backbone" />
+    <SUITE FILE_PATH="coverage/reid_baseline$test_optim.coverage" NAME="test_optim Coverage Results" MODIFIED="1588529579729" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/unit_test" />
     <SUITE FILE_PATH="coverage/reid_baseline$sing.coverage" NAME="sing Coverage Results" MODIFIED="1584803839224" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tools" />
     <SUITE FILE_PATH="coverage/reid_baseline$distance.coverage" NAME="distance Coverage Results" MODIFIED="1585127423348" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
-    <SUITE FILE_PATH="coverage/reid_baseline$train.coverage" NAME="train Coverage Results" MODIFIED="1588273601189" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tools" />
+    <SUITE FILE_PATH="coverage/reid_baseline$train.coverage" NAME="train Coverage Results" MODIFIED="1589180370831" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tools" />
     <SUITE FILE_PATH="coverage/reid_baseline$Unittests_in_test_build_py.coverage" NAME="Unittests in test_build.py Coverage Results" MODIFIED="1584893671905" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/unit_test" />
     <SUITE FILE_PATH="coverage/reid_baseline$re_ranking.coverage" NAME="re_ranking Coverage Results" MODIFIED="1585138580554" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
     <SUITE FILE_PATH="coverage/reid_baseline$smoth_loss.coverage" NAME="smoth_loss Coverage Results" MODIFIED="1588265107427" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/loss" />
@@ -637,7 +725,7 @@
     <SUITE FILE_PATH="coverage/reid_baseline$arcface_loss.coverage" NAME="arcface_loss Coverage Results" MODIFIED="1586897796542" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/loss" />
     <SUITE FILE_PATH="coverage/reid_baseline$optimizer.coverage" NAME="optimizer Coverage Results" MODIFIED="1584437169889" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/solver" />
     <SUITE FILE_PATH="coverage/reid_baseline$mnist_cluster.coverage" NAME="mnist_cluster Coverage Results" MODIFIED="1584823443431" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/unit_test" />
-    <SUITE FILE_PATH="coverage/reid_baseline$model_test.coverage" NAME="model_test Coverage Results" MODIFIED="1588359763195" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
+    <SUITE FILE_PATH="coverage/reid_baseline$model_test.coverage" NAME="model_test Coverage Results" MODIFIED="1589179886406" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/reid_baseline$SSG.coverage" NAME="SSG Coverage Results" MODIFIED="1584618776957" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/modeling" />
     <SUITE FILE_PATH="coverage/reid_baseline$visdiom_mnist.coverage" NAME="visdiom-mnist Coverage Results" MODIFIED="1584821834099" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/unit_test" />
     <SUITE FILE_PATH="coverage/reid_baseline$cluster.coverage" NAME="uda Coverage Results" MODIFIED="1584804222024" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tools" />
@@ -645,6 +733,7 @@
     <SUITE FILE_PATH="coverage/reid_baseline$build.coverage" NAME="build Coverage Results" MODIFIED="1585302092159" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data" />
     <SUITE FILE_PATH="coverage/reid_baseline$uda__1_.coverage" NAME="uda (1) Coverage Results" MODIFIED="1584952513484" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tools" />
     <SUITE FILE_PATH="coverage/reid_baseline$trainer_with_feat.coverage" NAME="trainer_with_feat Coverage Results" MODIFIED="1585301359025" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/engine" />
+    <SUITE FILE_PATH="coverage/reid_baseline$__init__.coverage" NAME="__init__ Coverage Results" MODIFIED="1588505460309" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/loss" />
     <SUITE FILE_PATH="coverage/reid_baseline$uda.coverage" NAME="uda Coverage Results" MODIFIED="1584902042738" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/engine" />
     <SUITE FILE_PATH="coverage/reid_baseline$mnist_with_tensorboard_logger.coverage" NAME="mnist_with_tensorboard_logger Coverage Results" MODIFIED="1584492338650" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>

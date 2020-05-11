@@ -25,6 +25,7 @@ class MyCrossEntropy(nn.Module):
         if self.learning_weight:
             self.uncertainty = nn.Parameter(torch.tensor(0.0), requires_grad=True)
             self.optimizer = None
+            self.scheduler = None
 
         if self.label_smooth:
             self.epsilon = 0.1

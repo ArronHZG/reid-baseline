@@ -5,10 +5,8 @@ from modeling.strong_baseline import model_map
 from utils.logger import setup_logger
 from test.model_shape import count_param, show_model
 
-setup_logger("model", "delving_into_model", 0)
 
-
-def test_backbone(model_name, se=False, ibn_a=False, ibn_b=False):
+def test_backbone(root_dir, model_name, se=False, ibn_a=False, ibn_b=False):
     base = model_map[model_name](last_stride=1, pretrained=False, se=se, ibn_a=ibn_a, ibn_b=ibn_b)
     if se:
         model_name += "_se"
@@ -21,15 +19,15 @@ def test_backbone(model_name, se=False, ibn_a=False, ibn_b=False):
 
     print(f"{'*' * 70}\n{'*' * 70}\n{model_name}")
 
-    saver_dir = os.path.join("delving_into_model", model_name)
+    saver_path = os.path.join(root_dir, model_name)
 
-    if not os.path.exists(saver_dir):
-        os.makedirs(saver_dir)
+    if not os.path.exists(saver_path):
+        os.makedirs(saver_path)
     else:
-        shutil.rmtree(saver_dir)
-        os.makedirs(saver_dir)
+        shutil.rmtree(saver_path)
+        os.makedirs(saver_path)
 
-    show_model(base, saver_dir, input_size=(3, 256, 128))
+    show_model(base, saver_path, input_size=(3, 256, 128))
 
 
 if __name__ == '__main__':
@@ -48,6 +46,14 @@ if __name__ == '__main__':
 
     bool_list = [[True, False, False], [True, True, False], [True, False, True], [False, True, False],
                  [False, False, True]]
+
+    root_dir = os.path.join("..", "..", "delving_into_model")
+
+    if not os.path.exists(root_dir):
+        os.makedirs(root_dir)
+
+    setup_logger("model", root_dir, 0)
+
     for name in names:
         for b in bool_list:
-            test_backbone(name, se=b[0], ibn_a=b[1], ibn_b=b[2])
+            test_backbone(root_dir, name, se=b[0], ibn_a=b[1], ibn_b=b[2])
