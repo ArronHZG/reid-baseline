@@ -1,3 +1,0 @@
-EXPAND:
-  IF_ON: True
-  DATASET_NAME: ("dukemtmc", "msmt17")

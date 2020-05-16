@@ -40,7 +40,7 @@ class Loss:
 
             if self.xent.learning_weight:
                 self.xent.optimizer = torch.optim.SGD(self.xent.parameters(),
-                                                      lr=cfg.OPTIMIZER.LOSS_LR,
+                                                      lr=0.0001,
                                                       momentum=0.9,
                                                       weight_decay=10 ** -4,
                                                       nesterov=True)
@@ -74,7 +74,14 @@ class Loss:
                 self.triplet = self.triplet.cuda()
 
             if self.triplet.learning_weight:
-                self.triplet.optimizer = torch.optim.SGD(self.triplet.parameters(), lr=cfg.OPTIMIZER.LOSS_LR)
+                self.triplet.optimizer = torch.optim.SGD(self.triplet.parameters(),
+                                                         lr=0.0001,
+                                                         momentum=0.9,
+                                                         weight_decay=10 ** -4,
+                                                         nesterov=True)
+                self.triplet.scheduler = ExponentialLR(self.triplet.optimizer,
+                                                       gamma=0.95,
+                                                       last_epoch=-1)
 
             def loss_function(**kw):
                 return cfg.LOSS.METRIC_LOSS_WEIGHT * self.triplet(kw['feat_t'], kw['target'])
@@ -123,6 +130,8 @@ class Loss:
                 return self.cross_entropy_dist_loss(kw['feat_c'], kw['target_feat_c'])
 
             self.loss_function_map["dist"] = loss_function
+
+        print(self.loss_function_map.keys())
 
     def optimizer_zero_grad(self):
         if self.center:

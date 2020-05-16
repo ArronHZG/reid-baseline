@@ -9,7 +9,7 @@ sys.path.append('..')
 
 from engine.extract import do_extract
 from engine.trainer_with_feat import do_train_with_feat
-from tools.expand import main, TrainComponent
+from tools.component import main, TrainComponent
 from data import make_multi_valid_data_loader, \
     make_data_with_loader_with_feat_label, make_train_data_loader_for_extract
 

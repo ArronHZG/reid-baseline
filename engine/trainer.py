@@ -8,7 +8,7 @@ from ignite.metrics import RunningAverage
 
 from engine.inference import get_valid_eval_map, eval_multi_dataset
 from loss import Loss
-from tools.expand import TrainComponent
+from tools.component import TrainComponent
 from utils.tensorboardX_log import TensorBoardXLog
 
 logger = logging.getLogger("reid_baseline.train")
@@ -127,7 +127,7 @@ def do_train(cfg,
                   f"Acc: {engine.state.metrics['Acc']:.4f}, "
 
         if tr_comp.loss.xent and tr_comp.loss.xent.learning_weight:
-            message += f"xentWeight: {tr_comp.loss.xent.uncertainty.item():.4f}, "
+            message += f"xentWeight: {tr_comp.loss.xent.uncertainty.mean().item():.4f}, "
 
         if tr_comp.loss.triplet and tr_comp.loss.triplet.learning_weight:
             message += f"tripletWeight: {tr_comp.loss.triplet.uncertainty.item():.4f}, "

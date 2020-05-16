@@ -1,4 +1,0 @@
-EVAL:
-  EPOCH_PERIOD: 30
-TEST:
-  IF_RE_RANKING: False

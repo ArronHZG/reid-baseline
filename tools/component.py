@@ -46,43 +46,10 @@ class TrainComponent:
             #     self.model = apex.parallel.convert_syncbn_model(self.model)
         if self.device is 'cuda':
             self.model = self.model.cuda()
-            self.loss.center = self.loss.center.cuda()
             if cfg.APEX.IF_ON:
                 from apex import amp
-                self.model, self.optimizer = amp.initialize(self.model, self.optimizer,
-                                                            opt_level=cfg.APEX.OPT_LEVEL,
-                                                            keep_batchnorm_fp32=None if cfg.APEX.OPT_LEVEL == 'O1' else True,
-                                                            loss_scale=cfg.APEX.LOSS_SCALE[0])
-
-
-class TrainComponentFeat:
-    def __init__(self, cfg, num_classes):
-        self.model = build_model(cfg, num_classes)
-        self.loss = Loss(cfg, num_classes, self.model.in_planes)
-        self.optimizer = make_optimizer(cfg, self.model)
-        self.scheduler = WarmupMultiStepLR(self.optimizer,
-                                           cfg.WARMUP.STEPS,
-                                           cfg.WARMUP.GAMMA,
-                                           cfg.WARMUP.FACTOR,
-                                           cfg.WARMUP.MAX_EPOCHS,
-                                           cfg.WARMUP.METHOD)
-        if cfg.APEX.IF_ON:
-            logger.info("Using apex")
-            try:
-                import apex
-            except ImportError:
-                raise ImportError("Please install apex from https://www.github.com/nvidia/apex to run this example.")
-            assert torch.backends.cudnn.enabled, "Amp requires cudnn backend to be enabled."
-            #
-            # if cfg.APEX.IF_SYNC_BN:
-            #     logger.info("Using apex synced BN")
-            #     self.model = apex.parallel.convert_syncbn_model(self.model)
-        if cfg.MODEL.DEVICE is 'cuda':
-            self.model = self.model.cuda()
-            self.loss.center = self.loss.center.cuda()
-            if cfg.APEX.IF_ON:
-                from apex import amp
-                self.model, self.optimizer = amp.initialize(self.model, self.optimizer,
+                self.model, self.optimizer = amp.initialize(self.model,
+                                                            self.optimizer,
                                                             opt_level=cfg.APEX.OPT_LEVEL,
                                                             keep_batchnorm_fp32=None if cfg.APEX.OPT_LEVEL == 'O1' else True,
                                                             loss_scale=cfg.APEX.LOSS_SCALE[0])
@@ -123,8 +90,10 @@ def main(merge_list=None):
     if cfg.MODEL.IF_DETERMINISTIC:
         cudnn.benchmark = False
         cudnn.deterministic = True
-        torch.manual_seed(1024)
+        torch.random.manual_seed(1024)
+        torch.random.manual_seed(1024)
         torch.cuda.manual_seed(1024)  # gpu
+        torch.cuda.manual_seed_all(1024)
         np.random.seed(1024)  # numpy
         random.seed(1024)  # random and transforms
         torch.set_printoptions(precision=10)

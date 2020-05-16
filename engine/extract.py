@@ -3,7 +3,7 @@ import logging
 import torch
 from ignite.engine import Engine, Events
 
-from tools.expand import TrainComponent
+from tools.component import TrainComponent
 from utils.tensor_utils import batch_horizontal_flip
 
 logger = logging.getLogger("reid_baseline.extract")

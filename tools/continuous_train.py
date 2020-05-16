@@ -4,7 +4,7 @@ import sys
 sys.path.append('.')
 sys.path.append('..')
 
-from tools.expand import main, TrainComponent
+from tools.component import main, TrainComponent
 from engine.continuous_trainer import do_continuous_train
 from engine.inference import inference
 from data import make_multi_valid_data_loader, make_train_data_loader
@@ -33,7 +33,7 @@ def train(cfg, saver):
 
     valid = make_multi_valid_data_loader(cfg, dataset_name)
 
-    inference(cfg, current_tr.model, valid)
+    # inference(cfg, current_tr.model, valid)
 
     do_continuous_train(cfg,
                         train_loader,

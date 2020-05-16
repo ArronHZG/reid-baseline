@@ -8,7 +8,7 @@ from ignite.metrics import RunningAverage
 from engine.inference import get_valid_eval_map, eval_multi_dataset
 from engine.trainer import Run
 from loss import Loss
-from tools.expand import TrainComponent
+from tools.component import TrainComponent
 from utils.tensorboardX_log import TensorBoardXLog
 
 logger = logging.getLogger("reid_baseline.continue")
@@ -45,7 +45,7 @@ def create_supervised_trainer(source_model,
                      "target_feat_c": source_feat_c}
 
         # train current model
-        loss = torch.tensor(.0, requires_grad=True).to(device)
+        loss = torch.tensor(0.0, requires_grad=True).to(device)
         for name, loss_fn in groupLoss.loss_function_map.items():
             loss_temp = loss_fn(**loss_args)
             loss += loss_temp
@@ -135,17 +135,14 @@ def do_continuous_train(cfg,
         for loss_name in current_tr_comp.loss.loss_function_map.keys():
             message += f"{loss_name}: {engine.state.metrics[loss_name]:.4f}, "
 
-        if current_tr_comp.loss.xent and tr_comp.loss.xent.learning_weight:
-            message += f"xentWeight: {tr_comp.loss.xent.uncertainty.item():.4f}, "
+        if current_tr_comp.loss.xent and current_tr_comp.loss.xent.learning_weight:
+            message += f"xentWeight: {current_tr_comp.loss.xent.uncertainty.item():.4f}, "
 
-        if current_tr_comp.loss.triplet and tr_comp.loss.triplet.learning_weight:
-            message += f"tripletWeight: {tr_comp.loss.triplet.uncertainty.item():.4f}, "
+        if current_tr_comp.loss.triplet and current_tr_comp.loss.triplet.learning_weight:
+            message += f"tripletWeight: {current_tr_comp.loss.triplet.uncertainty.item():.4f}, "
 
-        if current_tr_comp.loss.center and tr_comp.loss.center.learning_weight:
-            message += f"centerWeight: {tr_comp.loss.center.uncertainty.item():.4f}, "
-
-        for loss_name in tr_comp.loss.loss_function_map.keys():
-            message += f"{loss_name}: {engine.state.metrics[loss_name]:.4f}, "
+        if current_tr_comp.loss.center and current_tr_comp.loss.center.learning_weight:
+            message += f"centerWeight: {current_tr_comp.loss.center.uncertainty.item():.4f}, "
 
         logger.info(message)
 

@@ -67,12 +67,12 @@ class Saver:
             target_name = cfg.UDA.DATASET_NAME
             target_mid_name = 'uda'
 
-        elif cfg.EXPAND.IF_ON:
+        elif cfg.JOINT.IF_ON:
             name = cfg.DATASET.NAME
-            for n in cfg.EXPAND.DATASET_NAME:
+            for n in cfg.JOINT.DATASET_NAME:
                 name += f"--{n}"
             target_name = name
-            target_mid_name = 'expand'
+            target_mid_name = 'joint'
 
         else:
             target_name = cfg.DATASET.NAME

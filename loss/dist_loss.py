@@ -9,7 +9,7 @@ class CrossEntropyDistLoss(nn.Module):
         return -target*log(current)
     """
 
-    def __init__(self, T=0.1):
+    def __init__(self, T=0.05):
         super(CrossEntropyDistLoss, self).__init__()
         self.T = T
 

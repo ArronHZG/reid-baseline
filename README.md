@@ -120,21 +120,23 @@ CMC curve, Rank-10 :81.0%
 #### baseline and target
 ```shell script
 --------------------------------------------------------------------------------
-('/home/arron/dataset/market1501', 3368) Validation Results - Epoch: 120
-mAP: 85.1%
-CMC curve, Rank-1  :93.6%
-CMC curve, Rank-5  :98.0%
-CMC curve, Rank-10 :98.8%
-('/home/arron/dataset/DukeMTMC-reID', 2228) Validation Results - Epoch: 120
-mAP: 77.3%
-CMC curve, Rank-1  :86.8%
-CMC curve, Rank-5  :94.0%
-CMC curve, Rank-10 :95.7%
-('/home/arron/dataset/msmt17', 11659) Validation Results - Epoch: 120
-mAP: 47.0%
-CMC curve, Rank-1  :64.9%
-CMC curve, Rank-5  :77.1%
-CMC curve, Rank-10 :81.5%
-Save best: 0.7579
---------------------------------------------------------------------------------
+ Valid - Epoch: 400
+ market1501 Validation Results
+ mAP: 86.8%
+ CMC curve, Rank-1  :94.6%
+ CMC curve, Rank-5  :98.2%
+ CMC curve, Rank-10 :98.8%
+ dukemtmc Validation Results
+ mAP: 78.6%
+ CMC curve, Rank-1  :88.0%
+ CMC curve, Rank-5  :94.6%
+ CMC curve, Rank-10 :96.2%
+ msmt17 Validation Results
+ mAP: 48.9%
+ CMC curve, Rank-1  :67.5%
+ CMC curve, Rank-5  :79.2%
+ CMC curve, Rank-10 :83.1%
+ Save best: 0.7740
+ --------------------------------------------------------------------------------
 ```
+

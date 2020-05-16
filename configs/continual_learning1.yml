@@ -1,7 +1,0 @@
-EVAL:
-  EPOCH_PERIOD: 30
-TEST:
-  IF_RE_RANKING: False
-LOSS:
-  LOSS_TYPE: ' '
-  IF_WITH_CENTER: False

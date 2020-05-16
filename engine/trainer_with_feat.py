@@ -8,7 +8,7 @@ from ignite.metrics import RunningAverage
 from engine.inference import get_valid_eval_map, eval_multi_dataset
 from engine.trainer import Run
 from loss import Loss
-from tools.expand import TrainComponent
+from tools.component import TrainComponent
 from utils.tensorboardX_log import TensorBoardXLog
 
 logger = logging.getLogger("reid_baseline.train")

@@ -78,7 +78,7 @@ class TripletLoss(nn.Module):
         self.ranking_loss = nn.MarginRankingLoss(margin=margin)
 
         if self.learning_weight:
-            self.uncertainty = nn.Parameter(torch.tensor(1.64), requires_grad=True)
+            self.uncertainty = nn.Parameter(torch.tensor(2.73), requires_grad=True)
             self.optimizer = None
 
     def forward(self, global_feat, labels):
@@ -86,22 +86,20 @@ class TripletLoss(nn.Module):
         dist_mat = euclidean_dist(global_feat, global_feat)
         dist_ap, dist_an = hard_example_mining(dist_mat, labels)
         # y = dist_an.new().resize_as_(dist_an).fill_(1)
-        zero = torch.zeros_like(dist_an)
-        y = torch.zeros_like(dist_an).fill_(1)
-        # If y = 1  then it assumed the first input should be ranked higher
-        # (have a larger value) than the second input,
-        # and vice-versa for y = -1.
-
-        # print(torch.mean(dist_ap - dist_an + self.margin))
         ################################################################################
         # Person re-identification by multi-channel parts-based CNN with improved triplet loss function.
         # loss = ap + (ap - an + mergin)+
         ################################################################################
-
+        # zero = torch.zeros_like(dist_an)
         # ap_an_margin = dist_ap - dist_an + self.margin
         # ap_an_margin = torch.max(torch.stack((ap_an_margin, zero)), 0)
         # loss = (dist_ap + ap_an_margin[0]).mean()
-        loss = self.ranking_loss(dist_an, 2 * dist_ap, y)
+
+        # If y = 1  then it assumed the first input should be ranked higher
+        # (have a larger value) than the second input,
+        # and vice-versa for y = -1.
+        y = torch.zeros_like(dist_an).fill_(1)
+        loss = self.ranking_loss(dist_an, dist_ap, y)
 
         if self.learning_weight:
             loss = 0.5 * torch.exp(-self.uncertainty) * loss + self.uncertainty

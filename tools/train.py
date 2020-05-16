@@ -4,14 +4,14 @@ sys.path.append('.')
 sys.path.append('..')
 
 from data import make_train_data_loader, make_train_data_loader_with_expand, make_multi_valid_data_loader
-from tools.expand import main, TrainComponent
+from tools.component import main, TrainComponent
 from engine.trainer import do_train
 
 
 def train(cfg, saver):
     dataset_name = [cfg.DATASET.NAME]
-    if cfg.EXPAND.IF_ON:
-        for name in cfg.EXPAND.DATASET_NAME:
+    if cfg.JOINT.IF_ON:
+        for name in cfg.JOINT.DATASET_NAME:
             dataset_name.append(name)
         train_loader, num_classes = make_train_data_loader_with_expand(cfg, dataset_name)
     else:
