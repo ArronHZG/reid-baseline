@@ -102,8 +102,10 @@ class TripletLoss(nn.Module):
         loss = self.ranking_loss(dist_an, dist_ap, y)
 
         if self.learning_weight:
-            loss = 0.5 * torch.exp(-self.uncertainty) * loss + self.uncertainty
-            loss = loss.squeeze(-1)
+            # TODO
+            # loss = 0.5 * torch.exp(-self.uncertainty) * loss + self.uncertainty
+            # loss = loss.squeeze(-1)
+            pass
 
         # return loss, dist_ap, dist_an
         return loss
@@ -115,4 +117,3 @@ if __name__ == '__main__':
     tr = TripletLoss(margin=0.3)
     lo = tr(feat, label)
     print(lo)
-    TripletMarginLoss()

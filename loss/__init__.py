@@ -9,8 +9,9 @@ from loss.arcface_loss import ArcfaceLoss
 from loss.center_loss import CenterLoss
 from loss.dec_loss import DECLoss
 from loss.smoth_loss import MyCrossEntropy
+from loss.triplet_dist_loss import TripletDistLoss
 from loss.triplet_loss import TripletLoss
-from loss.dist_loss import CrossEntropyDistLoss
+from loss.cross_entropy_dist_loss import CrossEntropyDistLoss
 
 logger = logging.getLogger("reid_baseline.loss")
 
@@ -25,7 +26,7 @@ class Loss:
         #     feat_t,
         #     feat_c,
         #     cls_score,
-        #     target,
+        #     target,   # label
         #     target_feat_c,
 
         # ID loss
@@ -122,14 +123,23 @@ class Loss:
                 self.loss_function_map["dec"] = loss_function
 
         # dist loss
-        self.cross_entropy_dist_loss = None
+        # self.cross_entropy_dist_loss = None
+        # if cfg.CONTINUATION.IF_ON:
+        #     self.cross_entropy_dist_loss = CrossEntropyDistLoss(T=cfg.CONTINUATION.T)
+        #
+        #     def loss_function(**kw):
+        #         return self.cross_entropy_dist_loss(kw['feat_c'], kw['target_feat_c'])
+        #
+        #     self.loss_function_map["ce_dist"] = loss_function
+
+        self.triplet_dist_loss = None
         if cfg.CONTINUATION.IF_ON:
-            self.cross_entropy_dist_loss = CrossEntropyDistLoss(T=cfg.CONTINUATION.T)
+            self.triplet_dist_loss = TripletDistLoss(T=cfg.CONTINUATION.T)
 
             def loss_function(**kw):
-                return self.cross_entropy_dist_loss(kw['feat_c'], kw['target_feat_c'])
+                return self.triplet_dist_loss(kw['feat_c'], kw['target_feat_c'], kw['target'])
 
-            self.loss_function_map["dist"] = loss_function
+            self.loss_function_map["tr_dist"] = loss_function
 
         print(self.loss_function_map.keys())
 

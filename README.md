@@ -78,10 +78,6 @@ baseline:
 | ibn_b_resnext101_32x8d    | 04    | merge resnext101_32x8d: 01                               | 84.1 | 93.1  | 88.61 |
 | se_ibn_a_resnext101_32x8d | 05    | merge resnext101_32x8d: 01                               | 88.6 | 95.3  | 91.98 |
 | se_ibn_b_resnext101_32x8d | 06    | merge resnext101_32x8d: 01                               | 83.4 | 92.7  | 88.29 |
-|                           |       |                                                          |      |       |       |
-|                           |       |                                                          |      |       |       |
-|                           |       |                                                          |      |       |       |
-
 #### test
 
 using rerank
