@@ -30,18 +30,18 @@ def create_supervised_trainer(model, optimizer, groupLoss: Loss,
         optimizer.zero_grad()
         groupLoss.optimizer_zero_grad()
 
-        img, target = batch
+        img, cls_label = batch
         img = img.to(device)
-        target = target.to(device)
+        cls_label = cls_label.to(device)
         feat_t, feat_c, cls_score = model(img)
         loss_values = {}
         loss_args = {"feat_t": feat_t,
                      "feat_c": feat_c,
                      "cls_score": cls_score,
-                     "target": target,
-                     "target_feat_c": None}
-
-        loss = torch.tensor(.0, requires_grad=True).to(device)
+                     "cls_label": cls_label,
+                     "source_feat_t": None,
+                     "source_feat_c": None}
+        loss = torch.tensor(0.0, requires_grad=True).to(device)
         for name, loss_fn in groupLoss.loss_function_map.items():
             loss_temp = loss_fn(**loss_args)
             loss += loss_temp
@@ -58,7 +58,7 @@ def create_supervised_trainer(model, optimizer, groupLoss: Loss,
         groupLoss.optimizer_step()
 
         # compute acc
-        acc = (cls_score.max(1)[1] == target).float().mean()
+        acc = (cls_score.max(1)[1] == cls_label).float().mean()
         loss_values["Loss"] = loss.item()
         loss_values["Acc"] = acc.item()
         return loss_values
@@ -82,7 +82,7 @@ def do_train(cfg,
                                         apex=cfg.APEX.IF_ON)
 
     saver.to_save = {'trainer': trainer,
-                     'model': tr_comp.model}
+                     'module': tr_comp.model}
     # 'optimizer': tr_comp.optimizer,
     # 'center_param': tr_comp.loss_center,
     # 'optimizer_center': tr_comp.optimizer_center}

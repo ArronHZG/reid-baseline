@@ -88,7 +88,7 @@ def do_train_with_feat(cfg,
                                         center_loss_weight=cfg.LOSS.CENTER_LOSS_WEIGHT)
 
     saver.to_save = {'trainer': trainer,
-                     'model': tr_comp.model,
+                     'module': tr_comp.model,
                      'optimizer': tr_comp.optimizer,
                      'center_param': tr_comp.loss_center,
                      'optimizer_center': tr_comp.optimizer_center}

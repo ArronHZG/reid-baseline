@@ -15,7 +15,7 @@ from utils.tensor_utils import batch_horizontal_flip
 logger = logging.getLogger("reid_baseline.eval")
 
 
-def get_valid_eval_map(cfg, device, model, valid, re_ranking=False):
+def get_valid_eval_map(cfg, device, model, valid, re_ranking=False, classify_feature=True):
     validation_evaluator_map = OrderedDict()
     for name, (_, n_q) in valid.items():
         if re_ranking:
@@ -23,24 +23,30 @@ def get_valid_eval_map(cfg, device, model, valid, re_ranking=False):
         else:
             metrics = {"r1_mAP": R1_mAP(n_q, max_rank=50, if_feat_norm=cfg.TEST.IF_FEAT_NORM)}
 
-        validation_evaluator_map[name] = create_supervised_evaluator(model, metrics=metrics, device=device)
+        validation_evaluator_map[name] = create_supervised_evaluator(model,
+                                                                     metrics=metrics,
+                                                                     device=device,
+                                                                     classify_feature=classify_feature)
     return validation_evaluator_map
 
 
-def create_supervised_evaluator(model, metrics, device, flip=False):
+def create_supervised_evaluator(model, metrics, device, flip=False, classify_feature=True):
     def _inference(engine, batch):
         model.eval()
         with torch.no_grad():
             img, pids, camids = batch
             img = img.to(device)
             feat_t, feat_c = model(img)
-            feat_c = feat_c.to(torch.float16)
-            if flip:
-                flip_img = batch_horizontal_flip(img, device)
-                _, flip_feat = model(flip_img)
-                flip_feat = flip_feat.to(torch.float16)
-                feat_c += flip_feat
-            return feat_c, pids, camids
+            if classify_feature:
+                return feat_c.to(torch.float16), pids, camids
+            else:
+                return feat_t.to(torch.float16), pids, camids
+
+            # if flip:
+            #     flip_img = batch_horizontal_flip(img, device)
+            #     _, flip_feat = module(flip_img)
+            #     flip_feat = flip_feat.to(torch.float16)
+            #     feat_c += flip_feat
 
     engine = Engine(_inference)
 
@@ -76,6 +82,8 @@ def inference(
 ):
     device = cfg.MODEL.DEVICE
     # multi-dataset
-    validation_evaluator_map = get_valid_eval_map(cfg, device, model, valid, cfg.TEST.IF_RE_RANKING)
+    validation_evaluator_map = get_valid_eval_map(cfg, device, model, valid,
+                                                  cfg.TEST.IF_RE_RANKING,
+                                                  cfg.TEST.IF_CLASSIFT_FEATURE)
     sum_result = eval_multi_dataset(device, validation_evaluator_map, valid)
     logger.info(f'Sum result: {sum_result:.4f}')

@@ -2,8 +2,8 @@ import torch
 import torch.nn as nn
 from torch.hub import load_state_dict_from_url
 
-from modeling.backbone.model.ibn_model import IBN
-from modeling.backbone.model.se_module import SELayer
+from modeling.backbone.module.ibn_module import IBN
+from modeling.backbone.module.se_module import SELayer
 
 model_urls = {
     'resnet18': 'https://download.pytorch.org/models/resnet18-5c106cde.pth',
@@ -203,7 +203,7 @@ class ResNet(nn.Module):
 
         # Zero-initialize the last BN in each residual branch,
         # so that the residual branch starts with zeros, and each residual block behaves like an identity.
-        # This improves the model by 0.2~0.3% according to https://arxiv.org/abs/1706.02677
+        # This improves the module by 0.2~0.3% according to https://arxiv.org/abs/1706.02677
         if zero_init_residual:
             for m in self.modules():
                 if isinstance(m, Bottleneck):

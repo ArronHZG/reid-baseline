@@ -26,8 +26,9 @@ class Loss:
         #     feat_t,
         #     feat_c,
         #     cls_score,
-        #     target,   # label
-        #     target_feat_c,
+        #     cls_label,   # label
+        #     source_feat_t,
+        #     source_feat_c,
 
         # ID loss
         self.xent = None
@@ -50,7 +51,7 @@ class Loss:
                                                     last_epoch=-1)
 
             def loss_function(**kw):
-                return self.xent(kw['cls_score'], kw['target'])
+                return cfg.LOSS.ID_LOSS_WEIGHT * self.xent(kw['cls_score'], kw['cls_label'])
 
             self.loss_function_map["softmax"] = loss_function
 
@@ -61,7 +62,7 @@ class Loss:
                 self.arcface = self.arcface.cuda()
 
             def loss_function(**kw):
-                return self.arcface(kw['feat_c'], kw['target'])
+                return self.arcface(kw['feat_c'], kw['cls_label'])
 
             self.loss_function_map["arcface"] = loss_function
 
@@ -85,7 +86,7 @@ class Loss:
                                                        last_epoch=-1)
 
             def loss_function(**kw):
-                return cfg.LOSS.METRIC_LOSS_WEIGHT * self.triplet(kw['feat_t'], kw['target'])
+                return cfg.LOSS.METRIC_LOSS_WEIGHT * self.triplet(kw['feat_t'], kw['cls_label'])
 
             self.loss_function_map["triplet"] = loss_function
 
@@ -110,7 +111,7 @@ class Loss:
                                                   last_epoch=-1)
 
             def loss_function(**kw):
-                return cfg.LOSS.CENTER_LOSS_WEIGHT * self.center(kw['feat_t'], kw['target'])
+                return cfg.LOSS.CENTER_LOSS_WEIGHT * self.center(kw['feat_t'], kw['cls_label'])
 
             self.loss_function_map["center"] = loss_function
 
@@ -123,21 +124,21 @@ class Loss:
                 self.loss_function_map["dec"] = loss_function
 
         # dist loss
-        # self.cross_entropy_dist_loss = None
-        # if cfg.CONTINUATION.IF_ON:
-        #     self.cross_entropy_dist_loss = CrossEntropyDistLoss(T=cfg.CONTINUATION.T)
-        #
-        #     def loss_function(**kw):
-        #         return self.cross_entropy_dist_loss(kw['feat_c'], kw['target_feat_c'])
-        #
-        #     self.loss_function_map["ce_dist"] = loss_function
+        self.cross_entropy_dist_loss = None
+        if cfg.CONTINUATION.IF_ON and "ce_dist" in cfg.CONTINUATION.LOSS_TYPE:
+            self.cross_entropy_dist_loss = CrossEntropyDistLoss(T=cfg.CONTINUATION.T)
+
+            def loss_function(**kw):
+                return self.cross_entropy_dist_loss(kw['feat_c'], kw['source_feat_c'])
+
+            self.loss_function_map["ce_dist"] = loss_function
 
         self.triplet_dist_loss = None
-        if cfg.CONTINUATION.IF_ON:
+        if cfg.CONTINUATION.IF_ON and "tr_dist" in cfg.CONTINUATION.LOSS_TYPE:
             self.triplet_dist_loss = TripletDistLoss(T=cfg.CONTINUATION.T)
 
             def loss_function(**kw):
-                return self.triplet_dist_loss(kw['feat_c'], kw['target_feat_c'], kw['target'])
+                return self.triplet_dist_loss(kw['feat_t'], kw['source_feat_t'], kw['cls_label'])
 
             self.loss_function_map["tr_dist"] = loss_function
 

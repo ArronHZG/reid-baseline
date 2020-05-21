@@ -7,7 +7,7 @@ from torchsummary import summary
 
 def count_param(model):
     """
-    count model size
+    count module size
     :param model:
     :return:
     """

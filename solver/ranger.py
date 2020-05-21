@@ -24,7 +24,7 @@ from https://github.com/lessw2020/Ranger-Deep-Learning-Optimizer/blob/master/ran
 # summary of changes:
 # 4/11/20 - add gradient centralization option.  Set new testing benchmark for accuracy with it, toggle with use_gc flag at init.
 # full code integration with all updates at param level instead of group, moves slow weights into state dict (from generic weights),
-# supports group learning rates (thanks @SHolderbach), fixes sporadic load from saved model issues.
+# supports group learning rates (thanks @SHolderbach), fixes sporadic load from saved module issues.
 # changes 8/31/19 - fix references to *self*.N_sma_threshold;
 # changed eps to 1e-5 as better default than 1e-8.
 """
@@ -116,7 +116,7 @@ class Ranger(Optimizer):
                 if len(state) == 0:  # if first time to run...init dictionary with our desired entries
                     # if self.first_run_check==0:
                     # self.first_run_check=1
-                    # print("Initializing slow buffer...should not see this at load from saved model!")
+                    # print("Initializing slow buffer...should not see this at load from saved module!")
                     state['step'] = 0
                     state['exp_avg'] = torch.zeros_like(p_data_fp32)
                     state['exp_avg_sq'] = torch.zeros_like(p_data_fp32)

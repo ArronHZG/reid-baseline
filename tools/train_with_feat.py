@@ -28,7 +28,7 @@ def train(cfg, saver):
     source_loader, _ = make_train_data_loader_for_extract(cfg, source_name)
 
     tr = TrainComponent(cfg, 702)
-    to_load = {'model': tr.model}
+    to_load = {'module': tr.model}
     saver.to_save = to_load
     saver.load_checkpoint(is_best=True)
 
@@ -42,7 +42,7 @@ def train(cfg, saver):
 
     valid = make_multi_valid_data_loader(cfg, [source_name])
 
-    # inference(cfg, train_component.model, valid)
+    # inference(cfg, train_component.module, valid)
 
     do_train_with_feat(cfg,
                        train_loader,

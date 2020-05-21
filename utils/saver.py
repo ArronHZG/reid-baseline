@@ -109,7 +109,7 @@ class Saver:
         try:
             if is_best:
                 checkpoint = torch.load(self.fetch_checkpoint_model_filename("best"))
-                checkpoint['model'].pop("classifier.weight")
+                checkpoint['module'].pop("classifier.weight")
             else:
                 checkpoint = torch.load(self.fetch_checkpoint_model_filename("train"))
         except Exception:
@@ -120,7 +120,7 @@ class Saver:
         if 'trainer' in self.to_save.keys():
             self.to_save['trainer'].state.max_epochs = self.cfg.TRAIN.MAX_EPOCHS
 
-    # loading the saved model
+    # loading the saved module
     def fetch_checkpoint_model_filename(self, prefix):
         checkpoint_files = os.listdir(self.load_dir)
         checkpoint_files = [f for f in checkpoint_files if '.pth' in f and prefix in f]
@@ -140,8 +140,8 @@ class Saver:
         """Helper method to apply `load_state_dict` on the objects from `to_load` using states from `checkpoint`.
 
         Args:
-            to_load (Mapping): a dictionary with objects, e.g. `{"model": model, "optimizer": optimizer, ...}`
-            checkpoint (Mapping): a dictionary with state_dicts to load, e.g. `{"model": model_state_dict,
+            to_load (Mapping): a dictionary with objects, e.g. `{"module": module, "optimizer": optimizer, ...}`
+            checkpoint (Mapping): a dictionary with state_dicts to load, e.g. `{"module": model_state_dict,
                 "optimizer": opt_state_dict}`. If `to_load` contains a single key, then checkpoint can contain directly
                 corresponding state_dict.
         """

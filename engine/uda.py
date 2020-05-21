@@ -3,7 +3,7 @@
 @contact: hou.arron@gmail.com
 
 
-    model
+    module
     data
 for:
     eval
@@ -88,12 +88,12 @@ class SSG:
         self.saver = saver
         self.device = self.cfg.MODEL.DEVICE
 
-        # define model and load model weight, this model only is used to extract feature.
-        logger.info(f"load model from {self.saver.load_dir}")
+        # define module and load module weight, this module only is used to extract feature.
+        logger.info(f"load module from {self.saver.load_dir}")
         self.model = build_model(self.cfg, 0)
         if self.cfg.MODEL.DEVICE is 'cuda':
             self.model.cuda()
-        self.saver.to_save = {'model': self.model}
+        self.saver.to_save = {'module': self.model}
         self.saver.load_checkpoint(is_best=True)
         saver.best_result = 0
 

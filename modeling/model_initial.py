@@ -1,4 +1,5 @@
 from torch import nn
+from torchvision.models import resnet50
 
 
 def weights_init_kaiming(m):

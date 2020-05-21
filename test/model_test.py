@@ -52,7 +52,7 @@ if __name__ == '__main__':
     if not os.path.exists(root_dir):
         os.makedirs(root_dir)
 
-    setup_logger("model", root_dir, 0)
+    setup_logger("module", root_dir, 0)
 
     for name in names:
         for b in bool_list:

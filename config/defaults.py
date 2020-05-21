@@ -39,6 +39,7 @@ _C.LOSS.IF_WITH_DEC = False
 # Options: 'softmax' 'triplet' 'softmax_triplet' 'softmax_arcface_triplet'
 _C.LOSS.LOSS_TYPE = 'softmax_triplet'
 _C.LOSS.METRIC_LOSS_WEIGHT = 1.0
+_C.LOSS.ID_LOSS_WEIGHT = 1.0
 _C.LOSS.MARGIN = 0.3
 _C.LOSS.IF_LEARNING_WEIGHT = True
 
@@ -87,7 +88,8 @@ _C.TEST.IF_ON = False
 _C.TEST.BATCH_SIZE = 128  # from evaluate and extract feature
 _C.TEST.IF_RE_RANKING = True
 _C.TEST.IF_FEAT_NORM = True
-_C.TEST.RUN_ID = '01'
+_C.TEST.RUN_ID = '13'
+_C.TEST.IF_CLASSIFT_FEATURE = True
 
 _C.JOINT = CN()
 _C.JOINT.IF_ON = False
@@ -107,4 +109,5 @@ _C.FEAT.DATASET_NAME = 'dukemtmc'
 _C.CONTINUATION = CN()
 _C.CONTINUATION.IF_ON = False
 _C.CONTINUATION.DATASET_NAME = 'dukemtmc'
-_C.CONTINUATION.T = 0.05
+_C.CONTINUATION.T = 10.0
+_C.CONTINUATION.LOSS_TYPE = 'ce_dict'  # ce_dict tr_dist

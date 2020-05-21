@@ -2,6 +2,6 @@ JOINT:
   IF_ON: True
   DATASET_NAME: ("dukemtmc", "msmt17")
 LOSS:
-  IF_LEARNING_WEIGHT: False
+  IF_LEARNING_WEIGHT: True
 TRAIN:
   MAX_EPOCHS: 30

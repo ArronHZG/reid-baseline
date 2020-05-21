@@ -32,7 +32,7 @@ def create_supervised_trainer(source_model,
         target = target.to(device)
 
         # source_feat
-        _, source_feat_c = source_model(img)
+        source_feat_t, source_feat_c = source_model(img)
 
         # current_feat
         current_feat_t, current_feat_c, current_cls_score = current_model(img)
@@ -41,10 +41,11 @@ def create_supervised_trainer(source_model,
         loss_args = {"feat_t": current_feat_t,
                      "feat_c": current_feat_c,
                      "cls_score": current_cls_score,
-                     "target": target,
-                     "target_feat_c": source_feat_c}
+                     "cls_label": target,
+                     "source_feat_t": source_feat_t.detach(),
+                     "source_feat_c": source_feat_c.detach()}
 
-        # train current model
+        # train current module
         loss = torch.tensor(0.0, requires_grad=True).to(device)
         for name, loss_fn in groupLoss.loss_function_map.items():
             loss_temp = loss_fn(**loss_args)
@@ -88,7 +89,7 @@ def do_continuous_train(cfg,
                                         apex=cfg.APEX.IF_ON)
 
     saver.to_save = {'trainer': trainer,
-                     'model': current_tr_comp.model}
+                     'module': current_tr_comp.model}
     # 'optimizer': tr_comp.optimizer,
     # 'center_param': tr_comp.loss_center,
     # 'optimizer_center': tr_comp.optimizer_center}

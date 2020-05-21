@@ -11,6 +11,7 @@
       <w>imagenet</w>
       <w>inplanes</w>
       <w>iters</w>
+      <w>jacobian</w>
       <w>pbar</w>
       <w>pretrain</w>
       <w>resnet</w>

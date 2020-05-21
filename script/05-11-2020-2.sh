@@ -1,2 +1,0 @@
-python ../tools/test.py --config_file='../configs/resnet101.yml' MODEL.IF_IBN_A True TEST.RUN_ID 03
-python ../tools/test.py --config_file='../configs/resnext101_32x8d.yml' MODEL.IF_IBN_A True TEST.RUN_ID 03

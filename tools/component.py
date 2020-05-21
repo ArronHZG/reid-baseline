@@ -43,7 +43,7 @@ class TrainComponent:
             #
             # if cfg.APEX.IF_SYNC_BN:
             #     logger.info("Using apex synced BN")
-            #     self.model = apex.parallel.convert_syncbn_model(self.model)
+            #     self.module = apex.parallel.convert_syncbn_model(self.module)
         if self.device is 'cuda':
             self.model = self.model.cuda()
             if cfg.APEX.IF_ON:
@@ -117,10 +117,10 @@ def main(merge_list=None):
 # if args.distributed:
 #     # By default, apex.parallel.DistributedDataParallel overlaps communication with
 #     # computation in the backward pass.
-#     # model = DDP(model)
+#     # module = DDP(module)
 #     # delay_allreduce delays all communication to the end of the backward pass.
-#     model = DDP(model, delay_allreduce=True)
+#     module = DDP(module, delay_allreduce=True)
 # if device:
 #     if torch.cuda.device_count() > 1:
-#         model = nn.DataParallel(model)
-#     model.to(device)
+#         module = nn.DataParallel(module)
+#     module.to(device)

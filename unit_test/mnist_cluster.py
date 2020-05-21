@@ -118,7 +118,7 @@ def run(train_batch_size, val_batch_size, epochs, lr, log_interval):
         )
         vis.line(X=np.array([engine.state.epoch]), Y=np.array([avg_nll]), win=val_avg_loss_window, update="append")
 
-        checkpointer(engine, {"model": model})
+        checkpointer(engine, {"module": model})
 
     # kick everything off
     trainer.run(train_loader, max_epochs=epochs)
@@ -171,12 +171,12 @@ def cluster(train_batch_size, val_batch_size):
                                    n_saved=1,
                                    require_empty=False)
     checkpoint = torch.load("mnist-cluster/resnet50_model_4690.pth")
-    checkpointer.load_objects({'model': model}, checkpoint)
+    checkpointer.load_objects({'module': model}, checkpoint)
     model.cuda()
     model.eval()
 
     # evaluator = create_supervised_evaluator(
-    #     model, metrics={"accuracy": Accuracy()}, device=device)
+    #     module, metrics={"accuracy": Accuracy()}, device=device)
     # evaluator.run(val_loader)
     # metrics = evaluator.state.metrics
     # print(f"Validation Results Avg accuracy: {metrics['accuracy']:.2f}")
