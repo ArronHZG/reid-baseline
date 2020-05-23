@@ -6,7 +6,6 @@
 
 import os.path as osp
 from PIL import Image
-import jpeg4py as jpeg
 from torch.utils.data import Dataset
 
 

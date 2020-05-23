@@ -3,6 +3,8 @@ from torch import nn
 from modeling.backbone.resnet import resnet18, resnet50, resnet101, resnet152, \
     resnext50_32x4d, resnext101_32x8d, \
     wide_resnet50_2, wide_resnet101_2, resnet34
+from modeling.base import Base
+from utils.data import Data
 from modeling.model_initial import weights_init_kaiming, weights_init_classifier
 
 model_map = {'resnet18': resnet18,
@@ -17,7 +19,6 @@ model_map = {'resnet18': resnet18,
 
 
 class Baseline(nn.Module):
-
     def __init__(self,
                  num_classes,
                  last_stride,
@@ -36,7 +37,6 @@ class Baseline(nn.Module):
         self.GAP = nn.AdaptiveAvgPool2d(1)
         self.num_classes = num_classes
         self.in_planes = 512 * self.base.block.expansion
-
         self.bottleneck = nn.BatchNorm1d(self.in_planes)
         self.bottleneck.bias.requires_grad_(False)
         self.bottleneck.apply(weights_init_kaiming)
@@ -44,13 +44,14 @@ class Baseline(nn.Module):
 
         self.classifier.apply(weights_init_classifier)
 
-    def forward(self, x):
+    def forward(self, x) -> Data:
         x = self.base(x)
         feat_t = self.GAP(x).view(x.size(0), -1)
         feat_c = self.bottleneck(feat_t)  # normalize for angular softmax
-
+        data = Data()
+        data.feat_t = feat_t
+        data.feat_c = feat_c
         if self.training:
             cls_score = self.classifier(feat_c)
-            return feat_t, feat_c, cls_score  # global feature for triplet loss
-        else:  # Test with feature after BN
-            return feat_t, feat_c
+            data.cls_score = cls_score  # global feature for triplet loss
+        return data

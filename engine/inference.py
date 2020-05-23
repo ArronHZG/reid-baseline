@@ -36,11 +36,11 @@ def create_supervised_evaluator(model, metrics, device, flip=False, classify_fea
         with torch.no_grad():
             img, pids, camids = batch
             img = img.to(device)
-            feat_t, feat_c = model(img)
+            data = model(img)
             if classify_feature:
-                return feat_c.to(torch.float16), pids, camids
+                return data.feat_c.to(torch.float16), pids, camids
             else:
-                return feat_t.to(torch.float16), pids, camids
+                return data.feat_t.to(torch.float16), pids, camids
 
             # if flip:
             #     flip_img = batch_horizontal_flip(img, device)

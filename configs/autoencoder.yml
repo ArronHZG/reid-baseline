@@ -1,0 +1,8 @@
+EBLL:
+  IF_ON: True
+  CODE_SIZE: 1024
+  LAMBDA: 0.01
+MODEL:
+  DEVICE_ID: 0
+APEX:
+  IF_ON: True

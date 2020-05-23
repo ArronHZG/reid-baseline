@@ -12,7 +12,8 @@ class AutoEncoder(nn.Module):
         # fc layers for the decoder
         self.decoder = nn.Sequential(
             nn.Linear(code_dim, input_dim, bias=bias),
-            nn.Sigmoid())
+            # nn.Sigmoid()
+        )
 
     def forward(self, x):
         code = self.encoder(x)

@@ -48,6 +48,7 @@ class TrainComponent:
             self.model = self.model.cuda()
             if cfg.APEX.IF_ON:
                 from apex import amp
+                amp.register_float_function(torch, 'sigmoid')
                 self.model, self.optimizer = amp.initialize(self.model,
                                                             self.optimizer,
                                                             opt_level=cfg.APEX.OPT_LEVEL,
@@ -88,6 +89,7 @@ def main(merge_list=None):
 
     cudnn.benchmark = True
     if cfg.MODEL.IF_DETERMINISTIC:
+        # using cuDNN
         cudnn.benchmark = False
         cudnn.deterministic = True
         torch.random.manual_seed(1024)

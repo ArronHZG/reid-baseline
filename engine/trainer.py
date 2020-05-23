@@ -1,5 +1,4 @@
 import logging
-from copy import copy
 
 import torch
 from ignite.engine import Engine, Events
@@ -32,18 +31,12 @@ def create_supervised_trainer(model, optimizer, groupLoss: Loss,
 
         img, cls_label = batch
         img = img.to(device)
-        cls_label = cls_label.to(device)
-        feat_t, feat_c, cls_score = model(img)
+        data = model(img)
+        data.cls_label = cls_label.to(device)
         loss_values = {}
-        loss_args = {"feat_t": feat_t,
-                     "feat_c": feat_c,
-                     "cls_score": cls_score,
-                     "cls_label": cls_label,
-                     "source_feat_t": None,
-                     "source_feat_c": None}
         loss = torch.tensor(0.0, requires_grad=True).to(device)
         for name, loss_fn in groupLoss.loss_function_map.items():
-            loss_temp = loss_fn(**loss_args)
+            loss_temp = loss_fn(data)
             loss += loss_temp
             loss_values[name] = loss_temp.item()
 
@@ -58,7 +51,7 @@ def create_supervised_trainer(model, optimizer, groupLoss: Loss,
         groupLoss.optimizer_step()
 
         # compute acc
-        acc = (cls_score.max(1)[1] == cls_label).float().mean()
+        acc = (data.cls_score.max(1)[1] == data.cls_label).float().mean()
         loss_values["Loss"] = loss.item()
         loss_values["Acc"] = acc.item()
         return loss_values

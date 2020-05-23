@@ -23,7 +23,7 @@ _C.INPUT.PADDING = 10
 _C.MODEL = CN()
 _C.MODEL.DEVICE = "cuda"  # "cuda" or "cpu"
 _C.MODEL.DEVICE_ID = 0
-_C.MODEL.IF_DETERMINISTIC = True
+_C.MODEL.IF_DETERMINISTIC = False
 _C.MODEL.NAME = 'resnet50'
 _C.MODEL.LAST_STRIDE = 1
 _C.MODEL.PRETRAIN_CHOICE = 'imagenet'  # Options: 'imagenet','random' or 'self'
@@ -32,12 +32,12 @@ _C.MODEL.IF_IBN_B = False
 _C.MODEL.IF_SE = False
 
 _C.LOSS = CN()
-_C.LOSS.IF_WITH_CENTER = True
-_C.LOSS.CENTER_LOSS_WEIGHT = 0.0005
-_C.LOSS.IF_LABEL_SMOOTH = True
-_C.LOSS.IF_WITH_DEC = False
 # Options: 'softmax' 'triplet' 'softmax_triplet' 'softmax_arcface_triplet'
 _C.LOSS.LOSS_TYPE = 'softmax_triplet'
+_C.LOSS.IF_LABEL_SMOOTH = True
+_C.LOSS.IF_WITH_CENTER = True
+_C.LOSS.CENTER_LOSS_WEIGHT = 0.0005
+_C.LOSS.IF_WITH_DEC = False
 _C.LOSS.METRIC_LOSS_WEIGHT = 1.0
 _C.LOSS.ID_LOSS_WEIGHT = 1.0
 _C.LOSS.MARGIN = 0.3
@@ -66,7 +66,7 @@ _C.TRAIN.LOG_ITER_PERIOD = 100
 _C.TRAIN.MAX_EPOCHS = 150
 
 _C.EVAL = CN()
-_C.EVAL.EPOCH_PERIOD = 30
+_C.EVAL.EPOCH_PERIOD = 3
 
 _C.SAVER = CN()
 _C.SAVER.CHECKPOINT_PERIOD = 1
@@ -79,7 +79,7 @@ _C.TENSORBOARDX.HIST = False
 
 _C.APEX = CN()
 _C.APEX.IF_ON = True
-_C.APEX.OPT_LEVEL = 'O2'  # O1 or O2
+_C.APEX.OPT_LEVEL = 'O1'  # O1 or O2
 _C.APEX.IF_SYNC_BN = False
 _C.APEX.LOSS_SCALE = ("1.0",)
 
@@ -111,3 +111,9 @@ _C.CONTINUATION.IF_ON = False
 _C.CONTINUATION.DATASET_NAME = 'dukemtmc'
 _C.CONTINUATION.T = 10.0
 _C.CONTINUATION.LOSS_TYPE = 'ce_dict'  # ce_dict tr_dist
+
+_C.EBLL = CN()
+_C.EBLL.IF_ON = False
+_C.EBLL.CODE_SIZE = 1024
+_C.EBLL.LOSS_TYPE = "ae_loss ae_l1 ae_l2 ae_c"
+_C.EBLL.LAMBDA = 0.01

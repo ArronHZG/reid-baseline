@@ -31,5 +31,9 @@ def euclidean_dist(x: torch.Tensor, y: torch.Tensor):
 if __name__ == '__main__':
     a = torch.tensor([[0., 0.]])
     b = torch.tensor([[1., 1.]])
+    a = a.cuda()
+    b = b.cuda()
+    a = a.to(torch.half)
+    b = b.to(torch.half)
     dist = euclidean_dist(a, b)
     print(dist)
