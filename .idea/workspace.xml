@@ -2,30 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1b0344a7-c05c-4a3c-9dfc-141d92b1a83a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/configs/autoencoder.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/modeling/EBLL.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/modeling/base.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/script/05-23-2020.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/arron.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/arron.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/reid-baseline.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/reid-baseline.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/defaults.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/defaults.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/autoencoder.yml" beforeDir="false" afterPath="$PROJECT_DIR$/configs/autoencoder.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/configs/joint.yml" beforeDir="false" afterPath="$PROJECT_DIR$/configs/joint.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/datasets/dataset_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/datasets/dataset_loader.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/inference.py" beforeDir="false" afterPath="$PROJECT_DIR$/engine/inference.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/trainer.py" beforeDir="false" afterPath="$PROJECT_DIR$/engine/trainer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/trainer_with_feat.py" beforeDir="false" afterPath="$PROJECT_DIR$/engine/trainer_with_feat.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loss/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/loss/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loss/autoencoder_loss.py" beforeDir="false" afterPath="$PROJECT_DIR$/loss/autoencoder_loss.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modeling/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/modeling/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modeling/autoencoder.py" beforeDir="false" afterPath="$PROJECT_DIR$/modeling/backbone/autoencoder.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modeling/strong_baseline.py" beforeDir="false" afterPath="$PROJECT_DIR$/modeling/strong_baseline.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/component.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/component.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tensor_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/tensor_utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/script/05-21-2020.sh" beforeDir="false" afterPath="$PROJECT_DIR$/script/05-21-2020.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/script/05-23-2020.sh" beforeDir="false" afterPath="$PROJECT_DIR$/script/05-23-2020.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +56,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
     <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
@@ -285,7 +267,8 @@
       <workItem from="1589520930082" duration="16858000" />
       <workItem from="1590054687709" duration="8897000" />
       <workItem from="1590072837847" duration="7953000" />
-      <workItem from="1590146134581" duration="18909000" />
+      <workItem from="1590146134581" duration="19096000" />
+      <workItem from="1590256891122" duration="454000" />
     </task>
     <task id="LOCAL-00001" summary="auto download backbone weight">
       <created>1584559275020</created>
@@ -532,7 +515,14 @@
       <option name="project" value="LOCAL" />
       <updated>1590084931272</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="AutoEncoder">
+      <created>1590256783282</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1590256783282</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -543,7 +533,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="uda" />
     <MESSAGE value="debug uda" />
     <MESSAGE value="show each loss value" />
     <MESSAGE value="dec loss" />
@@ -568,7 +557,8 @@
     <MESSAGE value="joint" />
     <MESSAGE value="triplet_dist_loss" />
     <MESSAGE value="autoencoder" />
-    <option name="LAST_COMMIT_MESSAGE" value="autoencoder" />
+    <MESSAGE value="AutoEncoder" />
+    <option name="LAST_COMMIT_MESSAGE" value="AutoEncoder" />
   </component>
   <component name="WindowStateProjectService">
     <state x="368" y="145" key="#Deployment" timestamp="1588263119879">
@@ -599,10 +589,10 @@
       <screen x="0" y="0" width="1536" height="960" />
     </state>
     <state x="506" y="234" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.960@0.0.1536.960" timestamp="1585039242962" />
-    <state x="347" y="23" width="841" height="937" key="CommitChangelistDialog2" timestamp="1590256765618">
+    <state x="347" y="23" width="841" height="937" key="CommitChangelistDialog2" timestamp="1590256782968">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
-    <state x="347" y="23" width="841" height="937" key="CommitChangelistDialog2/0.0.1536.960@0.0.1536.960" timestamp="1590256765618" />
+    <state x="347" y="23" width="841" height="937" key="CommitChangelistDialog2/0.0.1536.960@0.0.1536.960" timestamp="1590256782968" />
     <state x="347" y="45" key="CommitChangelistDialog2/0.23.1536.937@0.23.1536.937" timestamp="1589199112562" />
     <state x="100" y="100" width="1336" height="760" key="DiffContextDialog" timestamp="1585132909011">
       <screen x="0" y="0" width="1536" height="960" />
@@ -616,25 +606,25 @@
       <screen x="0" y="0" width="1536" height="960" />
     </state>
     <state x="519" y="110" key="Github.UntrackedFilesDialog/0.0.1536.960@0.0.1536.960" timestamp="1584551148102" />
-    <state width="1494" height="330" key="GridCell.Tab.0.bottom" timestamp="1590255798684">
+    <state width="1494" height="330" key="GridCell.Tab.0.bottom" timestamp="1590256828345">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
-    <state width="1494" height="330" key="GridCell.Tab.0.bottom/0.0.1536.960@0.0.1536.960" timestamp="1590255798684" />
+    <state width="1494" height="330" key="GridCell.Tab.0.bottom/0.0.1536.960@0.0.1536.960" timestamp="1590256828345" />
     <state width="1494" height="290" key="GridCell.Tab.0.bottom/0.23.1536.937@0.23.1536.937" timestamp="1589197767853" />
-    <state width="1494" height="330" key="GridCell.Tab.0.center" timestamp="1590255798683">
+    <state width="1494" height="330" key="GridCell.Tab.0.center" timestamp="1590256828345">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
-    <state width="1494" height="330" key="GridCell.Tab.0.center/0.0.1536.960@0.0.1536.960" timestamp="1590255798683" />
+    <state width="1494" height="330" key="GridCell.Tab.0.center/0.0.1536.960@0.0.1536.960" timestamp="1590256828345" />
     <state width="1494" height="290" key="GridCell.Tab.0.center/0.23.1536.937@0.23.1536.937" timestamp="1589197767853" />
-    <state width="1494" height="330" key="GridCell.Tab.0.left" timestamp="1590255798682">
+    <state width="1494" height="330" key="GridCell.Tab.0.left" timestamp="1590256828344">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
-    <state width="1494" height="330" key="GridCell.Tab.0.left/0.0.1536.960@0.0.1536.960" timestamp="1590255798682" />
+    <state width="1494" height="330" key="GridCell.Tab.0.left/0.0.1536.960@0.0.1536.960" timestamp="1590256828344" />
     <state width="1494" height="290" key="GridCell.Tab.0.left/0.23.1536.937@0.23.1536.937" timestamp="1589197767852" />
-    <state width="1494" height="330" key="GridCell.Tab.0.right" timestamp="1590255798684">
+    <state width="1494" height="330" key="GridCell.Tab.0.right" timestamp="1590256828345">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
-    <state width="1494" height="330" key="GridCell.Tab.0.right/0.0.1536.960@0.0.1536.960" timestamp="1590255798684" />
+    <state width="1494" height="330" key="GridCell.Tab.0.right/0.0.1536.960@0.0.1536.960" timestamp="1590256828345" />
     <state width="1494" height="290" key="GridCell.Tab.0.right/0.23.1536.937@0.23.1536.937" timestamp="1589197767853" />
     <state width="1494" height="308" key="GridCell.Tab.1.bottom" timestamp="1590173725523">
       <screen x="0" y="0" width="1536" height="960" />
@@ -664,15 +654,15 @@
       <screen x="0" y="0" width="1536" height="960" />
     </state>
     <state x="269" y="119" key="SettingsEditor/0.0.1536.960@0.0.1536.960" timestamp="1590153229450" />
-    <state x="368" y="216" key="Vcs.Push.Dialog.v2" timestamp="1590084932958">
+    <state x="368" y="216" key="Vcs.Push.Dialog.v2" timestamp="1590256784612">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
-    <state x="368" y="216" key="Vcs.Push.Dialog.v2/0.0.1536.960@0.0.1536.960" timestamp="1590084932958" />
+    <state x="368" y="216" key="Vcs.Push.Dialog.v2/0.0.1536.960@0.0.1536.960" timestamp="1590256784612" />
     <state x="368" y="234" key="Vcs.Push.Dialog.v2/0.23.1536.937@0.23.1536.937" timestamp="1589199114616" />
-    <state x="428" y="328" key="com.intellij.ide.util.TipDialog" timestamp="1590146135477">
+    <state x="428" y="328" key="com.intellij.ide.util.TipDialog" timestamp="1590256891615">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
-    <state x="428" y="328" key="com.intellij.ide.util.TipDialog/0.0.1536.960@0.0.1536.960" timestamp="1590146135477" />
+    <state x="428" y="328" key="com.intellij.ide.util.TipDialog/0.0.1536.960@0.0.1536.960" timestamp="1590256891615" />
     <state x="428" y="328" key="com.intellij.ide.util.TipDialog/0.23.1536.937@0.23.1536.937" timestamp="1589209076448" />
     <state x="335" y="85" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1584474851693">
       <screen x="0" y="0" width="1536" height="960" />

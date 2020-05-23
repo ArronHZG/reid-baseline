@@ -4,5 +4,6 @@ EBLL:
   LAMBDA: 0.01
 MODEL:
   DEVICE_ID: 0
+  IF_IBN_A: True
 APEX:
   IF_ON: True
