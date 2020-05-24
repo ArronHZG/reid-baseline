@@ -17,13 +17,13 @@ def train(cfg, saver):
     else:
         train_loader, num_classes = make_train_data_loader(cfg, dataset_name[0])
 
-    valid = make_multi_valid_data_loader(cfg, dataset_name)
+    valid_dict = make_multi_valid_data_loader(cfg, dataset_name)
 
     train_component = TrainComponent(cfg, num_classes)
 
     do_train(cfg,
              train_loader,
-             valid,
+             valid_dict,
              train_component,
              saver)
 

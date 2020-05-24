@@ -11,7 +11,7 @@ class CrossEntropyDistLoss(nn.Module):
     def __init__(self, T=0.05):
         super(CrossEntropyDistLoss, self).__init__()
         self.T = T
-        self.bce_loss = BCELoss()
+        self.mse_loss = BCELoss()
 
     def forward(self, current, target):
         target = target / self.T
@@ -20,7 +20,7 @@ class CrossEntropyDistLoss(nn.Module):
         current = current / self.T
         source_item = F.softmax(current, dim=1)
 
-        loss = self.bce_loss(source_item, target_item)
+        loss = self.mse_loss(source_item, target_item)
         return loss
 
 

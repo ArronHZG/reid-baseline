@@ -4,14 +4,15 @@ from collections import OrderedDict
 import torch
 from torch.optim.lr_scheduler import ExponentialLR
 
-from loss.arcface_loss import ArcfaceLoss
-from loss.autoencoder_loss import AELoss, AELossL1, AELossL2
-from loss.center_loss import CenterLoss
-from loss.dec_loss import DECLoss
-from loss.smoth_loss import MyCrossEntropy
-from loss.triplet_dist_loss import TripletDistLoss
-from loss.triplet_loss import TripletLoss
-from loss.cross_entropy_dist_loss import CrossEntropyDistLoss
+from loss.dist_loss.autoencoder_dist_loss import AutoEncoderDistLoss
+from loss.dist_loss.cross_entropy_dist_loss import CrossEntropyDistLoss
+from loss.dist_loss.triplet_dist_loss import TripletDistLoss
+from loss.training_loss.arcface_loss import ArcfaceLoss
+from loss.training_loss.autoencoder_loss import AELoss, AELossL1, AELossL2
+from loss.training_loss.center_loss import CenterLoss
+from loss.training_loss.dec_loss import DECLoss
+from loss.training_loss.smoth_loss import MyCrossEntropy
+from loss.training_loss.triplet_loss import TripletLoss
 from utils import Data
 
 logger = logging.getLogger("reid_baseline.loss")
@@ -23,13 +24,7 @@ class Loss:
         self.loss_type = cfg.LOSS.LOSS_TYPE
         self.loss_function_map = OrderedDict()
 
-        # loss_function **kw should have:
-        #     feat_t,
-        #     feat_c,
-        #     cls_score,
-        #     cls_label,   # label
-        #     source_feat_t,
-        #     source_feat_c,
+        # loss_function should input Data
 
         # ID loss
         self.xent = None
@@ -52,14 +47,22 @@ class Loss:
                 self.loss_function_map["dec"] = self.get_dec_loss()
 
         # dist loss
-        self.cross_entropy_dist_loss = None
         if cfg.CONTINUATION.IF_ON and "ce_dist" in cfg.CONTINUATION.LOSS_TYPE:
             self.loss_function_map["ce_dist"] = self.get_cross_entropy_dist_loss(cfg)
 
-        self.triplet_dist_loss = None
         if cfg.CONTINUATION.IF_ON and "tr_dist" in cfg.CONTINUATION.LOSS_TYPE:
             self.loss_function_map["tr_dist"] = self.get_triplet_dist_loss(cfg)
 
+        if cfg.CONTINUATION.IF_ON and cfg.EBLL.IF_ON and "ae_loss" in cfg.EBLL.LOSS_TYPE:
+            self.loss_function_map["ae_dist"] = self.get_code_dist_loss(cfg)
+
+        if cfg.CONTINUATION.IF_ON and cfg.EBLL.IF_ON and "ae_l1" in cfg.EBLL.LOSS_TYPE:
+            self.loss_function_map["ae_l1_dist"] = self.get_code_l1_dist_loss(cfg)
+
+        if cfg.CONTINUATION.IF_ON and cfg.EBLL.IF_ON and "ae_l2" in cfg.EBLL.LOSS_TYPE:
+            self.loss_function_map["ae_l2_dist"] = self.get_code_l2dist_loss(cfg)
+
+        # autoencoder loss
         if cfg.EBLL.IF_ON and "ae_loss" in cfg.EBLL.LOSS_TYPE:
             self.loss_function_map["ae"] = self.get_ae_loss()
 
@@ -69,8 +72,8 @@ class Loss:
         if cfg.EBLL.IF_ON and "ae_l2" in cfg.EBLL.LOSS_TYPE:
             self.loss_function_map["ae_l2"] = self.get_ae_loss_l2(cfg)
 
-        if cfg.EBLL.IF_ON and "ae_c" in cfg.EBLL.LOSS_TYPE:
-            self.loss_function_map["cae"] = self.get_cae_loss(cfg)
+        # if cfg.EBLL.IF_ON and "ae_c" in cfg.EBLL.LOSS_TYPE:
+        #     self.loss_function_map["cae"] = self.get_cae_loss(cfg)
 
         print(self)
 
@@ -110,7 +113,7 @@ class Loss:
         self.triplet_dist_loss = TripletDistLoss(T=cfg.CONTINUATION.T)
 
         def loss_function(data: Data):
-            return self.triplet_dist_loss(data.feat_t, data.source_feat_t, data.cls_label)
+            return self.triplet_dist_loss(data.feat_t, data.source.feat_t, data.cls_label)
 
         return loss_function
 
@@ -118,7 +121,7 @@ class Loss:
         self.cross_entropy_dist_loss = CrossEntropyDistLoss(T=cfg.CONTINUATION.T)
 
         def loss_function(data: Data):
-            return self.cross_entropy_dist_loss(data.feat_t, data.source_feat_c)
+            return self.cross_entropy_dist_loss(data.feat_t, data.source.feat_t)
 
         return loss_function
 
@@ -146,7 +149,6 @@ class Loss:
         if cfg.MODEL.DEVICE is 'cuda':
             self.center = self.center.cuda()
             if cfg.APEX.IF_ON:
-                from apex import amp
                 self.center.to(torch.half)
 
         def loss_function(data: Data):
@@ -229,10 +231,34 @@ class Loss:
 
         return loss_function
 
-    def get_cae_loss(self, cfg):
-        self.cae = AELossL2(cfg.EBLL.LAMBDA)
+    # def get_cae_loss(self, cfg):
+    #     self.cae = CAELoss(cfg.EBLL.LAMBDA)
+    #
+    #     def loss_function(data: Data):
+    #         return self.cae(data.cae, data.recon_cae, data.feat_t)
+    #
+    #     return loss_function
+
+    def get_code_dist_loss(self, cfg):
+        ae_dist = AutoEncoderDistLoss()
 
         def loss_function(data: Data):
-            return self.cae(data.cae, data.recon_cae, data.feat_t)
+            return ae_dist(data.ae, data.source.ae, data.feat_t, data.source.feat_t)
+
+        return loss_function
+
+    def get_code_l1_dist_loss(self, cfg):
+        ae_dist = AutoEncoderDistLoss()
+
+        def loss_function(data: Data):
+            return ae_dist(data.ael1, data.source.ael1, data.feat_t, data.source.feat_t)
+
+        return loss_function
+
+    def get_code_l2dist_loss(self, cfg):
+        ae_dist = AutoEncoderDistLoss()
+
+        def loss_function(data: Data):
+            return ae_dist(data.ael2, data.source.ael2, data.feat_t, data.source.feat_t)
 
         return loss_function

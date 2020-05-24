@@ -8,9 +8,24 @@ from ignite.metrics import RunningAverage
 from engine.inference import get_valid_eval_map, eval_multi_dataset
 from loss import Loss
 from tools.component import TrainComponent
-from utils.tensorboardX_log import TensorBoardXLog
 
 logger = logging.getLogger("reid_baseline.train")
+
+
+def do_train(cfg,
+             train_loader,
+             valid_dict,
+             tr_comp: TrainComponent,
+             saver):
+    # tb_log = TensorBoardXLog(cfg, saver.save_dir)
+
+    trainer = create_supervised_trainer(tr_comp.model,
+                                        tr_comp.optimizer,
+                                        tr_comp.loss,
+                                        device=cfg.MODEL.DEVICE,
+                                        apex=cfg.APEX.IF_ON)
+
+    run(cfg, train_loader, valid_dict, tr_comp, saver, trainer)
 
 
 class Run:
@@ -59,45 +74,28 @@ def create_supervised_trainer(model, optimizer, groupLoss: Loss,
     return Engine(_update)
 
 
-def do_train(cfg,
-             train_loader,
-             valid,
-             tr_comp: TrainComponent,
-             saver):
-    tb_log = TensorBoardXLog(cfg, saver.save_dir)
-
+def run(cfg, train_loader, valid_dict, tr_comp, saver, trainer, tb_log=None):
     device = cfg.MODEL.DEVICE
-
-    trainer = create_supervised_trainer(tr_comp.model,
-                                        tr_comp.optimizer,
-                                        tr_comp.loss,
-                                        device=device,
-                                        apex=cfg.APEX.IF_ON)
 
     saver.to_save = {'trainer': trainer,
                      'module': tr_comp.model}
     # 'optimizer': tr_comp.optimizer,
     # 'center_param': tr_comp.loss_center,
     # 'optimizer_center': tr_comp.optimizer_center}
-
     trainer.add_event_handler(Events.EPOCH_COMPLETED(every=cfg.SAVER.CHECKPOINT_PERIOD),
                               saver.train_checkpointer,
                               saver.to_save)
-
     # multi-valid-dataset
-    validation_evaluator_map = get_valid_eval_map(cfg, device, tr_comp.model, valid)
-
+    validation_evaluator_map = get_valid_eval_map(cfg, device, tr_comp.model, valid_dict)
     timer = Timer(average=True)
     timer.attach(trainer,
                  start=Events.EPOCH_STARTED,
                  resume=Events.ITERATION_STARTED,
                  pause=Events.ITERATION_COMPLETED,
                  step=Events.ITERATION_COMPLETED)
-
     # average metric to attach on trainer
     names = ["Acc", "Loss"]
     names.extend(tr_comp.loss.loss_function_map.keys())
-
     for n in names:
         RunningAverage(output_transform=Run(n)).attach(trainer, n)
 
@@ -147,7 +145,7 @@ def do_train(cfg,
     def log_validation_results(engine, saver):
         logger.info(f"Valid - Epoch: {engine.state.epoch}")
 
-        sum_result = eval_multi_dataset(device, validation_evaluator_map, valid)
+        sum_result = eval_multi_dataset(device, validation_evaluator_map, valid_dict)
 
         if saver.best_result < sum_result:
             logger.info(f'Save best: {sum_result:.4f}')
@@ -158,14 +156,13 @@ def do_train(cfg,
             logger.info(f"Not best: {saver.best_result:.4f} > {sum_result:.4f}")
         logger.info('-' * 80)
 
-    tb_log.attach_handler(trainer, tr_comp.model, tr_comp.optimizer)
-
+    if tb_log:
+        tb_log.attach_handler(trainer, tr_comp.model, tr_comp.optimizer)
     # self.tb_logger.attach(
     #     validation_evaluator,
     #     log_handler=ReIDOutputHandler(tag="valid", metric_names=["r1_mAP"], another_engine=trainer),
     #     event_name=Events.EPOCH_COMPLETED,
     # )
-
     trainer.run(train_loader, max_epochs=cfg.TRAIN.MAX_EPOCHS)
-
-    tb_log.close()
+    if tb_log:
+        tb_log.close()

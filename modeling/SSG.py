@@ -1,6 +1,6 @@
 import torch
 
-from loss.dec_loss import ClusterAssignment
+from loss.training_loss.dec_loss import ClusterAssignment
 from modeling.strong_baseline import Baseline
 
 

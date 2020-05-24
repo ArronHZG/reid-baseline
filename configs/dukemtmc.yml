@@ -1,2 +1,5 @@
 DATASET:
   NAMES: dukemtmc
+MODEL:
+  DEVICE_ID: 1
+  IF_IBN_A: True

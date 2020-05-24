@@ -2,6 +2,7 @@
   <dictionary name="arron">
     <words>
       <w>arcface</w>
+      <w>autoencoder</w>
       <w>bnneck</w>
       <w>checkpointer</w>
       <w>cuda</w>

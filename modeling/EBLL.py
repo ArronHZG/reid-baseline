@@ -27,7 +27,6 @@ class EBLL(nn.Module):
         self.ae = AutoEncoder(self.in_planes, code_size)
         self.ael1 = AutoEncoder(self.in_planes, code_size)
         self.ael2 = AutoEncoder(self.in_planes, code_size)
-        self.cae = AutoEncoder(self.in_planes, code_size)
 
     def forward(self, x) -> Data:
         data = self.baseline(x)
@@ -40,6 +39,4 @@ class EBLL(nn.Module):
         data.recon_ael2 = self.ael2(data.feat_t)
         data.ael2 = self.ael2
 
-        data.recon_cae = self.cae(data.feat_t)
-        data.cae = self.cae
         return data

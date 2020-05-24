@@ -12,6 +12,7 @@ from ignite.metrics import Metric
 
 from data.datasets.eval_reid import eval_func
 from .re_ranking import re_ranking
+from .tensor_utils import euclidean_dist
 
 logger = logging.getLogger("reid_baseline.R1_mAP")
 
@@ -48,11 +49,7 @@ class R1_mAP(Metric):
         g_pids = np.asarray(self.pids[self.num_query:])
         g_camids = np.asarray(self.camids[self.num_query:])
 
-        m, n = qf.shape[0], gf.shape[0]
-        distmat = torch.pow(qf, 2).sum(dim=1, keepdim=True).expand(m, n) + \
-                  torch.pow(gf, 2).sum(dim=1, keepdim=True).expand(n, m).t()
-        distmat.addmm_(1, -2, qf, gf.t())
-        distmat = distmat.cpu().numpy()
+        distmat = euclidean_dist(qf, gf).cpu().numpy()
         cmc, mAP = eval_func(distmat, q_pids, g_pids, q_camids, g_camids)
 
         return cmc, mAP

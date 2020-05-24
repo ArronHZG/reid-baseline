@@ -92,12 +92,12 @@ using rerank
 ### DukeMTMC-reID
 
 #### baseline
-```shell script
-mAP: 76.4%
-CMC curve, Rank-1  :86.7%
-CMC curve, Rank-5  :94.1%
-CMC curve, Rank-10 :96.1%
-```
+
+| backbone | id   | tricks | mAP  | rank1 | mean  |
+| -------- | ---- | ------ | ---- | ----- | ----- |
+| resnet50 | 01   |        | 76.4 | 86.7  | 81.58 |
+|          |      |        |      |       |       |
+|          |      |        |      |       |       |
 
 ### msmt17
 

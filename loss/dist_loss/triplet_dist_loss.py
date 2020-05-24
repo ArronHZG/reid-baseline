@@ -1,7 +1,7 @@
 import torch
 from torch import nn
 
-from loss.triplet_loss import hard_example_mining
+from loss.training_loss.triplet_loss import hard_example_mining
 from utils.tensor_utils import euclidean_dist
 
 

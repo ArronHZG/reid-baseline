@@ -106,25 +106,28 @@ class Saver:
         return os.path.join(first_dir, 'experiment-{}'.format(str(run_id).zfill(2)))
 
     def load_checkpoint(self, is_best=False):
-        try:
-            if is_best:
-                checkpoint = torch.load(self.fetch_checkpoint_model_filename("best"))
-                checkpoint['module'].pop("classifier.weight")
-            else:
-                checkpoint = torch.load(self.fetch_checkpoint_model_filename("train"))
-        except Exception:
-            raise RuntimeError("checkpoint doesn't exist.")
+        if is_best:
+            file_path = self.fetch_checkpoint_model_filename("best")
+        else:
+            file_path = self.fetch_checkpoint_model_filename("train")
+
+        checkpoint = torch.load(file_path)
+
+        if "classifier.weight" in checkpoint['module'].keys():
+            checkpoint['module'].pop("classifier.weight")
+        elif "baseline.classifier.weight" in checkpoint['module'].keys():
+            checkpoint['module'].pop("baseline.classifier.weight")
 
         self.load_objects(self.to_save, checkpoint)
         # self.best_result = np.load(glob.glob(os.path.join(self.load_dir, "*.npy"))[0])
         if 'trainer' in self.to_save.keys():
             self.to_save['trainer'].state.max_epochs = self.cfg.TRAIN.MAX_EPOCHS
+            # loading the saved module
 
-    # loading the saved module
     def fetch_checkpoint_model_filename(self, prefix):
         checkpoint_files = os.listdir(self.load_dir)
         checkpoint_files = [f for f in checkpoint_files if '.pth' in f and prefix in f]
-        checkpoint_iter = [int(x.split('_')[2].split('.')[0]) for x in checkpoint_files]
+        checkpoint_iter = [int(x.split('_')[2].split(".")[0]) for x in checkpoint_files]
         last_idx = np.array(checkpoint_iter).argmax()
         return os.path.join(self.load_dir, checkpoint_files[last_idx])
 

@@ -88,7 +88,7 @@ _C.TEST.IF_ON = False
 _C.TEST.BATCH_SIZE = 128  # from evaluate and extract feature
 _C.TEST.IF_RE_RANKING = True
 _C.TEST.IF_FEAT_NORM = True
-_C.TEST.RUN_ID = '13'
+_C.TEST.RUN_ID = 13
 _C.TEST.IF_CLASSIFT_FEATURE = True
 
 _C.JOINT = CN()
@@ -110,10 +110,10 @@ _C.CONTINUATION = CN()
 _C.CONTINUATION.IF_ON = False
 _C.CONTINUATION.DATASET_NAME = 'dukemtmc'
 _C.CONTINUATION.T = 10.0
-_C.CONTINUATION.LOSS_TYPE = 'ce_dict'  # ce_dict tr_dist
+_C.CONTINUATION.LOSS_TYPE = 'tr_dist'  # ce_dict tr_dist
 
 _C.EBLL = CN()
 _C.EBLL.IF_ON = False
-_C.EBLL.CODE_SIZE = 1024
-_C.EBLL.LOSS_TYPE = "ae_loss ae_l1 ae_l2 ae_c"
+_C.EBLL.CODE_SIZE = 512
+_C.EBLL.LOSS_TYPE = "ae_loss ae_l1 ae_l2"
 _C.EBLL.LAMBDA = 0.01
