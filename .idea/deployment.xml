@@ -5,7 +5,7 @@
       <paths name="arron@10.103.244.125:22">
         <serverdata>
           <mappings>
-            <mapping deploy="/home/arron/PycharmProjects/reid-baseline" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/home/arron/PycharmProjects/reid-baseline" local="$PROJECT_DIR$" />
           </mappings>
         </serverdata>
       </paths>

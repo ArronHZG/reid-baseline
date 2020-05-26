@@ -24,7 +24,8 @@ def euclidean_dist(x: torch.Tensor, y: torch.Tensor):
     yy = torch.pow(y, 2).sum(1, keepdim=True).expand(n, m).t()
     dist = xx + yy
     dist.addmm_(beta=1, alpha=-2, mat1=x, mat2=y.t())
-    dist = dist.clamp(min=1e-12).sqrt()  # for numerical stability
+    dist.clamp_(min=1e-12)
+    dist.sqrt_()  # for numerical stability
     return dist
 
 

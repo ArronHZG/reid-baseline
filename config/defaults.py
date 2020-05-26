@@ -117,3 +117,4 @@ _C.EBLL.IF_ON = False
 _C.EBLL.CODE_SIZE = 512
 _C.EBLL.LOSS_TYPE = "ae_loss ae_l1 ae_l2"
 _C.EBLL.LAMBDA = 0.01
+_C.EBLL.DIST_TYPE = "bce"  # bce or mse

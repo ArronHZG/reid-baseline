@@ -4,7 +4,7 @@ from collections import OrderedDict
 import torch
 from torch.optim.lr_scheduler import ExponentialLR
 
-from loss.dist_loss.autoencoder_dist_loss import AutoEncoderDistLoss
+from loss.dist_loss.autoencoder_dist_loss import MSEAutoEncoderDistLoss, BCEAutoEncoderDistLoss
 from loss.dist_loss.cross_entropy_dist_loss import CrossEntropyDistLoss
 from loss.dist_loss.triplet_dist_loss import TripletDistLoss
 from loss.training_loss.arcface_loss import ArcfaceLoss
@@ -240,7 +240,10 @@ class Loss:
     #     return loss_function
 
     def get_code_dist_loss(self, cfg):
-        ae_dist = AutoEncoderDistLoss()
+        if cfg.EBLL.DIST_TYPE == "bce":
+            ae_dist = BCEAutoEncoderDistLoss()
+        elif cfg.EBLL.DIST_TYPE == "mse":
+            ae_dist = MSEAutoEncoderDistLoss()
 
         def loss_function(data: Data):
             return ae_dist(data.ae, data.source.ae, data.feat_t, data.source.feat_t)
@@ -248,7 +251,10 @@ class Loss:
         return loss_function
 
     def get_code_l1_dist_loss(self, cfg):
-        ae_dist = AutoEncoderDistLoss()
+        if cfg.EBLL.DIST_TYPE == "bce":
+            ae_dist = BCEAutoEncoderDistLoss()
+        elif cfg.EBLL.DIST_TYPE == "mse":
+            ae_dist = MSEAutoEncoderDistLoss()
 
         def loss_function(data: Data):
             return ae_dist(data.ael1, data.source.ael1, data.feat_t, data.source.feat_t)
@@ -256,7 +262,10 @@ class Loss:
         return loss_function
 
     def get_code_l2dist_loss(self, cfg):
-        ae_dist = AutoEncoderDistLoss()
+        if cfg.EBLL.DIST_TYPE == "bce":
+            ae_dist = BCEAutoEncoderDistLoss()
+        elif cfg.EBLL.DIST_TYPE == "mse":
+            ae_dist = MSEAutoEncoderDistLoss()
 
         def loss_function(data: Data):
             return ae_dist(data.ael2, data.source.ael2, data.feat_t, data.source.feat_t)
