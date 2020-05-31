@@ -1,19 +1,20 @@
 import argparse
+import copy
 import logging
 import os
 import random
 import sys
+import numpy as np
+import torch
+from torch.backends import cudnn
+from torch.optim.lr_scheduler import ExponentialLR
 
 sys.path.append('.')
 sys.path.append('..')
 
-import numpy as np
-import torch
-from torch.backends import cudnn
 from config import cfg
-
-from loss import Loss
-from modeling import build_model
+from loss import Loss, AutoEncoderLoss
+from modeling import build_model, AutoEncoder
 from solver import make_optimizer, WarmupMultiStepLR
 from utils.logger import setup_logger
 from utils.saver import Saver
@@ -22,7 +23,33 @@ logger = logging.getLogger("reid_baseline.train")
 
 
 class TrainComponent:
-    def __init__(self, cfg, num_classes):
+    def __init__(self, cfg, num_classes=0, autoencoder=False):
+        self.device = None
+        self.model = None
+        self.loss = None
+        self.optimizer = None
+        self.scheduler = None
+        if autoencoder:
+            self.get_autoencoder_component(cfg)
+        else:
+            self.get_component(cfg, num_classes)
+        self.apex_cuda_setting(cfg)
+
+    def __str__(self):
+        s = f"{self.model}\n{self.loss}\n{self.optimizer}\n{self.scheduler}"
+        return s
+
+    def get_autoencoder_component(self, cfg):
+        self.device = cfg.MODEL.DEVICE
+        self.model = AutoEncoder(cfg.EBLL.IN_PLANES, cfg.EBLL.CODE_SIZE)
+        self.loss = AutoEncoderLoss(cfg)
+        copy_cfg = copy.deepcopy(cfg)
+        copy_cfg['OPTIMIZER']['BASE_LR'] = copy_cfg.EBLL.OPTIMIZER_BASE_LR
+        copy_cfg['OPTIMIZER']['NAME'] = 'SGD'
+        self.optimizer = make_optimizer(copy_cfg, self.model)
+        self.scheduler = ExponentialLR(self.optimizer, gamma=0.9)
+
+    def get_component(self, cfg, num_classes):
         self.device = cfg.MODEL.DEVICE
         self.model = build_model(cfg, num_classes)
         self.loss = Loss(cfg, num_classes, self.model.in_planes)
@@ -33,6 +60,8 @@ class TrainComponent:
                                            cfg.WARMUP.FACTOR,
                                            cfg.WARMUP.MAX_EPOCHS,
                                            cfg.WARMUP.METHOD)
+
+    def apex_cuda_setting(self, cfg):
         if cfg.APEX.IF_ON:
             logger.info("Using apex")
             try:

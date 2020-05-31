@@ -7,3 +7,5 @@ MODEL:
   IF_IBN_A: True
 APEX:
   IF_ON: True
+WARMUP:
+  STEPS: (40, 70, 100, 130)

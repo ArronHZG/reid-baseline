@@ -93,7 +93,7 @@ class SSG:
         self.model = build_model(self.cfg, 0)
         if self.cfg.MODEL.DEVICE is 'cuda':
             self.model.cuda()
-        self.saver.to_save = {'module': self.model}
+        self.saver.to_save = {'model': self.model}
         self.saver.load_checkpoint(is_best=True)
         saver.best_result = 0
 

@@ -1,17 +1,13 @@
 class Data:
     def __init__(self):
+        self.feat_x = None
         self.feat_t = None
         self.feat_c = None
         self.cls_score = None
         self.cls_label = None
 
-        self.recon_ae = None
-        self.recon_ael1 = None
-        self.recon_ael2 = None
-
-        self.ael1 = None
-        self.ael2 = None
-        self.ae = None
+        self.recon_ae = None  # feature
+        self.ae = None  # model
 
         self.source = None
 

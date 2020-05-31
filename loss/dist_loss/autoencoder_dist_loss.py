@@ -16,11 +16,10 @@ class BCEAutoEncoderDistLoss(nn.Module):
         self.bce_loss = BCELoss()
 
     def forward(self,
-                current_model: AutoEncoder,
                 source_model: AutoEncoder,
                 current,
                 target):
-        current = current_model.encoder(current)
+        current = source_model.encoder(current)
         target = source_model.encoder(target).detach()
 
         target = target / self.T
@@ -40,12 +39,10 @@ class MSEAutoEncoderDistLoss(nn.Module):
         self.mse_loss = MSELoss()
 
     def forward(self,
-                current_model: AutoEncoder,
                 source_model: AutoEncoder,
                 current,
                 target):
-        current = current_model.encoder(current)
+        current = source_model.encoder(current)
         target = source_model.encoder(target).detach()
-
         loss = self.mse_loss(current, target)
         return loss

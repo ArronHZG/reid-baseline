@@ -28,7 +28,7 @@ def train(cfg, saver):
     source_loader, _ = make_train_data_loader_for_extract(cfg, source_name)
 
     tr = TrainComponent(cfg, 702)
-    to_load = {'module': tr.model}
+    to_load = {'model': tr.model}
     saver.to_save = to_load
     saver.load_checkpoint(is_best=True)
 

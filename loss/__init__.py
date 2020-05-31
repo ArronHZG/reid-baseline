@@ -53,32 +53,11 @@ class Loss:
         if cfg.CONTINUATION.IF_ON and "tr_dist" in cfg.CONTINUATION.LOSS_TYPE:
             self.loss_function_map["tr_dist"] = self.get_triplet_dist_loss(cfg)
 
-        if cfg.CONTINUATION.IF_ON and cfg.EBLL.IF_ON and "ae_loss" in cfg.EBLL.LOSS_TYPE:
+        if cfg.CONTINUATION.IF_ON and cfg.EBLL.IF_ON:
             self.loss_function_map["ae_dist"] = self.get_code_dist_loss(cfg)
 
-        if cfg.CONTINUATION.IF_ON and cfg.EBLL.IF_ON and "ae_l1" in cfg.EBLL.LOSS_TYPE:
-            self.loss_function_map["ae_l1_dist"] = self.get_code_l1_dist_loss(cfg)
-
-        if cfg.CONTINUATION.IF_ON and cfg.EBLL.IF_ON and "ae_l2" in cfg.EBLL.LOSS_TYPE:
-            self.loss_function_map["ae_l2_dist"] = self.get_code_l2dist_loss(cfg)
-
-        # autoencoder loss
-        if cfg.EBLL.IF_ON and "ae_loss" in cfg.EBLL.LOSS_TYPE:
-            self.loss_function_map["ae"] = self.get_ae_loss()
-
-        if cfg.EBLL.IF_ON and "ae_l1" in cfg.EBLL.LOSS_TYPE:
-            self.loss_function_map["ae_l1"] = self.get_ae_loss_l1(cfg)
-
-        if cfg.EBLL.IF_ON and "ae_l2" in cfg.EBLL.LOSS_TYPE:
-            self.loss_function_map["ae_l2"] = self.get_ae_loss_l2(cfg)
-
-        # if cfg.EBLL.IF_ON and "ae_c" in cfg.EBLL.LOSS_TYPE:
-        #     self.loss_function_map["cae"] = self.get_cae_loss(cfg)
-
-        print(self)
-
     def __str__(self):
-        return " ".join(self.loss_function_map.keys())
+        return "Loss Type: " + " ".join(self.loss_function_map.keys())
 
     def optimizer_zero_grad(self):
         if self.center:
@@ -113,7 +92,7 @@ class Loss:
         self.triplet_dist_loss = TripletDistLoss(T=cfg.CONTINUATION.T)
 
         def loss_function(data: Data):
-            return self.triplet_dist_loss(data.feat_t, data.source.feat_t, data.cls_label)
+            return self.triplet_dist_loss(data.feat_c, data.source.feat_c, data.cls_label)
 
         return loss_function
 
@@ -121,7 +100,7 @@ class Loss:
         self.cross_entropy_dist_loss = CrossEntropyDistLoss(T=cfg.CONTINUATION.T)
 
         def loss_function(data: Data):
-            return self.cross_entropy_dist_loss(data.feat_t, data.source.feat_t)
+            return self.cross_entropy_dist_loss(data.feat_c, data.source.feat_c)
 
         return loss_function
 
@@ -207,38 +186,6 @@ class Loss:
 
         return loss_function
 
-    def get_ae_loss(self):
-        self.ae = AELoss()
-
-        def loss_function(data: Data):
-            return self.ae(data.recon_ae, data.feat_t)
-
-        return loss_function
-
-    def get_ae_loss_l1(self, cfg):
-        self.ae_l1 = AELossL1(cfg.EBLL.LAMBDA)
-
-        def loss_function(data: Data):
-            return self.ae_l1(data.ael1, data.recon_ael1, data.feat_t)
-
-        return loss_function
-
-    def get_ae_loss_l2(self, cfg):
-        self.ae_l2 = AELossL2(cfg.EBLL.LAMBDA)
-
-        def loss_function(data: Data):
-            return self.ae_l2(data.ael2, data.recon_ael2, data.feat_t)
-
-        return loss_function
-
-    # def get_cae_loss(self, cfg):
-    #     self.cae = CAELoss(cfg.EBLL.LAMBDA)
-    #
-    #     def loss_function(data: Data):
-    #         return self.cae(data.cae, data.recon_cae, data.feat_t)
-    #
-    #     return loss_function
-
     def get_code_dist_loss(self, cfg):
         if cfg.EBLL.DIST_TYPE == "bce":
             ae_dist = BCEAutoEncoderDistLoss()
@@ -246,28 +193,60 @@ class Loss:
             ae_dist = MSEAutoEncoderDistLoss()
 
         def loss_function(data: Data):
-            return ae_dist(data.ae, data.source.ae, data.feat_t, data.source.feat_t)
+            return ae_dist(data.source.ae, data.feat_t, data.source.feat_t)
 
         return loss_function
 
-    def get_code_l1_dist_loss(self, cfg):
-        if cfg.EBLL.DIST_TYPE == "bce":
-            ae_dist = BCEAutoEncoderDistLoss()
-        elif cfg.EBLL.DIST_TYPE == "mse":
-            ae_dist = MSEAutoEncoderDistLoss()
+
+class AutoEncoderLoss:
+    def __init__(self, cfg):
+
+        self.loss_type = cfg.LOSS.LOSS_TYPE
+        self.loss_function_map = OrderedDict()
+        self.xent = None
+
+        # autoencoder loss
+        if cfg.EBLL.IF_ON and "ae_loss" in cfg.EBLL.LOSS_TYPE:
+            self.loss_function_map["ae"] = self.get_ae_loss()
+
+        if cfg.EBLL.IF_ON and "ae_l1" in cfg.EBLL.LOSS_TYPE:
+            self.loss_function_map["ae_l1"] = self.get_ae_loss_l1(cfg)
+
+        if cfg.EBLL.IF_ON and "ae_l2" in cfg.EBLL.LOSS_TYPE:
+            self.loss_function_map["ae_l2"] = self.get_ae_loss_l2(cfg)
+
+    def __str__(self):
+        return "Loss Type: " + " ".join(self.loss_function_map.keys())
+
+    def optimizer_zero_grad(self):
+        pass
+
+    def optimizer_step(self):
+        pass
+
+    def scheduler_step(self):
+        pass
+
+    def get_ae_loss(self):
+        ae = AELoss()
 
         def loss_function(data: Data):
-            return ae_dist(data.ael1, data.source.ael1, data.feat_t, data.source.feat_t)
+            return ae(data.recon_ae, data.feat_t)
 
         return loss_function
 
-    def get_code_l2dist_loss(self, cfg):
-        if cfg.EBLL.DIST_TYPE == "bce":
-            ae_dist = BCEAutoEncoderDistLoss()
-        elif cfg.EBLL.DIST_TYPE == "mse":
-            ae_dist = MSEAutoEncoderDistLoss()
+    def get_ae_loss_l1(self, cfg):
+        ae_l1 = AELossL1(cfg.EBLL.LAMBDA)
 
         def loss_function(data: Data):
-            return ae_dist(data.ael2, data.source.ael2, data.feat_t, data.source.feat_t)
+            return ae_l1(data.ae, data.recon_ae, data.feat_t)
+
+        return loss_function
+
+    def get_ae_loss_l2(self, cfg):
+        ae_l2 = AELossL2(cfg.EBLL.LAMBDA)
+
+        def loss_function(data: Data):
+            return ae_l2(data.ae, data.recon_ae, data.feat_t)
 
         return loss_function

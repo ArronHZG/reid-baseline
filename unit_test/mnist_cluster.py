@@ -171,7 +171,7 @@ def cluster(train_batch_size, val_batch_size):
                                    n_saved=1,
                                    require_empty=False)
     checkpoint = torch.load("mnist-cluster/resnet50_model_4690.pth")
-    checkpointer.load_objects({'module': model}, checkpoint)
+    checkpointer.load_objects({'model': model}, checkpoint)
     model.cuda()
     model.eval()
 

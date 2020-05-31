@@ -26,7 +26,7 @@ class AELossL1(nn.Module):
         ae = self.mse(recon, target.detach())
         weight = 0
         for m in model.modules():
-            if isinstance(m, nn.Linear):
+            if isinstance(m, nn.Linear) or isinstance(m,nn.Conv2d) or isinstance(m,nn.ConvTranspose2d):
                 weight += torch.abs(m.weight).sum()
         return ae + self.lambda_ * weight
 
@@ -41,7 +41,7 @@ class AELossL2(nn.Module):
         ae = self.mse(recon, target.detach())
         weight = 0
         for m in model.modules():
-            if isinstance(m, nn.Linear):
+            if isinstance(m, nn.Linear) or isinstance(m, nn.Conv2d) or isinstance(m, nn.ConvTranspose2d):
                 weight += 0.5 * (m.weight ** 2).sum()
         return ae + self.lambda_ * weight
 

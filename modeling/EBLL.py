@@ -25,18 +25,18 @@ class EBLL(nn.Module):
                                  ibn_b=ibn_b)
         self.in_planes = self.baseline.in_planes
         self.ae = AutoEncoder(self.in_planes, code_size)
-        self.ael1 = AutoEncoder(self.in_planes, code_size)
-        self.ael2 = AutoEncoder(self.in_planes, code_size)
+        # self.ael1 = AutoEncoder(self.in_planes, code_size)
+        # self.ael2 = AutoEncoder(self.in_planes, code_size)
 
     def forward(self, x) -> Data:
         data = self.baseline(x)
         data.recon_ae = self.ae(data.feat_t)
         data.ae = self.ae
 
-        data.recon_ael1 = self.ael1(data.feat_t)
-        data.ael1 = self.ael1
-
-        data.recon_ael2 = self.ael2(data.feat_t)
-        data.ael2 = self.ael2
+        # data.recon_ael1 = self.ael1(data.feat_t)
+        # data.ael1 = self.ael1
+        #
+        # data.recon_ael2 = self.ael2(data.feat_t)
+        # data.ael2 = self.ael2
 
         return data

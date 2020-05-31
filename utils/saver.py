@@ -59,6 +59,10 @@ class Saver:
             target_name = cfg.CONTINUATION.DATASET_NAME
             target_mid_name = 'continuation'
 
+        elif cfg.EBLL.IF_ON:
+            target_name = cfg.EBLL.DATASET_NAME
+            target_mid_name = 'ebll'
+
         elif cfg.FEAT.IF_ON:
             target_name = cfg.FEAT.DATASET_NAME
             target_mid_name = 'feat'
@@ -113,10 +117,10 @@ class Saver:
 
         checkpoint = torch.load(file_path)
 
-        if "classifier.weight" in checkpoint['module'].keys():
-            checkpoint['module'].pop("classifier.weight")
-        elif "baseline.classifier.weight" in checkpoint['module'].keys():
-            checkpoint['module'].pop("baseline.classifier.weight")
+        if "classifier.weight" in checkpoint['model'].keys():
+            checkpoint['model'].pop("classifier.weight")
+        elif "baseline.classifier.weight" in checkpoint['model'].keys():
+            checkpoint['model'].pop("baseline.classifier.weight")
 
         self.load_objects(self.to_save, checkpoint)
         # self.best_result = np.load(glob.glob(os.path.join(self.load_dir, "*.npy"))[0])
