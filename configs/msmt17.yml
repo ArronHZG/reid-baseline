@@ -2,5 +2,5 @@ DATASET:
   NAME: msmt17
 
 MODEL:
-  DEVICE_ID: 1
+  DEVICE_ID: 2
   IF_IBN_A: True

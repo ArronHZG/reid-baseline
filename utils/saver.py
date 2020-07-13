@@ -1,6 +1,6 @@
 import glob
 import os
-from collections import Mapping
+from collections import Mapping, OrderedDict
 
 import numpy as np
 import torch
@@ -47,7 +47,7 @@ class Saver:
                                                  "best",
                                                  require_empty=False)
 
-        self.to_save = None
+        self.checkpoint_params = OrderedDict()
 
         self.best_result = 0
 
@@ -122,10 +122,10 @@ class Saver:
         elif "baseline.classifier.weight" in checkpoint['model'].keys():
             checkpoint['model'].pop("baseline.classifier.weight")
 
-        self.load_objects(self.to_save, checkpoint)
+        self.load_objects(self.checkpoint_params, checkpoint)
         # self.best_result = np.load(glob.glob(os.path.join(self.load_dir, "*.npy"))[0])
-        if 'trainer' in self.to_save.keys():
-            self.to_save['trainer'].state.max_epochs = self.cfg.TRAIN.MAX_EPOCHS
+        if 'trainer' in self.checkpoint_params.keys():
+            self.checkpoint_params['trainer'].state.max_epochs = self.cfg.TRAIN.MAX_EPOCHS
             # loading the saved module
 
     def fetch_checkpoint_model_filename(self, prefix):
@@ -162,8 +162,9 @@ class Saver:
         # multiple objects to load
         for k, obj in to_load.items():
             if k not in checkpoint:
-                raise ValueError("Object labeled by '{}' from `to_load` is not found in the checkpoint".format(k))
-            obj.load_state_dict(checkpoint[k], strict=False)
+                print("Object labeled by '{}' from `to_load` is not found in the checkpoint".format(k))
+            else:
+                obj.load_state_dict(checkpoint[k], strict=False)
 
 
 if __name__ == '__main__':

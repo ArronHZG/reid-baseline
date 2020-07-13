@@ -21,6 +21,8 @@ def train(cfg, saver):
 
     train_component = TrainComponent(cfg, num_classes)
 
+    saver.checkpoint_params['model'] = train_component.model
+
     do_train(cfg,
              train_loader,
              valid_dict,

@@ -20,7 +20,7 @@ class CrossEntropyDistLoss(nn.Module):
         current = current / self.T
         source_item = F.softmax(current, dim=1)
 
-        loss = self.mse_loss(source_item, target_item)
+        loss = self.mse_loss(source_item, target_item.detach())
         return loss
 
 

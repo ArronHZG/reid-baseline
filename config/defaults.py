@@ -4,7 +4,7 @@ _C = CN()
 
 _C.DATASET = CN()
 _C.DATASET.NAME = 'market1501'  # market1501, dukemtmc, msmt17
-_C.DATASET.ROOT_DIR = '/home/arron/dataset'
+_C.DATASET.ROOT_DIR = '/home/hzg/dataset'
 
 _C.DATALOADER = CN()
 _C.DATALOADER.NUM_WORKERS = 8
@@ -22,7 +22,7 @@ _C.INPUT.PADDING = 10
 
 _C.MODEL = CN()
 _C.MODEL.DEVICE = "cuda"  # "cuda" or "cpu"
-_C.MODEL.DEVICE_ID = 1
+_C.MODEL.DEVICE_ID = 0
 _C.MODEL.IF_DETERMINISTIC = False
 _C.MODEL.NAME = 'resnet50'
 _C.MODEL.LAST_STRIDE = 1
@@ -57,7 +57,7 @@ _C.WARMUP.IF_WARMUP = True
 _C.WARMUP.FACTOR = 0.01
 _C.WARMUP.MAX_EPOCHS = 10
 _C.WARMUP.METHOD = 'linear'
-_C.WARMUP.STEPS = (40, 70, 100, 130)
+_C.WARMUP.STEPS = (40, 70)
 _C.WARMUP.GAMMA = 0.1
 
 _C.TRAIN = CN()
@@ -66,7 +66,7 @@ _C.TRAIN.LOG_ITER_PERIOD = 100
 _C.TRAIN.MAX_EPOCHS = 150
 
 _C.EVAL = CN()
-_C.EVAL.EPOCH_PERIOD = 5
+_C.EVAL.EPOCH_PERIOD = 30
 
 _C.SAVER = CN()
 _C.SAVER.CHECKPOINT_PERIOD = 1
@@ -88,7 +88,7 @@ _C.TEST.IF_ON = False
 _C.TEST.BATCH_SIZE = 128  # from evaluate and extract feature
 _C.TEST.IF_RE_RANKING = True
 _C.TEST.IF_FEAT_NORM = True
-_C.TEST.RUN_ID = 12
+_C.TEST.RUN_ID = '02'
 _C.TEST.IF_CLASSIFT_FEATURE = True
 
 _C.JOINT = CN()
@@ -110,7 +110,7 @@ _C.CONTINUATION = CN()
 _C.CONTINUATION.IF_ON = False
 _C.CONTINUATION.DATASET_NAME = 'dukemtmc'
 _C.CONTINUATION.T = 10.0
-_C.CONTINUATION.LOSS_TYPE = 'tr_dist'  # ce_dict tr_dist
+_C.CONTINUATION.LOSS_TYPE = 'ae_dict tr_dist'  # ce_dict tr_dist
 
 _C.EBLL = CN()
 _C.EBLL.IF_ON = False
@@ -122,5 +122,6 @@ _C.EBLL.LAMBDA = 0.01
 _C.EBLL.DIST_TYPE = "mse"
 _C.EBLL.DATASET_NAME = 'dukemtmc'
 _C.EBLL.MAX_EPOCHS = 50
+_C.EBLL.AE_LOSS_WEIGHT = 0.01
 
 

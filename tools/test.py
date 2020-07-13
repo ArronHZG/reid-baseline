@@ -13,8 +13,7 @@ def test(cfg, saver):
     valid = make_multi_valid_data_loader(cfg, dataset_name, verbose=True)
 
     tr = TrainComponent(cfg)
-    to_load = {'model': tr.model}
-    saver.to_save = to_load
+    saver.checkpoint_params['model'] = tr.model
     saver.load_checkpoint(is_best=True)
     inference(cfg, tr.model, valid)
 

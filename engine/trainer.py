@@ -79,16 +79,14 @@ def create_supervised_trainer(model, optimizer, groupLoss: Loss,
 
 
 def run(cfg, train_loader, tr_comp, saver, trainer, evaler, tb_log=None):
-    device = cfg.MODEL.DEVICE
-
-    saver.to_save = {'trainer': trainer,
-                     'model': tr_comp.model}
+    # saver.checkpoint_params = {'trainer': trainer,
+    #                  'model': tr_comp.model}
     # 'optimizer': tr_comp.optimizer,
     # 'center_param': tr_comp.loss_center,
     # 'optimizer_center': tr_comp.optimizer_center}
     trainer.add_event_handler(Events.EPOCH_COMPLETED(every=cfg.SAVER.CHECKPOINT_PERIOD),
                               saver.train_checkpointer,
-                              saver.to_save)
+                              saver.checkpoint_params)
     timer = Timer(average=True)
     timer.attach(trainer,
                  start=Events.EPOCH_STARTED,
@@ -144,7 +142,7 @@ def run(cfg, train_loader, tr_comp, saver, trainer, evaler, tb_log=None):
         if saver.best_result < sum_result:
             logger.info(f'Save best: {sum_result:.4f}')
             saver.save_best_value(sum_result)
-            saver.best_checkpointer(engine, saver.to_save)
+            saver.best_checkpointer(engine, saver.checkpoint_params)
             saver.best_result = sum_result
         else:
             logger.info(f"Not best: {saver.best_result:.4f} > {sum_result:.4f}")

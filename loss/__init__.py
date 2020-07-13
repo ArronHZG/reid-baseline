@@ -53,7 +53,7 @@ class Loss:
         if cfg.CONTINUATION.IF_ON and "tr_dist" in cfg.CONTINUATION.LOSS_TYPE:
             self.loss_function_map["tr_dist"] = self.get_triplet_dist_loss(cfg)
 
-        if cfg.CONTINUATION.IF_ON and cfg.EBLL.IF_ON:
+        if cfg.CONTINUATION.IF_ON and cfg.EBLL.IF_ON and "ae_dist" in cfg.CONTINUATION.LOSS_TYPE:
             self.loss_function_map["ae_dist"] = self.get_code_dist_loss(cfg)
 
     def __str__(self):
@@ -193,7 +193,7 @@ class Loss:
             ae_dist = MSEAutoEncoderDistLoss()
 
         def loss_function(data: Data):
-            return ae_dist(data.source.ae, data.feat_t, data.source.feat_t)
+            return cfg.EBLL.AE_LOSS_WEIGHT * ae_dist(data.source.ae, data.feat_t, data.source.feat_t)
 
         return loss_function
 

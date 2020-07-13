@@ -18,7 +18,7 @@ def train(cfg, saver):
         e.g.: train: dukemtmc with market module
     """
     source_tr = TrainComponent(cfg, 0)
-    saver.to_save = {'model': source_tr.model}
+    saver.checkpoint_params['model'] = source_tr.model
     saver.load_checkpoint(is_best=True)
 
     dataset_name = [cfg.DATASET.NAME, cfg.CONTINUATION.DATASET_NAME]
@@ -26,7 +26,7 @@ def train(cfg, saver):
     train_loader, num_classes = make_train_data_loader(cfg, dataset_name[1])
 
     current_tr = TrainComponent(cfg, num_classes)
-    saver.to_save = {'model': current_tr.model}
+    saver.checkpoint_params['model'] = current_tr.model
     saver.load_checkpoint(is_best=True)
 
     valid = make_multi_valid_data_loader(cfg, dataset_name)

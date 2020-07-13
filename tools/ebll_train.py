@@ -22,11 +22,17 @@ def train(cfg, saver):
     source_valid = make_multi_valid_data_loader(cfg, [dataset_name[0]])
 
     source_tr = TrainComponent(cfg)
-    saver.to_save = {'model': source_tr.model}
+    saver.checkpoint_params['model'] = source_tr.model
     saver.load_checkpoint(is_best=True)
 
     autoencoder_tr = TrainComponent(cfg, autoencoder=True)
-    saver.to_save = {'autoencoder': source_tr.model}
+    saver.checkpoint_params['autoencoder'] = source_tr.model
+
+    logger.info("")
+    logger.info('*' * 60)
+    logger.info("Start training autoencoder")
+    logger.info('*' * 60)
+    logger.info("")
 
     train_autoencoder(cfg,
                       source_train_loader,
@@ -35,13 +41,21 @@ def train(cfg, saver):
                       autoencoder_tr,
                       saver)
 
+    saver.best_result = 0
+
     train_loader, num_classes = make_train_data_loader(cfg, dataset_name[1])
     ebll_valid = make_multi_valid_data_loader(cfg, [dataset_name[1]])
 
     current_tr = TrainComponent(cfg, num_classes)
-    saver.to_save = {'model': current_tr.model}
+    saver.checkpoint_params['model'] = current_tr.model
     saver.load_checkpoint(is_best=True)
     # print(current_tr)
+
+    logger.info("")
+    logger.info('*' * 60)
+    logger.info("Start fine tuning current model")
+    logger.info('*' * 60)
+    logger.info("")
 
     fine_tune_current_model(cfg,
                             train_loader,
@@ -49,20 +63,33 @@ def train(cfg, saver):
                             current_tr,
                             saver)
 
-    copy_cfg = copy.deepcopy(cfg)
-    copy_cfg["CONTINUATION"]["IF_ON"] = True
-    ebll_tr = TrainComponent(copy_cfg, num_classes)
-    ebll_tr.model = current_tr.model
+    saver.best_result = 0
+    k_s = [1, 5, 10, 15, 20, 30, 50, 100, 150]
+    for k in k_s:
+        logger.info("")
+        logger.info('*' * 60)
+        logger.info(f"Start ebll training using {0.001 * k}")
+        logger.info('*' * 60)
+        logger.info("")
 
-    ebll_valid = make_multi_valid_data_loader(cfg, dataset_name)
+        copy_cfg = copy.deepcopy(cfg)
+        copy_cfg["CONTINUATION"]["IF_ON"] = True
+        copy_cfg["EBLL"]["AE_LOSS_WEIGHT"] = 0.001 * k
+        ebll_tr = TrainComponent(copy_cfg, num_classes)
+        ebll_tr.model = copy.deepcopy(current_tr.model)
+        saver.checkpoint_params['model'] = ebll_tr.model
+        ebll_valid = make_multi_valid_data_loader(cfg, dataset_name)
 
-    ebll_train(cfg,
-               train_loader,
-               ebll_valid,
-               source_tr,
-               ebll_tr,
-               autoencoder_tr,
-               saver)
+        ebll_train(cfg,
+                   train_loader,
+                   ebll_valid,
+                   source_tr,
+                   ebll_tr,
+                   autoencoder_tr,
+                   saver)
+
+        if "ae_dist" not in cfg.CONTINUATION.LOSS_TYPE:
+            break
 
 
 if __name__ == '__main__':

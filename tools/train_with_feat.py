@@ -29,7 +29,7 @@ def train(cfg, saver):
 
     tr = TrainComponent(cfg, 702)
     to_load = {'model': tr.model}
-    saver.to_save = to_load
+    saver.checkpoint_params = to_load
     saver.load_checkpoint(is_best=True)
 
     feat, _ = do_extract(cfg, source_loader, tr)

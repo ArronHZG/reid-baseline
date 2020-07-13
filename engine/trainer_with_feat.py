@@ -87,7 +87,7 @@
 #                                         optimizer_center=tr_comp.optimizer_center,
 #                                         center_loss_weight=cfg.LOSS.CENTER_LOSS_WEIGHT)
 #
-#     saver.to_save = {'trainer': trainer,
+#     saver.checkpoint_params = {'trainer': trainer,
 #                      'module': tr_comp.model,
 #                      'optimizer': tr_comp.optimizer,
 #                      'center_param': tr_comp.loss_center,
@@ -95,7 +95,7 @@
 #
 #     trainer.add_event_handler(Events.EPOCH_COMPLETED(every=cfg.SAVER.CHECKPOINT_PERIOD),
 #                               saver.train_checkpointer,
-#                               saver.to_save)
+#                               saver.checkpoint_params)
 #
 #     # multi-valid-dataset
 #     validation_evaluator_map = get_valid_eval_map(cfg, device, tr_comp.model, valid)
@@ -164,7 +164,7 @@
 #         if saver.best_result < sum_result:
 #             logger.info(f'Save best: {sum_result:.4f}')
 #             saver.save_best_value(sum_result)
-#             saver.best_checkpointer(engine, saver.to_save)
+#             saver.best_checkpointer(engine, saver.checkpoint_params)
 #             saver.best_result = sum_result
 #         else:
 #             logger.info(f"Not best: {saver.best_result:.4f} > {sum_result:.4f}")

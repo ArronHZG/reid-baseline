@@ -35,16 +35,16 @@ def create_autoencoder_trainer(source_model,
         current_data.ae = current_model
         current_data.feat_t = source_data.feat_t
 
-        if it % 200 == 0:
-            # print(data.ae)
-            # for m in model.modules():
-            #     if isinstance(m, nn.Linear):
-            #         print(m.weight)
-            code = current_data.ae.encoder(current_data.feat_t)
-            print(f"\n\nfeat_t: {current_data.feat_t.size()} {current_data.feat_t.detach().cpu().numpy()[0][:5]}")
-            print(f"code: {code.size()} {code.detach().cpu().numpy()[0][:5]}")
-            print(f"recon_ae: {current_data.recon_ae.size()} {current_data.recon_ae.detach().cpu().numpy()[0][:5]}")
-            print("\n\n")
+        # if it % 200 == 0:
+        #     # print(data.ae)
+        #     # for m in model.modules():
+        #     #     if isinstance(m, nn.Linear):
+        #     #         print(m.weight)
+        #     code = current_data.ae.encoder(current_data.feat_t)
+        #     print(f"\n\nfeat_t: {current_data.feat_t.size()} {current_data.feat_t.detach().cpu().numpy()[0][:5]}")
+        #     print(f"code: {code.size()} {code.detach().cpu().numpy()[0][:5]}")
+        #     print(f"recon_ae: {current_data.recon_ae.size()} {current_data.recon_ae.detach().cpu().numpy()[0][:5]}")
+        #     print("\n\n")
 
         # train current module
         loss_values = {}
@@ -175,7 +175,7 @@ def fine_tune_current_model(cfg,
     evaler = Eval(valid_dict, cfg.MODEL.DEVICE)
     evaler.get_valid_eval_map(cfg, tr_comp.model)
     copy_cfg = copy.deepcopy(cfg)
-    copy_cfg["TRAIN"]["MAX_EPOCHS"] = 30
+    copy_cfg["TRAIN"]["MAX_EPOCHS"] = 60
     run(copy_cfg, train_loader, tr_comp, saver, trainer, evaler)
 
 
