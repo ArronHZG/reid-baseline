@@ -2,29 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1b0344a7-c05c-4a3c-9dfc-141d92b1a83a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/script/06-03-1-2020.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/script/06-03-2-2020.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/script/06-03-3-2020.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/unit_test/test_weight.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/reid-baseline.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/reid-baseline.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReID比赛总结.assets/image-20200414190444329.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReID比赛总结.assets/image-20200414192626811.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReID比赛总结.assets/image-20200414193506890.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReID比赛总结.assets/image-20200414201806240.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReID比赛总结.assets/image-20200414202315894.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReID比赛总结.assets/image-20200414230618826.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReID比赛总结.assets/image-20200515154627588.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReID比赛总结.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/defaults.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/defaults.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs/msmt17.yml" beforeDir="false" afterPath="$PROJECT_DIR$/configs/msmt17.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/ebll.py" beforeDir="false" afterPath="$PROJECT_DIR$/engine/ebll.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/trainer.py" beforeDir="false" afterPath="$PROJECT_DIR$/engine/trainer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/trainer_with_feat.py" beforeDir="false" afterPath="$PROJECT_DIR$/engine/trainer_with_feat.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/uda.py" beforeDir="false" afterPath="$PROJECT_DIR$/engine/uda.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loss/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/loss/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loss/dist_loss/cross_entropy_dist_loss.py" beforeDir="false" afterPath="$PROJECT_DIR$/loss/dist_loss/cross_entropy_dist_loss.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/script/06-01-2020.sh" beforeDir="false" afterPath="$PROJECT_DIR$/script/06-01-2020.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/continuous_train.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/continuous_train.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/ebll_train.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/ebll_train.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/train.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/train_with_feat.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/train_with_feat.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/saver.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/saver.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modeling/backbone/resnet.py" beforeDir="false" afterPath="$PROJECT_DIR$/modeling/backbone/resnet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/script/05-21-2020.sh" beforeDir="false" afterPath="$PROJECT_DIR$/script/05-21-2020.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,29 +72,29 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="add_unversioned_files" value="$PROJECT_DIR$/run/strong.log" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/script" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/script" />
-      <recent name="$PROJECT_DIR$/engine" />
-      <recent name="$PROJECT_DIR$/tools" />
-      <recent name="$PROJECT_DIR$/modeling/backbone" />
-      <recent name="$PROJECT_DIR$/modeling" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/loss/training_loss" />
       <recent name="$PROJECT_DIR$/loss/dist_loss" />
       <recent name="$PROJECT_DIR$/utils" />
       <recent name="$PROJECT_DIR$/modeling/backbone" />
       <recent name="$PROJECT_DIR$/modeling" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/script" />
+      <recent name="$PROJECT_DIR$/engine" />
+      <recent name="$PROJECT_DIR$/tools" />
+      <recent name="$PROJECT_DIR$/modeling/backbone" />
     </key>
   </component>
   <component name="RunManager" selected="Python.ebll_train">
@@ -308,7 +296,12 @@
       <workItem from="1591982763579" duration="56000" />
       <workItem from="1593410086705" duration="471000" />
       <workItem from="1593415607410" duration="127000" />
-      <workItem from="1594623826647" duration="64000" />
+      <workItem from="1594623826647" duration="209000" />
+      <workItem from="1594624413873" duration="227000" />
+      <workItem from="1594630400614" duration="746000" />
+      <workItem from="1595385508370" duration="281000" />
+      <workItem from="1595757059205" duration="8000" />
+      <workItem from="1595950563044" duration="342000" />
     </task>
     <task id="LOCAL-00001" summary="auto download backbone weight">
       <created>1584559275020</created>
@@ -590,7 +583,14 @@
       <option name="project" value="LOCAL" />
       <updated>1590949896888</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="EBLL rewrite">
+      <created>1594623991336</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1594623991336</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -659,10 +659,11 @@
       <screen x="0" y="0" width="1536" height="960" />
     </state>
     <state x="529" y="113" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.960@0.0.1536.960" timestamp="1590151993269" />
-    <state x="347" y="23" width="841" height="937" key="CommitChangelistDialog2" timestamp="1590949896462">
-      <screen x="0" y="0" width="1536" height="960" />
+    <state x="405" y="26" width="841" height="937" key="CommitChangelistDialog2" timestamp="1594623990979">
+      <screen x="0" y="0" width="1792" height="1120" />
     </state>
     <state x="347" y="23" width="841" height="937" key="CommitChangelistDialog2/0.0.1536.960@0.0.1536.960" timestamp="1590949896462" />
+    <state x="405" y="26" key="CommitChangelistDialog2/0.0.1792.1120@0.0.1792.1120" timestamp="1594623990979" />
     <state x="463" y="30" key="CommitChangelistDialog2/0.0.2048.1280@0.0.2048.1280" timestamp="1590342203974" />
     <state x="347" y="45" key="CommitChangelistDialog2/0.23.1536.937@0.23.1536.937" timestamp="1589199112562" />
     <state width="1750" height="430" key="GridCell.Tab.0.bottom" timestamp="1591422848978">
@@ -745,30 +746,33 @@
       <screen x="0" y="0" width="1536" height="960" />
     </state>
     <state x="505" y="113" key="RollbackChangesDialog/0.0.1536.960@0.0.1536.960" timestamp="1589215418781" />
-    <state x="314" y="139" key="SettingsEditor" timestamp="1594623886847">
-      <screen x="0" y="0" width="1792" height="1120" />
+    <state x="449" y="199" key="SettingsEditor" timestamp="1595950906640">
+      <screen x="0" y="23" width="2560" height="1417" />
     </state>
     <state x="269" y="119" key="SettingsEditor/0.0.1536.960@0.0.1536.960" timestamp="1591037912844" />
-    <state x="314" y="139" key="SettingsEditor/0.0.1792.1120@0.0.1792.1120" timestamp="1594623886847" />
+    <state x="314" y="139" key="SettingsEditor/0.0.1792.1120@0.0.1792.1120" timestamp="1594624418042" />
     <state x="359" y="159" key="SettingsEditor/0.0.2048.1280@0.0.2048.1280" timestamp="1590343528781" />
+    <state x="449" y="199" key="SettingsEditor/0.23.2560.1417@0.23.2560.1417" timestamp="1595950906640" />
     <state width="500" height="445" key="SwitcherDM" timestamp="1591119000999">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
     <state width="500" height="445" key="SwitcherDM/0.0.1536.960@0.0.1536.960" timestamp="1591119000999" />
-    <state x="368" y="216" key="Vcs.Push.Dialog.v2" timestamp="1590949898610">
-      <screen x="0" y="0" width="1536" height="960" />
+    <state x="429" y="252" key="Vcs.Push.Dialog.v2" timestamp="1594623993309">
+      <screen x="0" y="0" width="1792" height="1120" />
     </state>
     <state x="368" y="216" key="Vcs.Push.Dialog.v2/0.0.1536.960@0.0.1536.960" timestamp="1590949898610" />
+    <state x="429" y="252" key="Vcs.Push.Dialog.v2/0.0.1792.1120@0.0.1792.1120" timestamp="1594623993309" />
     <state x="491" y="288" key="Vcs.Push.Dialog.v2/0.0.2048.1280@0.0.2048.1280" timestamp="1590342206200" />
     <state x="368" y="234" key="Vcs.Push.Dialog.v2/0.23.1536.937@0.23.1536.937" timestamp="1589199114616" />
-    <state x="499" y="398" key="com.intellij.ide.util.TipDialog" timestamp="1593415630089">
-      <screen x="0" y="0" width="1792" height="1120" />
+    <state x="713" y="512" key="com.intellij.ide.util.TipDialog" timestamp="1595950563729">
+      <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state x="499" y="398" key="com.intellij.ide.util.TipDialog/-339.-1440.2560.1440/0.0.1792.1120@0.0.1792.1120" timestamp="1593415630089" />
     <state x="428" y="328" key="com.intellij.ide.util.TipDialog/0.0.1536.960@0.0.1536.960" timestamp="1591119421148" />
-    <state x="499" y="398" key="com.intellij.ide.util.TipDialog/0.0.1792.1120@0.0.1792.1120" timestamp="1591422256967" />
+    <state x="499" y="398" key="com.intellij.ide.util.TipDialog/0.0.1792.1120@0.0.1792.1120" timestamp="1595385534811" />
     <state x="535" y="369" key="com.intellij.ide.util.TipDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1591194198247" />
     <state x="571" y="437" key="com.intellij.ide.util.TipDialog/0.0.2048.1280@0.0.2048.1280" timestamp="1590343112466" />
+    <state x="713" y="512" key="com.intellij.ide.util.TipDialog/0.0.2560.1440@0.0.2560.1440" timestamp="1595950563729" />
     <state x="838" y="601" key="com.intellij.ide.util.TipDialog/0.0.3008.1692@0.0.3008.1692" timestamp="1591982765061" />
     <state x="428" y="328" key="com.intellij.ide.util.TipDialog/0.23.1536.937@0.23.1536.937" timestamp="1590741093237" />
     <state x="0" y="23" width="1536" height="937" maximized="true" key="dock-window-1" timestamp="1591422438711">

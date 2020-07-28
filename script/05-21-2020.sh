@@ -5,4 +5,4 @@
 
 python ../tools/train.py --config_file='../configs/msmt17.yml'
 
-python ../tools/train.py --config_file='../configs/dukemtmc.yml'
+python ../tools/train.py --`config_file='../configs/dukemtmc.yml'
