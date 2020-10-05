@@ -19,6 +19,7 @@
       <w>pretrain</w>
       <w>resnet</w>
       <w>softmax</w>
+      <w>tensorboard</w>
       <w>tensorboardx</w>
       <w>warmup</w>
       <w>xent</w>

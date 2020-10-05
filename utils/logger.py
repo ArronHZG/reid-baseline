@@ -46,7 +46,7 @@ class Logger:
             self.file.close()
 
 
-def setup_logger(name, save_dir, distributed_rank):
+def setup_logger(name, save_dir, log_file, distributed_rank=0):
     logger = logging.getLogger(name)
     logger.setLevel(logging.DEBUG)
     # don't log results for the non-master process
@@ -59,7 +59,7 @@ def setup_logger(name, save_dir, distributed_rank):
     logger.addHandler(ch)
 
     if save_dir:
-        log_path = os.path.join(save_dir, "log.txt")
+        log_path = os.path.join(save_dir, log_file)
         fh = logging.FileHandler(log_path)
         fh.setLevel(logging.DEBUG)
         fh.setFormatter(formatter)

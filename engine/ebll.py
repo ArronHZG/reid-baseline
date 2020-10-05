@@ -7,7 +7,7 @@ from ignite.engine import Engine
 from engine.inference import Eval
 from engine.trainer import run, create_supervised_trainer
 from loss import Loss
-from tools.component import TrainComponent
+from utils.component import TrainComponent
 
 logger = logging.getLogger("reid_baseline.ebll")
 

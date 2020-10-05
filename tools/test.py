@@ -5,7 +5,7 @@ sys.path.append('..')
 
 from data import make_multi_valid_data_loader
 from engine.inference import inference
-from tools.component import main, TrainComponent
+from utils.component import main, TrainComponent
 
 
 def test(cfg, saver):

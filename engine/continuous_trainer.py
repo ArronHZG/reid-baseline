@@ -5,7 +5,7 @@ from ignite.engine import Engine
 
 from engine.trainer import run
 from loss import Loss
-from tools.component import TrainComponent
+from utils.component import TrainComponent
 
 logger = logging.getLogger("reid_baseline.continue")
 

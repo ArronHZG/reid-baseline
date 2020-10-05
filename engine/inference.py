@@ -4,18 +4,17 @@ from collections import OrderedDict
 import torch
 from ignite.engine import Engine
 
-from utils import Data
 from utils.reid_metric import R1_mAP, R1_mAP_reranking
 
 logger = logging.getLogger("reid_baseline.eval")
 
 
-def create_supervised_evaluator(model, metrics, device, classify_feature=True):
+def create_supervised_evaluator(model, metrics, classify_feature=True):
     def _inference(engine, batch):
         model.eval()
         with torch.no_grad():
             img, pids, camids = batch
-            img = img.to(device)
+            img = img.cuda()
             data = model(img)
 
             if classify_feature:
@@ -31,12 +30,12 @@ def create_supervised_evaluator(model, metrics, device, classify_feature=True):
     return engine
 
 
-def create_autoencoder_evaluator(model, autoencoder, metrics, device, classify_feature=True):
+def create_autoencoder_evaluator(model, autoencoder, metrics, classify_feature=True):
     def _inference(engine, batch):
         model.eval()
         with torch.no_grad():
             img, pids, camids = batch
-            img = img.to(device)
+            img = img.cuda()
             data = model(img)
             auto_data = autoencoder(data.feat_t)
             auto_data.feat_t = auto_data.recon_ae
@@ -55,13 +54,13 @@ def create_autoencoder_evaluator(model, autoencoder, metrics, device, classify_f
     return engine
 
 
-def create_source_evaluator(source_model, current_model, metrics, device, classify_feature):
+def create_source_evaluator(source_model, current_model, metrics, classify_feature):
     def _inference(engine, batch):
         source_model.eval()
         current_model.eval()
         with torch.no_grad():
             img, pids, camids = batch
-            img = img.to(device)
+            img = img.cuda()
 
             x = current_model.base(img)
             feat_t = current_model.GAP(x).view(x.size(0), -1)
@@ -81,10 +80,9 @@ def create_source_evaluator(source_model, current_model, metrics, device, classi
 
 
 class Eval:
-    def __init__(self, valid_dict, device, re_ranking=False, classify_feature=True):
+    def __init__(self, valid_dict, re_ranking=False, classify_feature=True):
         self.validation_evaluator_map = None
         self.valid_dict = valid_dict
-        self.device = device
         self.re_ranking = re_ranking
         self.classify_feature = classify_feature
 
@@ -93,9 +91,7 @@ class Eval:
         sum_result = 0
         for name, validation_evaluator in self.validation_evaluator_map.items():
             validation_evaluator.run(self.valid_dict[name][0])
-            if self.device == 'cuda':
-                torch.cuda.empty_cache()
-
+            torch.cuda.empty_cache()
             cmc, mAP = validation_evaluator.state.metrics['r1_mAP']
             logger.info(f"{name} Validation Results")
             logger.info("mAP: {:.1%}".format(mAP))
@@ -116,7 +112,6 @@ class Eval:
 
             self.validation_evaluator_map[name] = create_supervised_evaluator(model,
                                                                               metrics=metrics,
-                                                                              device=self.device,
                                                                               classify_feature=self.classify_feature)
 
     def get_valid_eval_map_autoencoder(self, cfg, model, autoencoder):
@@ -130,7 +125,6 @@ class Eval:
             self.validation_evaluator_map[name] = create_autoencoder_evaluator(model,
                                                                                autoencoder,
                                                                                metrics=metrics,
-                                                                               device=self.device,
                                                                                classify_feature=self.classify_feature)
 
     def get_valid_eval_map_ebll(self, cfg, source_model, current_model):
@@ -148,7 +142,6 @@ class Eval:
             self.validation_evaluator_map[name] = create_source_evaluator(source_model,
                                                                           current_model,
                                                                           metrics=metrics,
-                                                                          device=self.device,
                                                                           classify_feature=self.classify_feature)
 
         name, (_, n_q) = list_odict_items[long - 1]
@@ -159,7 +152,6 @@ class Eval:
 
         self.validation_evaluator_map[name] = create_supervised_evaluator(current_model,
                                                                           metrics=metrics,
-                                                                          device=self.device,
                                                                           classify_feature=self.classify_feature)
 
 
@@ -168,9 +160,8 @@ def inference(
         model,
         valid
 ):
-    device = cfg.MODEL.DEVICE
     # multi-dataset
-    ev = Eval(valid, device, cfg.TEST.IF_RE_RANKING, cfg.TEST.IF_CLASSIFT_FEATURE)
+    ev = Eval(valid, cfg.TEST.IF_RE_RANKING, cfg.TEST.IF_CLASSIFT_FEATURE)
     ev.get_valid_eval_map(cfg, model)
     sum_result = ev.eval_multi_dataset()
     logger.info(f'Sum result: {sum_result:.4f}')

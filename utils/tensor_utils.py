@@ -1,17 +1,18 @@
 import torch
+from torch.cuda.amp import autocast
 
 
-def batch_horizontal_flip(tensor, device):
+def batch_horizontal_flip(tensor):
     """
     :param tensor: N x C x H x W
     :return:
     """
-    inv_idx = torch.arange(tensor.size(3) - 1, -1, -1).long().to(device)
+    inv_idx = torch.arange(tensor.size(3) - 1, -1, -1).long().cuda()
     img_flip = tensor.index_select(3, inv_idx)
     return img_flip
 
 
-def euclidean_dist(x: torch.Tensor, y: torch.Tensor):
+def euclidean_dist(x, y):
     """
     Args:
       x: pytorch Variable, with shape [m, d]
@@ -23,6 +24,9 @@ def euclidean_dist(x: torch.Tensor, y: torch.Tensor):
     xx = torch.pow(x, 2).sum(1, keepdim=True).expand(m, n)
     yy = torch.pow(y, 2).sum(1, keepdim=True).expand(n, m).t()
     dist = xx + yy
+    # dist = dist.addmm(beta=1, alpha=-2, mat1=x, mat2=y.t())
+    # dist = dist.clamp(min=1e-12)
+    # dist = dist.sqrt()  # for numerical stability
     dist.addmm_(beta=1, alpha=-2, mat1=x, mat2=y.t())
     dist.clamp_(min=1e-12)
     dist.sqrt_()  # for numerical stability

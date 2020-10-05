@@ -1,127 +1,116 @@
-from yacs.config import CfgNode as CN
+from yacs.config import CfgNode
 
-_C = CN()
+cfg = CfgNode()
 
-_C.DATASET = CN()
-_C.DATASET.NAME = 'market1501'  # market1501, dukemtmc, msmt17
-_C.DATASET.ROOT_DIR = '/home/arron/dataset'
+cfg.DATASET = CfgNode()
+cfg.DATASET.NAME = 'market1501'  # market1501, dukemtmc, msmt17
+cfg.DATASET.ROOT_DIR = '/home/arron/dataset'
 
-_C.DATALOADER = CN()
-_C.DATALOADER.NUM_WORKERS = 8
-_C.DATALOADER.NUM_INSTANCE = 4
-_C.DATALOADER.SAMPLER = 'RandomIdentity'  # Options: 'None' or 'RandomIdentity'
+cfg.DATALOADER = CfgNode()
+cfg.DATALOADER.NUM_WORKERS = 8
+cfg.DATALOADER.NUM_INSTANCE = 4
+cfg.DATALOADER.SAMPLER = 'RandomIdentity'  # Options: 'None' or 'RandomIdentity'
 
-_C.INPUT = CN()
-_C.INPUT.SIZE_TRAIN = [256, 128]
-_C.INPUT.SIZE_TEST = [256, 128]
-_C.INPUT.PROB = 0.5
-_C.INPUT.RE_PROB = 0.5
-_C.INPUT.PIXEL_MEAN = [0.485, 0.456, 0.406]
-_C.INPUT.PIXEL_STD = [0.229, 0.224, 0.225]
-_C.INPUT.PADDING = 10
+cfg.INPUT = CfgNode()
+cfg.INPUT.SIZE_TRAIN = [256, 128]
+cfg.INPUT.SIZE_TEST = [256, 128]
+cfg.INPUT.PROB = 0.5
+cfg.INPUT.RE_PROB = 0.5
+cfg.INPUT.PIXEL_MEAN = [0.485, 0.456, 0.406]
+cfg.INPUT.PIXEL_STD = [0.229, 0.224, 0.225]
+cfg.INPUT.PADDING = 10
 
-_C.MODEL = CN()
-_C.MODEL.DEVICE = "cuda"  # "cuda" or "cpu"
-_C.MODEL.DEVICE_ID = 0
-_C.MODEL.IF_DETERMINISTIC = False
-_C.MODEL.NAME = 'resnet50'
-_C.MODEL.LAST_STRIDE = 1
-_C.MODEL.PRETRAIN_CHOICE = 'imagenet'  # Options: 'imagenet','random' or 'self'
-_C.MODEL.IF_IBN_A = True
-_C.MODEL.IF_IBN_B = False
-_C.MODEL.IF_SE = False
+cfg.MODEL = CfgNode()
+cfg.MODEL.DEVICE_ID = 1
+cfg.MODEL.IF_DETERMINISTIC = False
+cfg.MODEL.NAME = 'resnet50'
+cfg.MODEL.LAST_STRIDE = 1
+cfg.MODEL.PRETRAIN_CHOICE = 'imagenet'  # Options: 'imagenet','random' or 'self'
+cfg.MODEL.IF_IBN_A = True
+cfg.MODEL.IF_IBN_B = False
+cfg.MODEL.IF_SE = False
 
-_C.LOSS = CN()
+cfg.LOSS = CfgNode()
 # Options: 'softmax' 'triplet' 'softmax_triplet' 'softmax_arcface_triplet'
-_C.LOSS.LOSS_TYPE = 'softmax_triplet'
-_C.LOSS.IF_LABEL_SMOOTH = True
-_C.LOSS.IF_WITH_CENTER = True
-_C.LOSS.CENTER_LOSS_WEIGHT = 0.0005
-_C.LOSS.IF_WITH_DEC = False
-_C.LOSS.METRIC_LOSS_WEIGHT = 1.0
-_C.LOSS.ID_LOSS_WEIGHT = 1.0
-_C.LOSS.MARGIN = 0.3
-_C.LOSS.IF_LEARNING_WEIGHT = True
+cfg.LOSS.LOSS_TYPE = 'softmax_triplet_center'
+cfg.LOSS.IF_LABEL_SMOOTH = True
+cfg.LOSS.IF_WITH_CENTER = True
+cfg.LOSS.CENTER_LOSS_WEIGHT = 0.0005
+cfg.LOSS.IF_WITH_DEC = False
+cfg.LOSS.METRIC_LOSS_WEIGHT = 1.0
+cfg.LOSS.ID_LOSS_WEIGHT = 1.0
+cfg.LOSS.MARGIN = 0.3
+cfg.LOSS.IF_LEARNING_WEIGHT = True
 
-_C.OPTIMIZER = CN()
-_C.OPTIMIZER.BASE_LR = 0.00035
-# _C.OPTIMIZER.BIAS_LR_FACTOR = 1.0
-_C.OPTIMIZER.NAME = 'Adam'  # Adam, ranger, SGD
-_C.OPTIMIZER.WEIGHT_DECAY = 0.0005
-# _C.OPTIMIZER.WEIGHT_DECAY_BIAS = 0.0005
-_C.OPTIMIZER.MOMENTUM = 0.9
-_C.OPTIMIZER.LOSS_LR = 0.5
+cfg.OPTIMIZER = CfgNode()
+cfg.OPTIMIZER.BASE_LR = 0.00035
+cfg.OPTIMIZER.NAME = 'Adam'  # Adam, SGD
+cfg.OPTIMIZER.WEIGHT_DECAY = 0.0005
+cfg.OPTIMIZER.MOMENTUM = 0.9
+cfg.OPTIMIZER.LOSS_LR = 0.5
 
-_C.WARMUP = CN()
-_C.WARMUP.IF_WARMUP = True
-_C.WARMUP.FACTOR = 0.01
-_C.WARMUP.MAX_EPOCHS = 10
-_C.WARMUP.METHOD = 'linear'
-_C.WARMUP.STEPS = (40, 70)
-_C.WARMUP.GAMMA = 0.1
+cfg.WARMUP = CfgNode()
+cfg.WARMUP.IF_WARMUP = True
+cfg.WARMUP.FACTOR = 0.01
+cfg.WARMUP.MAX_EPOCHS = 10
+cfg.WARMUP.METHOD = 'linear'
+cfg.WARMUP.STEPS = (40, 70)
+cfg.WARMUP.GAMMA = 0.1
 
-_C.TRAIN = CN()
-_C.TRAIN.BATCH_SIZE = 64
-_C.TRAIN.LOG_ITER_PERIOD = 100
-_C.TRAIN.MAX_EPOCHS = 150
+cfg.TRAIN = CfgNode()
+cfg.TRAIN.BATCH_SIZE = 64
+cfg.TRAIN.LOG_ITER_PERIOD = 100
+cfg.TRAIN.MAX_EPOCHS = 150
 
-_C.EVAL = CN()
-_C.EVAL.EPOCH_PERIOD = 30
+cfg.EVAL = CfgNode()
+cfg.EVAL.EPOCH_PERIOD = 30
 
-_C.SAVER = CN()
-_C.SAVER.CHECKPOINT_PERIOD = 1
-_C.SAVER.N_SAVED = 1
+cfg.SAVER = CfgNode()
+cfg.SAVER.CHECKPOINT_PERIOD = 1
+cfg.SAVER.N_SAVED = 1
 
-_C.TENSORBOARDX = CN()
-_C.TENSORBOARDX.IF_ON = False
-_C.TENSORBOARDX.SCALAR = False
-_C.TENSORBOARDX.HIST = False
+cfg.TENSORBOARDX = CfgNode()
+cfg.TENSORBOARDX.IF_ON = False
+cfg.TENSORBOARDX.SCALAR = False
+cfg.TENSORBOARDX.HIST = False
 
-_C.APEX = CN()
-_C.APEX.IF_ON = True
-_C.APEX.OPT_LEVEL = 'O2'  # O1 or O2
-_C.APEX.IF_SYNC_BN = False
-_C.APEX.LOSS_SCALE = ("1.0",)
+cfg.TEST = CfgNode()
+cfg.TEST.IF_ON = False
+cfg.TEST.BATCH_SIZE = 128  # from evaluate and extract feature
+cfg.TEST.IF_RE_RANKING = True
+cfg.TEST.IF_FEAT_NORM = True
+cfg.TEST.RUN_ID = '02'
+cfg.TEST.IF_CLASSIFT_FEATURE = True
 
-_C.TEST = CN()
-_C.TEST.IF_ON = False
-_C.TEST.BATCH_SIZE = 128  # from evaluate and extract feature
-_C.TEST.IF_RE_RANKING = True
-_C.TEST.IF_FEAT_NORM = True
-_C.TEST.RUN_ID = '02'
-_C.TEST.IF_CLASSIFT_FEATURE = True
+cfg.JOINT = CfgNode()
+cfg.JOINT.IF_ON = False
+cfg.JOINT.DATASET_NAME = ("dukemtmc", "msmt17")
 
-_C.JOINT = CN()
-_C.JOINT.IF_ON = False
-_C.JOINT.DATASET_NAME = ("dukemtmc", "msmt17")
+cfg.UDA = CfgNode()
+cfg.UDA.IF_ON = False
+cfg.UDA.DATASET_NAME = 'dukemtmc'
+cfg.UDA.IF_FLIP = True
+cfg.UDA.IF_RE_RANKING = True
+cfg.UDA.TIMES = 1
 
-_C.UDA = CN()
-_C.UDA.IF_ON = False
-_C.UDA.DATASET_NAME = 'dukemtmc'
-_C.UDA.IF_FLIP = True
-_C.UDA.IF_RE_RANKING = True
-_C.UDA.TIMES = 1
+cfg.FEAT = CfgNode()
+cfg.FEAT.IF_ON = False
+cfg.FEAT.DATASET_NAME = 'dukemtmc'
 
-_C.FEAT = CN()
-_C.FEAT.IF_ON = False
-_C.FEAT.DATASET_NAME = 'dukemtmc'
+cfg.CONTINUATION = CfgNode()
+cfg.CONTINUATION.IF_ON = False
+cfg.CONTINUATION.DATASET_NAME = 'dukemtmc'
+cfg.CONTINUATION.T = 10.0
+cfg.CONTINUATION.LOSS_TYPE = 'ae_dict tr_dist'  # ce_dict tr_dist
 
-_C.CONTINUATION = CN()
-_C.CONTINUATION.IF_ON = False
-_C.CONTINUATION.DATASET_NAME = 'dukemtmc'
-_C.CONTINUATION.T = 10.0
-_C.CONTINUATION.LOSS_TYPE = 'ae_dict tr_dist'  # ce_dict tr_dist
-
-_C.EBLL = CN()
-_C.EBLL.IF_ON = False
-_C.EBLL.IN_PLANES = 2048
-_C.EBLL.CODE_SIZE = 512
-_C.EBLL.OPTIMIZER_BASE_LR = 0.1
-_C.EBLL.LOSS_TYPE = "ae_loss"
-_C.EBLL.LAMBDA = 0.01
-_C.EBLL.DIST_TYPE = "mse"
-_C.EBLL.DATASET_NAME = 'dukemtmc'
-_C.EBLL.MAX_EPOCHS = 50
-_C.EBLL.AE_LOSS_WEIGHT = 0.01
-
-
+cfg.EBLL = CfgNode()
+cfg.EBLL.IF_ON = False
+cfg.EBLL.IN_PLANES = 2048
+cfg.EBLL.CODE_SIZE = 512
+cfg.EBLL.OPTIMIZER_BASE_LR = 0.1
+cfg.EBLL.LOSS_TYPE = "ae_loss"
+cfg.EBLL.LAMBDA = 0.01
+cfg.EBLL.DIST_TYPE = "mse"
+cfg.EBLL.DATASET_NAME = 'dukemtmc'
+cfg.EBLL.MAX_EPOCHS = 50
+cfg.EBLL.AE_LOSS_WEIGHT = 0.01

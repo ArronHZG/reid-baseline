@@ -1,1 +1,1 @@
-python  ../tools/train.py --config_file='../configs/ranger.yml'
+python  ../tools/train.py --config_file='../config-yml/ranger.yml'

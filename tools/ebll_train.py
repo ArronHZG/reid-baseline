@@ -6,7 +6,7 @@ sys.path.append('.')
 sys.path.append('..')
 
 from engine.ebll import train_autoencoder, fine_tune_current_model, ebll_train
-from tools.component import main, TrainComponent
+from utils.component import main, TrainComponent
 from data import make_multi_valid_data_loader, make_train_data_loader
 
 logger = logging.getLogger("reid_baseline.continuation")

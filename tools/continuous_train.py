@@ -4,9 +4,8 @@ import sys
 sys.path.append('.')
 sys.path.append('..')
 
-from tools.component import main, TrainComponent
+from utils.component import main, TrainComponent
 from engine.continuous_trainer import do_continuous_train
-from engine.inference import inference
 from data import make_multi_valid_data_loader, make_train_data_loader
 
 logger = logging.getLogger("reid_baseline.continuation")

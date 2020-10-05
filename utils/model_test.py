@@ -3,7 +3,7 @@ import shutil
 
 from modeling.strong_baseline import model_map
 from utils.logger import setup_logger
-from test.model_shape import count_param, show_model
+from utils.model_shape import show_model
 
 
 def test_backbone(root_dir, model_name, se=False, ibn_a=False, ibn_b=False):
