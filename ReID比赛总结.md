@@ -41,18 +41,18 @@
 
 3. 由于比赛对于个人隐私的保密性,以及为了提高难度, 数据集经过特殊处理基本上肉眼无法辨识是否为同一人. 在后期的研究观察中发现, 每一张图片是灰度图(0-255)在三个区间进行分离重新组合为RGB彩色图.
 
-   <img src="ReID比赛总结.assets/image-20200414192626811.png" alt="image-20200414192626811" style="zoom:50%;" />
+   <img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gjeqrbmxufj31dy08s42l.jpg" alt="image-20200414192626811" style="zoom:50%;" />
 
    实际的训练集:列出一些较为
 
-   <img src="ReID比赛总结.assets/image-20200414190444329.png" alt="image-20200414190444329" style="zoom:50%;" />
+   <img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gjeqrctwvfj30ue096mz6.jpg" alt="image-20200414190444329" style="zoom:50%;" />
 
    在训练中, 大量出现上图所示的图片, 人眼基本不无法辨认, 只能靠机器识别:dog:.另外官方也声明了不允许去使用某些算法还原训练集.
 
    并且通过对于训练集观察, 同一ID的颜色模式基本一直, 不同ID会存在变化.
 
 4. 训练集和测试集的分布不同, 所以是一个UDA问题^[1]^
-   > <img src="ReID比赛总结.assets/image-20200414193506890.png" alt="image-20200414193506890" style="zoom:50%;" />
+   > <img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gjeqreh0qej30wy0lw77q.jpg" alt="image-20200414193506890" style="zoom:50%;" />
 
    
 
@@ -74,9 +74,9 @@ global feature 使用 strong baseline^[13]^ 的版本
 
 part feature 在初赛使用PCB^[3]^作为输出头, 复赛使用MGN^[4]^作为输出头.
 
-<img src="ReID比赛总结.assets/image-20200515154627588.png" alt="image-20200515154627588" style="zoom:50%;" />
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gjeqrdsaskj317u0h8n3s.jpg" alt="image-20200515154627588" style="zoom:50%;" />
 
-<img src="ReID比赛总结.assets/image-20200414202315894.png" alt="image-20200414202315894" style="zoom:50%;" />
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gjeqrcdiw2j318o0smajn.jpg" alt="image-20200414202315894" style="zoom:50%;" />
 
 增加了ABD-net^[12]^的attention部分, 但是明显的提升.
 
@@ -123,7 +123,7 @@ Look Ahead + RAdam, github 有一个实现好了的[ranger](https://github.com/l
 
  2. 迭代训练时, 更换backbone, backbone的复杂程度依次上升Resnet101-ibn-a → Resnet10-ibn-b → SeResnet-ibn-a, 因为模型越复杂越容易过拟合, 而且前期挖掘数据并不准确, 在逐渐挖掘的同时, 提升模型提取特征的能力, 这个点特别好.
 
-    <img src="ReID比赛总结.assets/image-20200414230618826.png" alt="image-20200414230618826" style="zoom:50%;" />
+    <img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gjeqrdaf0jj312m0aawfy.jpg" alt="image-20200414230618826" style="zoom:50%;" />
 
  3. 挖掘的时候, 并没有采用传统意义上的无监督挖掘,而是进行一个半监督挖掘. 无监督挖掘例如DBSCAN会根据feature之间距离的远近自动生成聚类的 cluster center, 聚类的数量和实际结果不一致.而[1]使用Query作为中心预先决定了cluster center, 之后再聚类, 效果肯定要优于无监督挖掘. 这个其实已经不是聚类了, 直观来讲就是一个排序.
 

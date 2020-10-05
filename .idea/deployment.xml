@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="hzg@10.103.249.193:22" showDialogOnRemoteDnD="false" showAutoUploadSettingsWarning="false">
+  <component name="PublishConfigData" autoUpload="Always" serverName="arron@10.103.244.125" showDialogOnRemoteDnD="false" showAutoUploadSettingsWarning="false">
     <serverData>
+      <paths name="arron@10.103.244.125">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/home/arron/PycharmProjects/reid-baseline" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="hzg@10.103.249.193:22">
         <serverdata>
           <mappings>
@@ -10,5 +17,6 @@
         </serverdata>
       </paths>
     </serverData>
+    <option name="myAutoUpload" value="ALWAYS" />
   </component>
 </project>

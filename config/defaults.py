@@ -4,7 +4,7 @@ _C = CN()
 
 _C.DATASET = CN()
 _C.DATASET.NAME = 'market1501'  # market1501, dukemtmc, msmt17
-_C.DATASET.ROOT_DIR = '/home/hzg/dataset'
+_C.DATASET.ROOT_DIR = '/home/arron/dataset'
 
 _C.DATALOADER = CN()
 _C.DATALOADER.NUM_WORKERS = 8
@@ -79,7 +79,7 @@ _C.TENSORBOARDX.HIST = False
 
 _C.APEX = CN()
 _C.APEX.IF_ON = True
-_C.APEX.OPT_LEVEL = 'O1'  # O1 or O2
+_C.APEX.OPT_LEVEL = 'O2'  # O1 or O2
 _C.APEX.IF_SYNC_BN = False
 _C.APEX.LOSS_SCALE = ("1.0",)
 
