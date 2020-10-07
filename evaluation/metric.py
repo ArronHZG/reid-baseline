@@ -5,7 +5,6 @@
 """
 import logging
 
-import numpy as np
 import torch
 from ignite.metrics import Metric
 
@@ -36,8 +35,8 @@ class R1_mAP(Metric):
 
     def compute(self):
         feats = torch.cat(self.feats, dim=0)
-        pids = torch.cat(self.pids, dim=0)
-        camids = torch.cat(self.camids, dim=0)
+        pids = self.pids
+        camids = self.camids
 
         if self.if_feat_norm:
             feats = torch.nn.functional.normalize(feats, dim=1, p=2)
@@ -54,3 +53,4 @@ class R1_mAP(Metric):
         # distmat = re_ranking(qf, gf, k1=24, k2=6, lambda_value=0.3)
         cmc, mAP = eval_func(qf, gf, q_pids, g_pids, q_camids, g_camids, distance_type='euclidean', re_rank=False)
         return cmc, mAP
+

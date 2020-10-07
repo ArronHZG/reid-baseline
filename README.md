@@ -23,7 +23,7 @@ pytorch >= 1.6
 
   ![image-20201007013159885](https://tva1.sinaimg.cn/large/007S8ZIlly1gjgac7oau6j31dk0f6n0u.jpg)
 
-- [ ] 使用Cpython 提高eval速度
+- [x] 使用Cpython 提高eval速度
 
 - [ ] 监督学习框架绘图
 

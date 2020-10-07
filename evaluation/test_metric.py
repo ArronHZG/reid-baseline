@@ -2,7 +2,7 @@ from unittest import TestCase
 
 import torch
 
-from evaluation.rank_py import evaluate_py
+from evaluation.rank import eval_func
 
 
 class TestR1_mAP(TestCase):
@@ -20,8 +20,6 @@ class TestR1_mAP(TestCase):
         q_camids = torch.randint(0, 5, size=[num_q])
         g_camids = torch.randint(0, 5, size=[num_g])
 
-        all_cmc, mAP = evaluate_py(q_feats, g_feats, q_pids, g_pids, q_camids, g_camids,
-                                   max_rank=max_rank,
-                                   distance_type='DSR')
-        print(all_cmc)
-        print(mAP)
+        result = eval_func(q_feats, g_feats, q_pids, g_pids, q_camids, g_camids, max_rank=max_rank,
+                                 distance_type='DSR', re_rank=False)
+        print(result)

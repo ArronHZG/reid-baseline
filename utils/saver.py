@@ -50,7 +50,8 @@ class Saver:
         mkdir_if_missing(self.model_dir)
         mkdir_if_missing(self.image_dir)
         mkdir_if_missing(self.tensorboard_dir)
-        shutil.copytree(self.up_dir, self.code_dir, ignore=shutil.ignore_patterns('run'))
+        if not os.path.exists(self.code_dir):
+            shutil.copytree(self.up_dir, self.code_dir, ignore=shutil.ignore_patterns('run'))
 
     def _get_some_dir_name(self, cfg):
 
@@ -127,14 +128,13 @@ class Saver:
     #     # self.best_result = np.load(glob.glob(os.path.join(self.load_dir, "*.npy"))[0])
     #     if 'trainer' in self.checkpoint_params.keys():
     #         self.checkpoint_params['trainer'].state.max_epochs = self.cfg.TRAIN.MAX_EPOCHS
-    #         # loading the saved module
 
-    # def fetch_checkpoint_model_filename(self, prefix):
-    #     checkpoint_files = os.listdir(self.load_dir)
-    #     checkpoint_files = [f for f in checkpoint_files if '.pth' in f and prefix in f]
-    #     checkpoint_iter = [int(x.split('_')[2].split(".")[0]) for x in checkpoint_files]
-    #     last_idx = np.array(checkpoint_iter).argmax()
-    #     return os.path.join(self.load_dir, checkpoint_files[last_idx])
+    def fetch_checkpoint_model_filename(self, prefix):
+        checkpoint_files = os.listdir(self.load_dir)
+        checkpoint_files = [f for f in checkpoint_files if '.pth' in f and prefix in f]
+        checkpoint_iter = [int(x.split('_')[2].split(".")[0]) for x in checkpoint_files]
+        last_idx = np.array(checkpoint_iter).argmax()
+        return os.path.join(self.load_dir, checkpoint_files[last_idx])
 
     # def save_best_value(self, value):
     #     self.best_result = value
@@ -143,29 +143,29 @@ class Saver:
     #         os.remove(best_name_list[0])
     #     np.save(os.path.join(self.save_dir, f"best-{value:.4f}.npy"), self.best_result)
 
-    # @staticmethod
-    # def load_objects(to_load: Mapping, checkpoint: Mapping) -> None:
-    #     """Helper method to apply `load_state_dict` on the objects from `to_load` using states from `checkpoint`.
-    #
-    #     Args:
-    #         to_load (Mapping): a dictionary with objects, e.g. `{"module": module, "optimizer": optimizer, ...}`
-    #         checkpoint (Mapping): a dictionary with state_dicts to load, e.g. `{"module": model_state_dict,
-    #             "optimizer": opt_state_dict}`. If `to_load` contains a single key, then checkpoint can contain directly
-    #             corresponding state_dict.
-    #     """
-    #     if len(to_load) == 1:
-    #         # single object and checkpoint is directly a state_dict
-    #         key, obj = list(to_load.items())[0]
-    #         if key not in checkpoint:
-    #             obj.load_state_dict(checkpoint)
-    #             return
-    #
-    #     # multiple objects to load
-    #     for k, obj in to_load.items():
-    #         if k not in checkpoint:
-    #             print("Object labeled by '{}' from `to_load` is not found in the checkpoint".format(k))
-    #         else:
-    #             obj.load_state_dict(checkpoint[k], strict=False)
+    @staticmethod
+    def load_objects(to_load: Mapping, checkpoint: Mapping) -> None:
+        """Helper method to apply `load_state_dict` on the objects from `to_load` using states from `checkpoint`.
+
+        Args:
+            to_load (Mapping): a dictionary with objects, e.g. `{"module": module, "optimizer": optimizer, ...}`
+            checkpoint (Mapping): a dictionary with state_dicts to load, e.g. `{"module": model_state_dict,
+                "optimizer": opt_state_dict}`. If `to_load` contains a single key, then checkpoint can contain directly
+                corresponding state_dict.
+        """
+        if len(to_load) == 1:
+            # single object and checkpoint is directly a state_dict
+            key, obj = list(to_load.items())[0]
+            if key not in checkpoint:
+                obj.load_state_dict(checkpoint)
+                return
+
+        # multiple objects to load
+        for k, obj in to_load.items():
+            if k not in checkpoint:
+                print("Object labeled by '{}' from `to_load` is not found in the checkpoint".format(k))
+            else:
+                obj.load_state_dict(checkpoint[k], strict=False)
 
 
 if __name__ == '__main__':

@@ -1,9 +1,9 @@
-#python ../tools/train.py --config_file='../config-yml/dukemtmc.yml'
+#python ../tools/supervisedComponent.py --config_file='../config-yml/dukemtmc.yml'
 #
-#python ../tools/train.py --config_file='../config-yml/dukemtmc.yml' \
+#python ../tools/supervisedComponent.py --config_file='../config-yml/dukemtmc.yml' \
 #MODEL.IF_IBN_A = False
 
-#python ../tools/train.py --config_file='../config-yml/joint.yml'
+#python ../tools/supervisedComponent.py --config_file='../config-yml/joint.yml'
 
 #python ../tools/continuous_train.py --config_file='../config-yml/continue.yml' \
 #CONTINUATION.LOSS_TYPE "ce_dist"

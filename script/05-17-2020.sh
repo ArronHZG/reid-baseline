@@ -1,5 +1,5 @@
 #python ../tools/continuous_train.py --config_file='../config-yml/continue.yml' CONTINUATION.T 0.05
-#python ../tools/train.py --config_file='../config-yml/sgd.yml'
+#python ../tools/supervisedComponent.py --config_file='../config-yml/sgd.yml'
 python ../tools/continuous_train.py --config_file='../config-yml/continue.yml' \
 CONTINUATION.LOSS_TYPE "ce_dist"
 

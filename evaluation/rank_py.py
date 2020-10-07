@@ -21,15 +21,14 @@ def get_cosine_indices(qf, gf):
 
 
 def get_DSR_indices(qf, gf):
-    qf = qf.numpy()
-    gf = gf.numpy()
+    qf = qf.cpu().numpy()
+    gf = gf.cpu().numpy()
 
     num_g = gf.shape[0]
     dim = qf.shape[1]
     index = faiss.IndexFlatL2(dim)
     index.add(gf)
-    _, indices = index.search(qf, k=num_g)
-    return indices
+    return index.search(qf, k=num_g)[1]
 
 
 DISTANCE_TYPES = {
@@ -48,17 +47,16 @@ def evaluate_py(qf: torch.Tensor, gf: torch.Tensor,
     """Evaluation with market1501 metric
         Key: for each query identity, its gallery images from the same camera view are discarded.
         """
-    q_pids = q_pids.numpy()
-    g_pids = g_pids.numpy()
-    q_camids = q_camids.numpy()
-    g_camids = g_camids.numpy()
+    q_pids = np.asarray(q_pids)
+    g_pids = np.asarray(g_pids)
+    q_camids = np.asarray(q_camids)
+    g_camids = np.asarray(g_camids)
 
     num_q, num_g = qf.size(0), gf.size(0)
     if num_g < max_rank:
         max_rank = num_g
         print("Note: number of gallery samples is quite small, got {}".format(num_g))
     indices = DISTANCE_TYPES[distance_type](qf, gf)
-    print(indices)
 
     matches = (g_pids[indices] == q_pids[:, np.newaxis]).astype(np.int32)
 

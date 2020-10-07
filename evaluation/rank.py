@@ -2,7 +2,10 @@
 
 import warnings
 
-from .rank_py import evaluate_py
+import torch
+import numpy as np
+
+from .rank_py import evaluate_py, DISTANCE_TYPES
 
 try:
     from .rank_cylib.rank_cy import evaluate_cy
@@ -16,8 +19,26 @@ except ImportError:
     )
 
 
+def call_cy(qf, gf,
+            q_pids, g_pids,
+            q_camids, g_camids,
+            max_rank=50,
+            distance_type='euclidean',
+            re_rank=False):
+    indices = DISTANCE_TYPES[distance_type](qf, gf)
+
+    return evaluate_cy(indices,
+                       qf.cpu().numpy(),
+                       gf.cpu().numpy(),
+                       q_pids,
+                       g_pids,
+                       q_camids,
+                       g_camids,
+                       max_rank)
+
+
 def eval_func(*args, **kwargs):
-    if IS_CYTHON_AVAI and False:
-        return evaluate_cy(*args, **kwargs)
+    if IS_CYTHON_AVAI:
+        return call_cy(*args, **kwargs)
     else:
         return evaluate_py(*args, **kwargs)

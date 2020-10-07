@@ -21,7 +21,7 @@ cfg.INPUT.PIXEL_STD = [0.229, 0.224, 0.225]
 cfg.INPUT.PADDING = 10
 
 cfg.GPU = CfgNode()
-cfg.GPU.DEVICE_ID = 1
+cfg.GPU.DEVICE_ID = 0
 cfg.GPU.IF_DETERMINISTIC = False
 
 cfg.MODEL = CfgNode()
@@ -56,7 +56,7 @@ cfg.WARMUP.IF_WARMUP = True
 cfg.WARMUP.FACTOR = 0.01
 cfg.WARMUP.MAX_EPOCHS = 10
 cfg.WARMUP.METHOD = 'linear'
-cfg.WARMUP.STEPS = (40, 70)
+cfg.WARMUP.STEPS = (40, 70, 150)
 cfg.WARMUP.GAMMA = 0.1
 
 cfg.TRAIN = CfgNode()
@@ -65,7 +65,7 @@ cfg.TRAIN.LOG_ITER_PERIOD = 100
 cfg.TRAIN.MAX_EPOCHS = 210
 
 cfg.EVAL = CfgNode()
-cfg.EVAL.EPOCH_PERIOD = 30
+cfg.EVAL.EPOCH_PERIOD = 10
 
 cfg.SAVER = CfgNode()
 cfg.SAVER.CHECKPOINT_PERIOD = 1
@@ -79,10 +79,11 @@ cfg.TENSORBOARDX.HIST = False
 cfg.TEST = CfgNode()
 cfg.TEST.IF_ON = False
 cfg.TEST.BATCH_SIZE = 128  # from evaluate and extract feature
-cfg.TEST.IF_RE_RANKING = True
+cfg.TEST.IF_RE_RANKING = False
 cfg.TEST.IF_FEAT_NORM = True
-cfg.TEST.RUN_ID = '02'
+cfg.TEST.RUN_ID = '34'
 cfg.TEST.IF_CLASSIFT_FEATURE = True
+cfg.TEST.DATASET_NAMES = ['market1501']
 
 cfg.JOINT = CfgNode()
 cfg.JOINT.IF_ON = False
