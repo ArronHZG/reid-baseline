@@ -39,13 +39,13 @@ def main(merge_list=None):
     logger.info("Running with config:\n{}".format(cfg))
     logger.info("=" * 20)
     # os.environ['CUDA_VISIBLE_DEVICES'] = '3'
-    torch.cuda.set_device(cfg.MODEL.DEVICE_ID)
-    logger.info(f"Using GPU: {cfg.MODEL.DEVICE_ID}")
+    torch.cuda.set_device(cfg.GPU.DEVICE_ID)
+    logger.info(f"Using GPU: {cfg.GPU.DEVICE_ID}")
     logger.info(f"CUDNN VERSION: {cudnn.version()}")
 
     cudnn.enabled = True
     cudnn.benchmark = True
-    if cfg.MODEL.IF_DETERMINISTIC:
+    if cfg.GPU.IF_DETERMINISTIC:
         # using cuDNN
         cudnn.benchmark = False
         cudnn.deterministic = True

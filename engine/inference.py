@@ -4,7 +4,7 @@ from collections import OrderedDict
 import torch
 from ignite.engine import Engine
 
-from utils.reid_metric import R1_mAP, R1_mAP_reranking
+from evaluation.metric import R1_mAP, R1_mAP_reranking
 
 logger = logging.getLogger("reid_baseline.eval")
 

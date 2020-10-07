@@ -3,19 +3,63 @@
 @author:  liaoxingyu
 @contact: sherlockliao01@gmail.com
 """
-
+import faiss
 import numpy as np
+import torch
+
+from utils.tensor_utils import euclidean_dist, cosine_dist
 
 
-def eval_func(distmat, q_pids, g_pids, q_camids, g_camids, max_rank=50):
+def get_euclidean_indices(qf, gf):
+    distmat = euclidean_dist(qf, gf).cpu().numpy()
+    return np.argsort(distmat, axis=1)
+
+
+def get_cosine_indices(qf, gf):
+    distmat = cosine_dist(qf, gf).cpu().numpy()
+    return np.argsort(distmat, axis=1)
+
+
+def get_DSR_indices(qf, gf):
+    qf = qf.numpy()
+    gf = gf.numpy()
+
+    num_g = gf.shape[0]
+    dim = qf.shape[1]
+    index = faiss.IndexFlatL2(dim)
+    index.add(gf)
+    _, indices = index.search(qf, k=num_g)
+    return indices
+
+
+DISTANCE_TYPES = {
+    'euclidean': get_euclidean_indices,
+    'cosine': get_cosine_indices,
+    'DSR': get_DSR_indices
+}
+
+
+def evaluate_py(qf: torch.Tensor, gf: torch.Tensor,
+                q_pids: torch.Tensor, g_pids: torch.Tensor,
+                q_camids: torch.Tensor, g_camids: torch.Tensor,
+                max_rank=50,
+                distance_type='euclidean',
+                re_rank=False):
     """Evaluation with market1501 metric
         Key: for each query identity, its gallery images from the same camera view are discarded.
         """
-    num_q, num_g = distmat.shape
+    q_pids = q_pids.numpy()
+    g_pids = g_pids.numpy()
+    q_camids = q_camids.numpy()
+    g_camids = g_camids.numpy()
+
+    num_q, num_g = qf.size(0), gf.size(0)
     if num_g < max_rank:
         max_rank = num_g
         print("Note: number of gallery samples is quite small, got {}".format(num_g))
-    indices = np.argsort(distmat, axis=1)
+    indices = DISTANCE_TYPES[distance_type](qf, gf)
+    print(indices)
+
     matches = (g_pids[indices] == q_pids[:, np.newaxis]).astype(np.int32)
 
     # compute cmc curve for each query

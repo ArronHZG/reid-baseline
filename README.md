@@ -1,18 +1,45 @@
-# ecosystem
+## 
+
+## ecosystem
+
+pytorch >= 1.6
 
 [ignite](https://github.com/pytorch/ignite)
 
-[tensorboardX](https://github.com/lanpa/tensorboardX)
-
-UNDO [dali](https://github.com/NVIDIA/DALI)
-
-UNDO [jpeg4py](https://github.com/ajkxyz/jpeg4py)
-
 [apex](https://github.com/NVIDIA/apex)
 
-# parameter
+## ToDo
 
-# experiment
+- [ ] 分割前景背景训练模型
+
+- [ ] 复现fast-reid 各类trick
+
+  - [ ] soft margin
+  - [ ] non-local
+  - [ ] gem pooling
+  - [ ] circle loss
+  - [ ] cosine lr scheduler 并绘图
+  - [ ] 384×128
+
+  ![image-20201007013159885](https://tva1.sinaimg.cn/large/007S8ZIlly1gjgac7oau6j31dk0f6n0u.jpg)
+
+- [ ] 使用Cpython 提高eval速度
+
+- [ ] 监督学习框架绘图
+
+- [ ] 迁移学习框架绘图
+
+- [ ] 增量学习框架绘图
+
+- [ ] 搜索结果可视化
+
+- [ ] 聚类效果绘图
+
+- [ ] 特征绘图
+
+- [ ] 
+
+## parameter
 
 ## direct
 
@@ -25,7 +52,7 @@ baseline:
 
 ### market1501
 
-#### train
+**train**
 
 | backbone                  | id    | tricks                                                       | mAP  | rank1 | mean  |
 | ------------------------- | ----- | ------------------------------------------------------------ | ---- | ----- | ----- |
@@ -58,7 +85,7 @@ baseline:
 |                           |       |                                                              |      |       |       |
 |                           |       |                                                              |      |       |       |
 |                           |       |                                                              |      |       |       |
-#### test
+**test**
 
 using rerank
 
@@ -71,7 +98,7 @@ using rerank
 
 ### DukeMTMC-reID
 
-#### train
+##### train
 
 | backbone       | id   | tricks          | mAP  | rank1 | mean  |
 | -------------- | ---- | --------------- | ---- | ----- | ----- |
@@ -81,7 +108,8 @@ using rerank
 
 ### msmt17
 
-#### train
+**train**
+
 | backbone       | id   | tricks          | mAP  | rank1 | mean |
 | -------------- | ---- | --------------- | ---- | ----- | ---- |
 | resnet50       | 01   | learning weight | 46.2 | 64.8  | 55.6 |
@@ -89,9 +117,10 @@ using rerank
 |                |      |                 |      |       |      |
 ## Join train
 
-### market1501--DukeMTMC--msmt17 
+market1501--DukeMTMC--msmt17 
 
-#### baseline and target
+**baseline and target**
+
 | backbone       | id   | tricks                        | market1501<br>map/rank-1 | dukemtmc<br/>map/rank-1 | msmt17<br/>map/rank-1 |
 | -------------- | ---- | ----------------------------- | ------------------------ | ----------------------- | --------------------- |
 | resnet50       | 01   | Epoch: 520                    | 86.8/94.6                | 78.6/88.0               | 48.9/67.5             |
@@ -154,7 +183,7 @@ CONTINUATION.LOSS_TYPE = 'tr_dist'
 
 # Acknowledgements
 
-## person-reid
+### person-reid
 
 **Bag of Tricks and A Strong ReID Baseline**
 
@@ -169,14 +198,14 @@ CONTINUATION.LOSS_TYPE = 'tr_dist'
 
 [centerloss](https://github.com/jxgu1016/MNIST_center_loss_pytorch/blob/master/MNIST_with_centerloss.py)
 
-## unsupervised
+### unsupervised
 
 **Self-similarity Grouping: A Simple Unsupervised Cross Domain Adaptation Approach for Person Re-identification(SSG)**
 
 [OasisYang/SSG](https://github.com/OasisYang/SSG)
 [visualizing-dbscan-clustering](https://www.naftaliharris.com/blog/visualizing-dbscan-clustering/)
 
-## continual learning
+### continual learning
 
 **Learning without Forgetting**
 

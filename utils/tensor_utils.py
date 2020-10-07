@@ -24,12 +24,15 @@ def euclidean_dist(x, y):
     xx = torch.pow(x, 2).sum(1, keepdim=True).expand(m, n)
     yy = torch.pow(y, 2).sum(1, keepdim=True).expand(n, m).t()
     dist = xx + yy
-    # dist = dist.addmm(beta=1, alpha=-2, mat1=x, mat2=y.t())
-    # dist = dist.clamp(min=1e-12)
-    # dist = dist.sqrt()  # for numerical stability
     dist.addmm_(beta=1, alpha=-2, mat1=x, mat2=y.t())
     dist.clamp_(min=1e-12)
     dist.sqrt_()  # for numerical stability
+    return dist
+
+
+def cosine_dist(x, y):
+    dist = 1 - torch.mm(x, y.t())
+    dist.clamp_(min=1e-12)
     return dist
 
 

@@ -3,7 +3,7 @@ from yacs.config import CfgNode
 cfg = CfgNode()
 
 cfg.DATASET = CfgNode()
-cfg.DATASET.NAME = 'market1501'  # market1501, dukemtmc, msmt17
+cfg.DATASET.NAME = 'dukemtmc'  # market1501, dukemtmc, msmt17
 cfg.DATASET.ROOT_DIR = '/home/arron/dataset'
 
 cfg.DATALOADER = CfgNode()
@@ -20,9 +20,11 @@ cfg.INPUT.PIXEL_MEAN = [0.485, 0.456, 0.406]
 cfg.INPUT.PIXEL_STD = [0.229, 0.224, 0.225]
 cfg.INPUT.PADDING = 10
 
+cfg.GPU = CfgNode()
+cfg.GPU.DEVICE_ID = 1
+cfg.GPU.IF_DETERMINISTIC = False
+
 cfg.MODEL = CfgNode()
-cfg.MODEL.DEVICE_ID = 1
-cfg.MODEL.IF_DETERMINISTIC = False
 cfg.MODEL.NAME = 'resnet50'
 cfg.MODEL.LAST_STRIDE = 1
 cfg.MODEL.PRETRAIN_CHOICE = 'imagenet'  # Options: 'imagenet','random' or 'self'
@@ -60,7 +62,7 @@ cfg.WARMUP.GAMMA = 0.1
 cfg.TRAIN = CfgNode()
 cfg.TRAIN.BATCH_SIZE = 64
 cfg.TRAIN.LOG_ITER_PERIOD = 100
-cfg.TRAIN.MAX_EPOCHS = 150
+cfg.TRAIN.MAX_EPOCHS = 210
 
 cfg.EVAL = CfgNode()
 cfg.EVAL.EPOCH_PERIOD = 30
