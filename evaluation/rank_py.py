@@ -12,6 +12,7 @@ from utils.tensor_utils import euclidean_dist, cosine_dist
 
 def get_euclidean_indices(qf, gf):
     distmat = euclidean_dist(qf, gf).cpu().numpy()
+    np.save('qf_dist.npy', euclidean_dist(qf, qf).cpu().numpy())
     return np.argsort(distmat, axis=1)
 
 

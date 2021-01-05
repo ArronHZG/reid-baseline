@@ -64,7 +64,7 @@ class Market1501(BaseImageDataset):
             raise RuntimeError("'{}' is not available".format(self.gallery_dir))
 
     def _process_dir(self, dir_path, relabel=False):
-        img_paths = glob.glob(osp.join(dir_path, '*.jpg'))
+        img_paths = sorted(glob.glob(osp.join(dir_path, '*.jpg')))
         pattern = re.compile(r'([-\d]+)_c(\d)')
 
         pid_container = set()

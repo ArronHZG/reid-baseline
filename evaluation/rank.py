@@ -27,6 +27,9 @@ def call_cy(qf, gf,
             re_rank=False):
     indices = DISTANCE_TYPES[distance_type](qf, gf)
 
+    np.save('qf.npy', np.asarray(q_pids))
+    np.save('qf_feat.npy', qf.cpu().numpy())
+
     return evaluate_cy(indices,
                        qf.cpu().numpy(),
                        gf.cpu().numpy(),

@@ -3,7 +3,7 @@ from yacs.config import CfgNode
 cfg = CfgNode()
 
 cfg.DATASET = CfgNode()
-cfg.DATASET.NAME = 'dukemtmc'  # market1501, dukemtmc, msmt17
+cfg.DATASET.NAME = 'market1501'  # market1501, dukemtmc, msmt17
 cfg.DATASET.ROOT_DIR = '/home/arron/dataset'
 
 cfg.DATALOADER = CfgNode()
